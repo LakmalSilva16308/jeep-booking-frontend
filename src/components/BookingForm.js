@@ -20,7 +20,7 @@ const BookingForm = ({ providerId, price }) => {
     const calculateTotalPrice = () => {
       const adultsCount = parseInt(formData.adults) || 0;
       const childrenCount = parseInt(formData.children) || 0;
-      const childDiscount = 0.5; // 50% for children
+      const childDiscount = 0.5;
       const validatedPrice = Number.isFinite(price) && price > 0 ? price : 0;
       const calculatedPrice = (adultsCount * validatedPrice) + (childrenCount * validatedPrice * childDiscount);
       console.log('Price calculation:', {
@@ -70,13 +70,15 @@ const BookingForm = ({ providerId, price }) => {
       };
       console.log('Submitting booking:', bookingData);
 
-      const response = await axios.post('http://localhost:5000/api/bookings', bookingData, {
+      const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const cleanApiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl;
+      const response = await axios.post(`${cleanApiUrl}/api/bookings`, bookingData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       console.log('Booking created:', response.data);
 
       navigate('/payment', {
-        state: { totalPrice, bookingId: response.data.booking._id }
+        state: { totalPrice, bookingId: response.data._id }
       });
     } catch (err) {
       console.error('Error creating booking:', err.response?.data || err.message);

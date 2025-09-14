@@ -5,6 +5,7 @@ import axios from 'axios';
 import '../styles/App.css';
 
 console.log('REACT_APP_STRIPE_PUBLISHABLE_KEY:', process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY);
+console.log('REACT_APP_API_URL:', process.env.REACT_APP_API_URL);
 
 const stripePromise = process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY
   ? loadStripe(process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY)
@@ -21,13 +22,21 @@ const CheckoutForm = ({ bookingId, totalPrice, onSuccess }) => {
   useEffect(() => {
     const fetchClientSecret = async () => {
       try {
+        const token = localStorage.getItem('token');
+        console.log('Token for payment request:', token);
+        if (!token) {
+          throw new Error('Please log in to proceed with payment');
+        }
         console.log('Fetching client secret for booking:', { bookingId, totalPrice, paymentMethod });
-        const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/api/payments/create-intent`, {
+        const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+        const cleanApiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl;
+        const response = await axios.post(`${cleanApiUrl}/api/payments/create-intent`, {
           bookingId,
           paymentMethod
         }, {
-          headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+          headers: { Authorization: `Bearer ${token}` }
         });
+        console.log('Payment intent response:', response.data);
         if (paymentMethod === 'stripe') {
           setClientSecret(response.data.clientSecret);
         } else if (paymentMethod === 'payhere') {
@@ -47,7 +56,12 @@ const CheckoutForm = ({ bookingId, totalPrice, onSuccess }) => {
         }
       } catch (err) {
         console.error('Error fetching client secret:', err.response?.data || err.message);
-        setError('Failed to initialize payment. Please try again.');
+        const errorMessage = err.response?.status === 403
+          ? 'Access denied: Please log in as a tourist to make a payment'
+          : err.response?.status === 404
+          ? 'Payment endpoint not found. Please check backend configuration.'
+          : err.response?.data?.error || 'Failed to initialize payment. Please try again.';
+        setError(errorMessage);
       }
     };
     if (bookingId) {
@@ -55,7 +69,7 @@ const CheckoutForm = ({ bookingId, totalPrice, onSuccess }) => {
     } else {
       setError('Invalid booking ID');
     }
-  }, [bookingId, paymentMethod, totalPrice]); // Added totalPrice to dependency array
+  }, [bookingId, paymentMethod]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
