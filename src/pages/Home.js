@@ -81,7 +81,6 @@ function Home() {
       try {
         console.log('Fetching featured providers and reviews...');
         const [providersRes, reviewsRes] = await Promise.all([
-          // Corrected API URL: removed the extra `/api`
           axios.get(`${apiUrl}/providers?approved=true&limit=8`),
           axios.get(`${apiUrl}/reviews/all`).catch(err => {
             console.warn('Reviews fetch failed:', err.response?.data || err.message);
@@ -308,12 +307,13 @@ function Home() {
           <div className="services-slider" style={{ transform: `translateX(-${currentServiceSlide * 100}%)` }}>
             {featuredProviders.map((provider) => (
               <div key={provider._id} className="service-card">
+                {/* Updated image source to use the full URL from the database, assuming the backend is updated to store public image URLs (e.g., from Cloudinary) */}
                 <img
-                  src={provider.profilePicture ? `${apiUrl}/${provider.profilePicture}` : '/images/placeholder.jpg'}
+                  src={provider.profilePicture || '/images/placeholder.jpg'}
                   alt={provider.serviceName}
                   className="service-image"
                   onError={(e) => {
-                    console.error(`Failed to load image: ${apiUrl}/${provider.profilePicture}`);
+                    console.error(`Failed to load image: ${provider.profilePicture}`);
                     e.target.src = '/images/placeholder.jpg';
                   }}
                 />

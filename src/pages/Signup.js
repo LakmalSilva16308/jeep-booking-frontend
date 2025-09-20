@@ -19,6 +19,7 @@ function Signup() {
     photos: []
   });
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const categories = [
@@ -43,6 +44,7 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
 
     try {
       let endpoint = formData.role === 'tourist' ? '/api/auth/tourist/signup' : '/api/auth/provider/signup';
@@ -74,19 +76,14 @@ function Signup() {
         formData.photos.forEach((photo) => data.append('photos', photo));
       }
 
-      // Improved logging for debugging
-      const formDataEntries = formData.role === 'tourist' 
-        ? data 
-        : Object.fromEntries([...data.entries()].map(([key, value]) => [key, value instanceof File ? value.name : value]));
-      console.log('Sending signup request:', JSON.stringify(formDataEntries, null, 2));
-
-      const res = await axios.post(`http://localhost:5000${endpoint}`, data, { headers });
+      // Updated to use environment variable for API URL
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}${endpoint}`, data, { headers });
       console.log('Signup response:', JSON.stringify(res.data, null, 2));
       localStorage.setItem('token', res.data.token);
       navigate(formData.role === 'tourist' ? '/tourist-dashboard' : '/provider-dashboard');
     } catch (err) {
       console.error('Signup error:', err.response?.data || err.message);
-      alert('Error signing up: ' + (err.response?.data?.error || err.message));
+      setError('Error signing up: ' + (err.response?.data?.error || err.message));
     }
     setLoading(false);
   };
@@ -165,6 +162,7 @@ function Signup() {
           <button type="submit" disabled={loading}>{loading ? 'Signing Up...' : 'Sign Up'}</button>
         </div>
       </form>
+      {error && <div className="error-message">{error}</div>}
       <p>
         Already have an account? <Link to="/login">Login</Link>
       </p>
