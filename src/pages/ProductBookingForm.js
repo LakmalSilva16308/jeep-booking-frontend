@@ -182,7 +182,9 @@ const ProductBookingForm = () => {
         contact: formData.contact
       };
       console.log('ProductBookingForm: Sending booking data:', JSON.stringify(bookingData, null, 2));
-      const response = await axios.post(`${cleanApiUrl}/api/bookings/product`, bookingData, {
+      // FIX: Removed the redundant '/api' from the endpoint path.
+      // The `cleanApiUrl` already includes it.
+      const response = await axios.post(`${cleanApiUrl}/bookings/product`, bookingData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       console.log('ProductBookingForm: Booking created:', JSON.stringify(response.data, null, 2));
