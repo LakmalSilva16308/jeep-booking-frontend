@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/AdminPanel.css';
+import { jwtDecode } from 'jwt-decode';
 
 // ErrorBoundary component to catch rendering errors
 class ErrorBoundary extends React.Component {
@@ -170,27 +171,27 @@ function AdminPanel() {
       try {
         console.log('AdminPanel: Fetching admin data...');
         const [pendingProvidersRes, providersRes, bookingsRes, touristsRes, reviewsRes, contactMessagesRes] = await Promise.all([
-          axios.get(`${cleanApiUrl}/api/admin/pending-providers`, { headers: { Authorization: `Bearer ${token}` } }).catch(err => {
+          axios.get(`${cleanApiUrl}/admin/pending-providers`, { headers: { Authorization: `Bearer ${token}` } }).catch(err => {
             console.error('Pending providers fetch failed:', err.response?.data || err.message);
             return { data: [] };
           }),
-          axios.get(`${cleanApiUrl}/api/admin/providers`, { headers: { Authorization: `Bearer ${token}` } }).catch(err => {
+          axios.get(`${cleanApiUrl}/admin/providers`, { headers: { Authorization: `Bearer ${token}` } }).catch(err => {
             console.error('Providers fetch failed:', err.response?.data || err.message);
             return { data: [] };
           }),
-          axios.get(`${cleanApiUrl}/api/bookings/admin`, { headers: { Authorization: `Bearer ${token}` } }).catch(err => {
+          axios.get(`${cleanApiUrl}/bookings/admin`, { headers: { Authorization: `Bearer ${token}` } }).catch(err => {
             console.error('Bookings fetch failed:', err.response?.data || err.message);
             return { data: [] };
           }),
-          axios.get(`${cleanApiUrl}/api/admin/tourists`, { headers: { Authorization: `Bearer ${token}` } }).catch(err => {
+          axios.get(`${cleanApiUrl}/admin/tourists`, { headers: { Authorization: `Bearer ${token}` } }).catch(err => {
             console.error('Tourists fetch failed:', err.response?.data || err.message);
             return { data: [] };
           }),
-          axios.get(`${cleanApiUrl}/api/reviews/admin/reviews`, { headers: { Authorization: `Bearer ${token}` } }).catch(err => {
+          axios.get(`${cleanApiUrl}/reviews/admin/reviews`, { headers: { Authorization: `Bearer ${token}` } }).catch(err => {
             console.error('Reviews fetch failed:', err.response?.data || err.message);
             return { data: [] };
           }),
-          axios.get(`${cleanApiUrl}/api/admin/contact-messages`, { headers: { Authorization: `Bearer ${token}` } }).catch(err => {
+          axios.get(`${cleanApiUrl}/admin/contact-messages`, { headers: { Authorization: `Bearer ${token}` } }).catch(err => {
             console.error('Contact messages fetch failed:', err.response?.data || err.message);
             return { data: [] };
           })
@@ -313,7 +314,7 @@ function AdminPanel() {
           formData.append(key, providerFormData[key]);
         }
       });
-      const { data: { provider } } = await axios.post(`${cleanApiUrl}/api/admin/providers`, formData, {
+      const { data: { provider } } = await axios.post(`${cleanApiUrl}/admin/providers`, formData, {
         headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'multipart/form-data' }
       });
       console.log(`AdminPanel: Adding provider ID=${provider._id}`, JSON.stringify(provider, null, 2));
@@ -353,7 +354,7 @@ function AdminPanel() {
 
   const handleAddTourist = async () => {
     try {
-      const { data: { tourist } } = await axios.post(`${cleanApiUrl}/api/admin/tourists`, touristFormData, {
+      const { data: { tourist } } = await axios.post(`${cleanApiUrl}/admin/tourists`, touristFormData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setTourists(prev => [...prev, tourist]);
@@ -369,7 +370,7 @@ function AdminPanel() {
   const handleAddBooking = async () => {
     try {
       const { data: { booking } } = await axios.post(
-        `${cleanApiUrl}/api/bookings/admin`,
+        `${cleanApiUrl}/bookings/admin`,
         {
           ...bookingFormData,
           totalPrice: parseFloat(bookingFormData.totalPrice) || 0
@@ -400,7 +401,7 @@ function AdminPanel() {
   const handleApproveProvider = async (id) => {
     try {
       const { data: { provider } } = await axios.put(
-        `${cleanApiUrl}/api/admin/providers/${id}/approve`,
+        `${cleanApiUrl}/admin/providers/${id}/approve`,
         { approved: true },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -427,7 +428,7 @@ function AdminPanel() {
 
   const handleDeleteProvider = async (id) => {
     try {
-      await axios.delete(`${cleanApiUrl}/api/admin/providers/${id}`, {
+      await axios.delete(`${cleanApiUrl}/admin/providers/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setProviders(prev => {
@@ -449,7 +450,7 @@ function AdminPanel() {
 
   const handleDeleteTourist = async (id) => {
     try {
-      await axios.delete(`${cleanApiUrl}/api/admin/tourists/${id}`, {
+      await axios.delete(`${cleanApiUrl}/admin/tourists/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setTourists(prev => prev.filter(t => t._id !== id));
@@ -463,7 +464,7 @@ function AdminPanel() {
   const handleApproveBooking = async (id) => {
     try {
       const { data: { booking } } = await axios.put(
-        `${cleanApiUrl}/api/bookings/admin/${id}/approve`,
+        `${cleanApiUrl}/bookings/admin/${id}/approve`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -477,7 +478,7 @@ function AdminPanel() {
 
   const handleDeleteBooking = async (id) => {
     try {
-      await axios.delete(`${cleanApiUrl}/api/bookings/admin/${id}`, {
+      await axios.delete(`${cleanApiUrl}/bookings/admin/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setBookings(prev => prev.filter(b => b._id !== id));
@@ -491,7 +492,7 @@ function AdminPanel() {
   const handleApproveReview = async (id) => {
     try {
       const { data: { review } } = await axios.put(
-        `${cleanApiUrl}/api/reviews/admin/reviews/${id}/approve`,
+        `${cleanApiUrl}/reviews/admin/reviews/${id}/approve`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -505,7 +506,7 @@ function AdminPanel() {
 
   const handleDeleteReview = async (id) => {
     try {
-      await axios.delete(`${cleanApiUrl}/api/reviews/admin/reviews/${id}`, {
+      await axios.delete(`${cleanApiUrl}/reviews/admin/reviews/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setReviews(prev => prev.filter(r => r._id !== id));
@@ -519,7 +520,7 @@ function AdminPanel() {
   const handleDeleteContactMessage = async (id) => {
     try {
       console.log(`AdminPanel: Attempting to delete contact message ID=${id}`);
-      await axios.delete(`${cleanApiUrl}/api/admin/contact-messages/${id}`, {
+      await axios.delete(`${cleanApiUrl}/admin/contact-messages/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setContactMessages(prev => prev.filter(m => m._id !== id));
@@ -688,7 +689,7 @@ function AdminPanel() {
           <div className="admin-card">
             <h3>Manage Reviews ({reviews.length})</h3>
             <ul className="admin-list">
-              {tourists.map(review => (
+              {reviews.map(review => (
                 <li key={review._id}>
                   <span>
                     {review.reviewType === 'product' ? review.targetId : (review.targetId?.serviceName || review.targetId?.fullName || 'N/A')} 
