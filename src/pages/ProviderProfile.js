@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import PaymentForm from '../components/PaymentForm';
-import ReviewSlider from '../components/ReviewSlider'; // New import
+import ReviewSlider from '../components/ReviewSlider';
+import { USD_TO_LKR_RATE } from '../data/products';
 import '../styles/App.css';
 
 function ProviderProfile() {
@@ -30,17 +30,20 @@ function ProviderProfile() {
   const [reviewError, setReviewError] = useState(null);
   const [reviewSuccess, setReviewSuccess] = useState(null);
   const [bookingSuccess, setBookingSuccess] = useState(false);
-  const [bookingId, setBookingId] = useState(null);
+  const [bookingError, setBookingError] = useState(null);
   const token = localStorage.getItem('token');
+
+  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  const cleanApiUrl = apiUrl.replace(/\/+$/, ''); // Remove trailing slashes
 
   useEffect(() => {
     const fetchProviderAndReviews = async () => {
       try {
         console.log('Fetching provider and reviews for ID:', id);
         const [providerRes, reviewsRes] = await Promise.all([
-          axios.get(`http://localhost:5000/api/providers/${id}`),
-          axios.get(`http://localhost:5000/api/reviews/${id}`).catch(err => {
-            console.warn('Reviews fetch failed, returning empty array:', err.response?.data || err.message);
+          axios.get(`${cleanApiUrl}/api/providers/${id}`),
+          axios.get(`${cleanApiUrl}/api/reviews/${id}`).catch(err => {
+            console.warn('Reviews fetch failed:', err.response?.data || err.message);
             return { data: [] };
           })
         ]);
@@ -64,13 +67,16 @@ function ProviderProfile() {
         return;
       }
       try {
+        if (!token.includes('.') || token.split('.').length !== 3) {
+          throw new Error('Invalid token format');
+        }
         const decoded = JSON.parse(atob(token.split('.')[1]));
         console.log('Decoded token:', decoded);
 
         if (decoded.role === 'tourist') {
           try {
             console.log('Fetching bookings for tourist:', decoded.id);
-            const res = await axios.get('http://localhost:5000/api/bookings/my-bookings', {
+            const res = await axios.get(`${cleanApiUrl}/api/bookings/my-bookings`, {
               headers: { Authorization: `Bearer ${token}` }
             });
             console.log('My bookings:', res.data);
@@ -79,18 +85,23 @@ function ProviderProfile() {
               console.log('Booking check:', { bookingId: booking._id, providerId: booking.providerId?._id, status: booking.status, isValid });
               return isValid;
             });
-            console.log('Tourist can review service:', hasBooking, 'Provider ID:', id);
+            console.log('Tourist can review service:', hasBooking);
             setCanReviewService(hasBooking);
             setCanReviewTourist(false);
           } catch (err) {
-            console.error('Error fetching bookings for review eligibility:', err.response?.data || err.message);
-            setCanReviewService(false);
-            setError(err.response?.status === 403 ? 'Access denied: Please log in as a tourist' : 'Failed to check review eligibility');
+            console.error('Error fetching bookings:', err.response?.data || err.message);
+            if (err.response?.status === 401) {
+              localStorage.removeItem('token');
+              setError('Session expired. Please log in again.');
+              navigate('/login');
+            } else {
+              setError('Failed to check review eligibility');
+            }
           }
         } else if (decoded.role === 'provider') {
           try {
             console.log('Fetching bookings for provider:', decoded.id);
-            const res = await axios.get('http://localhost:5000/api/bookings/provider-bookings', {
+            const res = await axios.get(`${cleanApiUrl}/api/bookings/provider-bookings`, {
               headers: { Authorization: `Bearer ${token}` }
             });
             console.log('Provider bookings:', res.data);
@@ -113,8 +124,13 @@ function ProviderProfile() {
             setCanReviewService(false);
           } catch (err) {
             console.error('Error fetching provider bookings:', err.response?.data || err.message);
-            setCanReviewTourist(false);
-            setError(err.response?.status === 403 ? 'Access denied: Please log in as a provider' : 'Failed to check review eligibility');
+            if (err.response?.status === 401) {
+              localStorage.removeItem('token');
+              setError('Session expired. Please log in again.');
+              navigate('/login');
+            } else {
+              setError('Failed to check review eligibility');
+            }
           }
         } else {
           console.log('User is neither tourist nor provider:', decoded.role);
@@ -122,16 +138,16 @@ function ProviderProfile() {
           setCanReviewTourist(false);
         }
       } catch (err) {
-        console.error('Error decoding token or checking review eligibility:', err.message);
-        setCanReviewService(false);
-        setCanReviewTourist(false);
-        setError('Invalid token or failed to check review eligibility');
+        console.error('Error decoding token:', err.message);
+        localStorage.removeItem('token');
+        setError('Invalid session. Please log in again.');
+        navigate('/login');
       }
     };
 
     fetchProviderAndReviews();
     checkReviewEligibility();
-  }, [id, token]);
+  }, [id, token, cleanApiUrl, navigate]);
 
   const handleBookingChange = (e) => {
     const { name, value } = e.target;
@@ -141,33 +157,38 @@ function ProviderProfile() {
   const handleBookingSubmit = async (e) => {
     e.preventDefault();
     if (!token) {
-      setError('Please log in to book a service');
+      setBookingError('Please log in to book a service');
       return;
     }
     try {
       const decoded = JSON.parse(atob(token.split('.')[1]));
+      if (decoded.role !== 'tourist') {
+        setBookingError('Only tourists can book services');
+        return;
+      }
       console.log('Submitting booking for user:', decoded);
-      const res = await axios.post('http://localhost:5000/api/bookings', {
+      const res = await axios.post(`${cleanApiUrl}/api/bookings`, {
         providerId: id,
         ...bookingForm
       }, {
         headers: { Authorization: `Bearer ${token}` }
       });
       console.log('Booking created:', res.data);
-      setBookingId(res.data.booking._id);
       setBookingSuccess(true);
-      setError(null);
-      alert('Booking created successfully! Proceed to payment.');
+      setBookingError(null);
+      alert('Booking created successfully! Awaiting admin approval.');
+      setBookingForm({ date: '', time: '', adults: 1, children: 0, specialNotes: '' });
+      setTimeout(() => setBookingSuccess(false), 3000);
     } catch (err) {
       console.error('Error creating booking:', err.response?.data || err.message);
-      setError(err.response?.status === 403 ? 'Access denied: Please log in as a tourist' : err.response?.data?.error || 'Failed to create booking');
+      if (err.response?.status === 401) {
+        localStorage.removeItem('token');
+        setBookingError('Session expired. Please log in again.');
+        navigate('/login');
+      } else {
+        setBookingError(err.response?.data?.error || 'Failed to create booking');
+      }
     }
-  };
-
-  const handlePaymentSuccess = () => {
-    setBookingSuccess(false);
-    alert('Payment successful! Your booking is confirmed.');
-    navigate('/tourist-dashboard');
   };
 
   const handleReviewChange = (e) => {
@@ -190,24 +211,29 @@ function ProviderProfile() {
         reviewType: decoded.role === 'tourist' ? 'service' : 'tourist'
       };
       console.log('Submitting review:', reviewData);
-      const res = await axios.post('http://localhost:5000/api/reviews', reviewData, {
+      const res = await axios.post(`${cleanApiUrl}/api/reviews`, reviewData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       console.log('Review submitted:', res.data);
       setReviewSuccess('Review submitted successfully');
       setReviewError(null);
       setReviewForm({ rating: 5, comment: '', targetId: '' });
-      const reviewsRes = await axios.get(`http://localhost:5000/api/reviews/${id}`);
+      const reviewsRes = await axios.get(`${cleanApiUrl}/api/reviews/${id}`);
       setReviews(reviewsRes.data || []);
     } catch (err) {
       console.error('Error submitting review:', err.response?.data || err.message);
-      setReviewError(err.response?.status === 403 ? 'Access denied: Please log in with appropriate role' : err.response?.data?.error || 'Failed to submit review');
-      setReviewSuccess(null);
+      if (err.response?.status === 401) {
+        localStorage.removeItem('token');
+        setReviewError('Session expired. Please log in again.');
+        navigate('/login');
+      } else {
+        setReviewError(err.response?.data?.error || 'Failed to submit review');
+      }
     }
   };
 
   if (loading) return <div className="container">Loading...</div>;
-  if (error) return <div className="container">Error: {error}</div>;
+  if (error) return <div className="container error">{error}</div>;
   if (!provider) return <div className="container">Provider not found</div>;
 
   return (
@@ -215,34 +241,25 @@ function ProviderProfile() {
       <section className="provider-details">
         <h2>{provider.serviceName}</h2>
         <img
-          src={provider.profilePicture ? `http://localhost:5000${provider.profilePicture}` : '/images/placeholder.jpg'}
+          src={provider.profilePicture ? `${cleanApiUrl}/${provider.profilePicture}` : '/images/placeholder.jpg'}
           alt={provider.serviceName}
           className="service-image"
           onError={(e) => {
-            console.error(`Failed to load image: http://localhost:5000${provider.profilePicture}`);
+            console.error(`Failed to load image: ${cleanApiUrl}/${provider.profilePicture}`);
             e.target.src = '/images/placeholder.jpg';
           }}
         />
         <div className="provider-info">
           <p><strong>Category:</strong> {provider.category?.replace('-', ' ') || 'Unknown'}</p>
           <p><strong>Description:</strong> {provider.description || 'No description available'}</p>
-          <p><strong>Price:</strong> ${provider.price}</p>
+          <p><strong>Price:</strong> USD {(provider.price / USD_TO_LKR_RATE).toFixed(2)} / LKR {provider.price.toFixed(2)}</p>
           <p><strong>Location:</strong> {provider.location || 'Not specified'}</p>
         </div>
       </section>
 
       <section className="booking-form">
         <h3>Book This Service</h3>
-        {bookingSuccess ? (
-          <div className="payment-section">
-            <h4>Proceed to Payment</h4>
-            <PaymentForm 
-              bookingId={bookingId} 
-              totalPrice={provider.price * (bookingForm.adults + bookingForm.children * 0.5)} 
-              onSuccess={handlePaymentSuccess} 
-            />
-          </div>
-        ) : (
+        {!bookingSuccess ? (
           <div className="form-container">
             <form onSubmit={handleBookingSubmit}>
               <div className="form-group">
@@ -299,9 +316,15 @@ function ProviderProfile() {
                   onChange={handleBookingChange}
                 />
               </div>
-              <button type="submit" className="cta-button">Proceed to Payment</button>
+              <button type="submit" className="cta-button">Book Now</button>
             </form>
-            {error && <p className="error">{error}</p>}
+            {bookingError && <p className="error">{bookingError}</p>}
+          </div>
+        ) : (
+          <div className="success-section">
+            <h4>Booking Created Successfully!</h4>
+            <p>Awaiting admin approval. You will be notified once approved.</p>
+            <button className="cta-button" onClick={() => setBookingSuccess(false)}>Book Another</button>
           </div>
         )}
       </section>

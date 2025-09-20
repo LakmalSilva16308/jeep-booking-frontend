@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import '../styles/App.css';
+import '../styles/TouristDashboard.css';
 
 function TouristDashboard() {
   const [bookings, setBookings] = useState([]);
@@ -18,7 +19,9 @@ function TouristDashboard() {
       }
       try {
         console.log('Fetching bookings with token:', token);
-        const res = await axios.get('http://localhost:5000/api/bookings/my-bookings', {
+        const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+        const cleanApiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl;
+        const res = await axios.get(`${cleanApiUrl}/api/bookings/my-bookings`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         console.log('Bookings response:', res.data);
@@ -39,22 +42,28 @@ function TouristDashboard() {
     <div className="tourist-dashboard container">
       <h2>My Bookings</h2>
       {bookings.length === 0 ? (
-        <p>No bookings found.</p>
+        <p className="no-bookings">No bookings found.</p>
       ) : (
-        <ul className="booking-list">
+        <div className="booking-grid">
           {bookings.map((booking) => (
-            <li key={booking._id}>
-              <p><strong>Service:</strong> {booking.providerId?.serviceName || 'Unknown'}</p>
-              <p><strong>Category:</strong> {booking.providerId?.category?.replace('-', ' ') || 'Unknown'}</p>
-              <p><strong>Date:</strong> {new Date(booking.date).toLocaleDateString()}</p>
-              <p><strong>Time:</strong> {booking.time}</p>
-              <p><strong>Adults:</strong> {booking.adults}</p>
-              <p><strong>Children:</strong> {booking.children}</p>
-              <p><strong>Total Price:</strong> ${booking.totalPrice}</p>
-              <p><strong>Status:</strong> {booking.status}</p>
-            </li>
+            <div key={booking._id} className="booking-card">
+              <div className="booking-header">
+                <h3>{booking.providerId?.serviceName || 'Unknown'}</h3>
+                <span className={`status ${booking.status.toLowerCase()}`}>
+                  {booking.status}
+                </span>
+              </div>
+              <div className="booking-details">
+                <p><strong>Category:</strong> {booking.providerId?.category?.replace('-', ' ') || 'Unknown'}</p>
+                <p><strong>Date:</strong> {new Date(booking.date).toLocaleDateString()}</p>
+                <p><strong>Time:</strong> {booking.time}</p>
+                <p><strong>Adults:</strong> {booking.adults}</p>
+                <p><strong>Children:</strong> {booking.children}</p>
+                <p><strong>Total Price:</strong> LKR {booking.totalPrice.toFixed(2)}</p>
+              </div>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
       <Link to="/services" className="cta-button">Browse Services</Link>
     </div>

@@ -25,7 +25,7 @@ function TouristDashboard() {
           setLoading(false);
           return;
         }
-        const res = await axios.get('http://localhost:5000/api/bookings/my-bookings', {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/bookings/my-bookings`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         console.log('Bookings response:', res.data);

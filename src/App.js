@@ -12,6 +12,7 @@ import ProviderDashboardPage from './pages/ProviderDashboardPage';
 import AdminPanelPage from './pages/AdminPanelPage';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import ProductBookingForm from './pages/ProductBookingForm'; // New import
 import './styles/App.css';
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
             <Route path="/admin-panel" element={<AdminPanelPage />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/book-product/:productName" element={<ProductBookingForm />} /> {/* New route */}
           </Routes>
         </main>
         <Footer />

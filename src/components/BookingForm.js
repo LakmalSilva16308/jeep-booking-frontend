@@ -15,6 +15,7 @@ const BookingForm = ({ providerId, price }) => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [success, setSuccess] = useState(null);
 
   useEffect(() => {
     const calculateTotalPrice = () => {
@@ -48,6 +49,7 @@ const BookingForm = ({ providerId, price }) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
+    setSuccess(null);
 
     try {
       const token = localStorage.getItem('token');
@@ -71,15 +73,18 @@ const BookingForm = ({ providerId, price }) => {
       console.log('Submitting booking:', bookingData);
 
       const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      if (!apiUrl) {
+        throw new Error('API URL is not defined');
+      }
       const cleanApiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl;
+      console.log('Using API URL:', cleanApiUrl);
       const response = await axios.post(`${cleanApiUrl}/api/bookings`, bookingData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       console.log('Booking created:', response.data);
 
-      navigate('/payment', {
-        state: { totalPrice, bookingId: response.data._id }
-      });
+      setSuccess('Booking created successfully! Awaiting admin approval.');
+      setTimeout(() => navigate('/bookings'), 2000);
     } catch (err) {
       console.error('Error creating booking:', err.response?.data || err.message);
       setError(err.response?.data?.error || 'Failed to create booking. Please try again.');
@@ -150,9 +155,10 @@ const BookingForm = ({ providerId, price }) => {
           <p className="total-price">Total Price: <strong>LKR {totalPrice.toFixed(2)}</strong></p>
         </div>
         <button type="submit" disabled={loading} className="cta-button">
-          {loading ? 'Processing...' : 'Proceed to Payment'}
+          {loading ? 'Processing...' : 'Book Now'}
         </button>
         {error && <p className="error">{error}</p>}
+        {success && <p className="success">{success}</p>}
       </form>
     </div>
   );

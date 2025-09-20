@@ -1,10 +1,12 @@
 import { useState, useEffect, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import ReviewGridSlider from '../components/ReviewGridSlider';
-import '../styles/App.css';
+import CompanyProducts from '../components/CompanyProducts';
+import '../styles/Home.css';
 
 function Home() {
+  const navigate = useNavigate();
   const [featuredProviders, setFeaturedProviders] = useState([]);
   const [reviews, setReviews] = useState([]);
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -19,41 +21,48 @@ function Home() {
   const [confirmedProviders, setConfirmedProviders] = useState([]);
   const [reviewError, setReviewError] = useState(null);
   const [reviewSuccess, setReviewSuccess] = useState(null);
-  const token = localStorage.getItem('token');
   const [userRole, setUserRole] = useState(null);
+  const token = localStorage.getItem('token');
+
+  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  const cleanApiUrl = apiUrl.replace(/\/+$/, '');
 
   const slides = useMemo(() => [
     {
-      src: '/images/img1.jpg',
+      src: '/images/jeep_safari.jpg',
       alt: 'Jeep Safari Adventure',
       title: 'Discover Amazing Adventures',
       caption: 'Explore Jeep Safaris, Boat Rides, and More!'
     },
     {
-      src: '/images/img4.jpg',
-      alt: 'Coastal Adventure',
-      title: 'Thrilling Coastal Journeys',
-      caption: 'Book Your Next Adventure Today!'
+      src: '/images/catamaran_boat_ride.jpg',
+      alt: 'Catamaran Boat Ride',
+      title: 'Sail Through Serenity',
+      caption: 'Enjoy a peaceful boat ride on Hiriwadunna Lake!'
     },
     {
-      src: '/images/img5.jpg',
-      alt: 'Mountain Expedition',
-      title: 'Conquer the Mountains',
-      caption: 'Experience the Ultimate Adventure!'
+      src: '/images/tuk_tuk.jpg',
+      alt: 'Tuk Tuk Adventure',
+      title: 'Ride Through the Village',
+      caption: 'Experience local life with a fun tuk-tuk tour!'
     },
     {
-      src: '/images/img2.jpg',
-      alt: 'Desert Safari',
-      title: 'Venture into the Desert',
-      caption: 'Unforgettable Safari Experiences Await!'
+      src: '/images/village_cooking.jpg',
+      alt: 'Village Cooking Experience',
+      title: 'Cook Like a Local',
+      caption: 'Learn authentic Sri Lankan recipes!'
     }
-  ], []); // Empty dependency array since slides is static
-
-  const providersPerPage = 8; // 2 rows x 4 columns
-  const totalServiceSlides = Math.ceil(featuredProviders.length / providersPerPage);
+  ], []);
 
   useEffect(() => {
     console.log('Slider initialized. Slides:', slides);
+    // Preload images to ensure they load correctly
+    slides.forEach(slide => {
+      const img = new Image();
+      img.src = slide.src;
+      img.onerror = () => console.error(`Failed to preload image: ${slide.src}`);
+    });
+
     const interval = setInterval(() => {
       setCurrentSlide((prev) => {
         const next = (prev + 1) % slides.length;
@@ -72,9 +81,9 @@ function Home() {
       try {
         console.log('Fetching featured providers and reviews...');
         const [providersRes, reviewsRes] = await Promise.all([
-          axios.get('http://localhost:5000/api/providers', { params: { approved: true, limit: 8 } }),
-          axios.get('http://localhost:5000/api/reviews/all').catch(err => {
-            console.warn('Reviews fetch failed, returning empty array:', err.response?.data || err.message);
+          axios.get(`${cleanApiUrl}/api/providers`, { params: { approved: true, limit: 8 } }),
+          axios.get(`${cleanApiUrl}/api/reviews/all`).catch(err => {
+            console.warn('Reviews fetch failed:', err.response?.data || err.message);
             return { data: [] };
           })
         ]);
@@ -84,11 +93,7 @@ function Home() {
         setReviews(reviewsRes.data || []);
       } catch (err) {
         console.error('Error fetching data:', err.response?.data || err.message);
-        setError(err.message.includes('Network Error') 
-          ? 'Cannot connect to the server. Please ensure the server is running.'
-          : 'Failed to load providers or reviews. Please try again later.');
-      } finally {
-        setLoading(false);
+        setError('Failed to load providers or reviews. Please try again later.');
       }
     };
 
@@ -100,54 +105,65 @@ function Home() {
         return;
       }
       try {
+        if (!token.includes('.') || token.split('.').length !== 3) {
+          throw new Error('Invalid token format');
+        }
         const decoded = JSON.parse(atob(token.split('.')[1]));
         console.log('Decoded token:', decoded);
         setUserRole(decoded.role);
         if (decoded.role === 'tourist') {
           try {
             console.log('Fetching bookings for tourist:', decoded.id);
-            const res = await axios.get('http://localhost:5000/api/bookings/my-bookings', {
+            const res = await axios.get(`${cleanApiUrl}/api/bookings/my-bookings`, {
               headers: { Authorization: `Bearer ${token}` }
             });
             console.log('Raw bookings response:', res.data);
             const providers = res.data
               .filter(booking => {
-                const isValid = booking.status === 'confirmed' && booking.providerId && booking.providerId._id && booking.providerId.serviceName;
+                const isValid = booking.status === 'confirmed' && 
+                               (booking.providerId?._id || booking.productType);
                 console.log('Booking filter:', { 
                   bookingId: booking._id, 
                   status: booking.status, 
                   providerId: booking.providerId?._id, 
-                  serviceName: booking.providerId?.serviceName, 
+                  productType: booking.productType,
                   isValid 
                 });
                 return isValid;
               })
               .map(booking => ({
-                id: booking.providerId._id,
-                serviceName: booking.providerId.serviceName
+                id: booking.providerId?._id || booking.productType,
+                serviceName: booking.providerId?.serviceName || booking.productType,
+                type: booking.providerId ? 'service' : 'product'
               }))
               .filter((provider, index, self) => 
                 provider.id && self.findIndex(p => p.id === provider.id) === index
               );
-            console.log('Confirmed providers:', providers);
+            console.log('Confirmed providers/products:', providers);
             setConfirmedProviders(providers);
           } catch (err) {
             console.error('Error fetching bookings:', err.response?.data || err.message);
-            setConfirmedProviders([]);
+            if (err.response?.status === 401) {
+              localStorage.removeItem('token');
+              setError('Session expired. Please log in again.');
+              navigate('/login');
+            } else {
+              setError('Failed to fetch bookings.');
+            }
           }
         } else {
           console.log('User is not a tourist:', decoded.role);
         }
       } catch (err) {
         console.error('Error decoding token:', err.message);
-        setUserRole(null);
-        setConfirmedProviders([]);
+        localStorage.removeItem('token');
+        setError('Invalid session. Please log in again.');
+        navigate('/login');
       }
     };
 
-    fetchData();
-    fetchUserRoleAndBookings();
-  }, [token]);
+    Promise.all([fetchData(), fetchUserRoleAndBookings()]).finally(() => setLoading(false));
+  }, [token, navigate, cleanApiUrl]);
 
   const prevSlide = () => {
     setCurrentSlide((prev) => {
@@ -165,9 +181,14 @@ function Home() {
     });
   };
 
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
+    console.log(`Manual hero slide: go to ${index}`);
+  };
+
   const prevServiceSlide = () => {
     setCurrentServiceSlide((prev) => {
-      const next = prev === 0 ? totalServiceSlides - 1 : prev - 1;
+      const next = prev === 0 ? 0 : prev - 1;
       console.log(`Manual service slide: prev ${prev} to ${next}`);
       return next;
     });
@@ -175,15 +196,11 @@ function Home() {
 
   const nextServiceSlide = () => {
     setCurrentServiceSlide((prev) => {
-      const next = (prev + 1) % totalServiceSlides;
+      const maxSlides = Math.ceil(featuredProviders.length / 4);
+      const next = prev === maxSlides - 1 ? prev : prev + 1;
       console.log(`Manual service slide: next ${prev} to ${next}`);
       return next;
     });
-  };
-
-  const goToSlide = (index) => {
-    setCurrentSlide(index);
-    console.log(`Manual hero slide: go to ${index}`);
   };
 
   const handleReviewChange = (e) => {
@@ -191,65 +208,47 @@ function Home() {
     setReviewForm(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleReviewSubmit = async (e) => {
-    e.preventDefault();
+  const handleReviewSubmit = async () => {
     if (!token) {
       setReviewError('Please log in to submit a review');
-      console.log('Review submission failed: No token');
       return;
     }
     if (!reviewForm.targetId) {
-      setReviewError('Please select a service to review');
-      console.log('Review submission failed: No targetId selected');
-      return;
-    }
-    const cleanedTargetId = reviewForm.targetId.trim();
-    if (!isValidObjectId(cleanedTargetId)) {
-      setReviewError('Invalid service selected');
-      console.log('Review submission failed: Invalid targetId format:', cleanedTargetId);
+      setReviewError('Please select a service or product to review');
       return;
     }
     try {
+      const selectedProvider = confirmedProviders.find(p => p.id === reviewForm.targetId);
       const reviewData = {
-        targetId: cleanedTargetId,
+        targetId: reviewForm.targetId,
         rating: parseInt(reviewForm.rating),
         comment: reviewForm.comment,
-        reviewType: 'service'
+        reviewType: selectedProvider?.type || (/^[0-9a-fA-F]{24}$/.test(reviewForm.targetId) ? 'service' : 'product')
       };
       console.log('Submitting review:', reviewData);
-      const res = await axios.post('http://localhost:5000/api/reviews', reviewData, {
+      const res = await axios.post(`${cleanApiUrl}/api/reviews`, reviewData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       console.log('Review submitted:', res.data);
       setReviewSuccess('Review submitted successfully');
       setReviewError(null);
       setReviewForm({ targetId: '', rating: 5, comment: '' });
-      try {
-        const reviewsRes = await axios.get('http://localhost:5000/api/reviews/all');
-        console.log('Refreshed reviews:', reviewsRes.data);
-        setReviews(reviewsRes.data || []);
-      } catch (refreshErr) {
-        console.error('Error refreshing reviews:', refreshErr.response?.data || refreshErr.message);
-        setReviews([]);
-      }
+      const reviewsRes = await axios.get(`${cleanApiUrl}/api/reviews/all`);
+      setReviews(reviewsRes.data || []);
     } catch (err) {
       console.error('Error submitting review:', err.response?.data || err.message);
-      setReviewError(err.response?.data?.error || 'Failed to submit review. Please try again.');
-      setReviewSuccess(null);
+      if (err.response?.status === 401) {
+        localStorage.removeItem('token');
+        setReviewError('Session expired. Please log in again.');
+        navigate('/login');
+      } else {
+        setReviewError(err.response?.data?.error || 'Failed to submit review');
+      }
     }
   };
 
-  const isValidObjectId = (id) => {
-    return /^[0-9a-fA-F]{24}$/.test(id);
-  };
-
   if (loading) return <div className="container">Loading...</div>;
-  if (error) return <div className="container">Error: {error}</div>;
-
-  const visibleProviders = featuredProviders.slice(
-    currentServiceSlide * providersPerPage,
-    (currentServiceSlide + 1) * providersPerPage
-  );
+  if (error) return <div className="container error">{error}</div>;
 
   return (
     <div className="home">
@@ -300,35 +299,47 @@ function Home() {
         </div>
       </section>
 
+      <CompanyProducts />
+
       <section className="services-preview container">
         <h2>Featured Services</h2>
         <div className="services-container">
-          <div className="services-grid">
-            {visibleProviders.map((provider) => (
+          <div className="services-slider" style={{ transform: `translateX(-${currentServiceSlide * 100}%)` }}>
+            {featuredProviders.map((provider) => (
               <div key={provider._id} className="service-card">
                 <img
-                  src={provider.profilePicture ? `http://localhost:5000${provider.profilePicture}` : '/images/placeholder.jpg'}
+                  src={provider.profilePicture ? `${cleanApiUrl}/${provider.profilePicture}` : '/images/placeholder.jpg'}
                   alt={provider.serviceName}
                   className="service-image"
                   onError={(e) => {
-                    console.error(`Failed to load image: http://localhost:5000${provider.profilePicture}`);
+                    console.error(`Failed to load image: ${cleanApiUrl}/${provider.profilePicture}`);
                     e.target.src = '/images/placeholder.jpg';
                   }}
                 />
                 <h3>{provider.serviceName}</h3>
                 <p>{provider.category ? provider.category.replace('-', ' ') : 'Unknown'}</p>
                 <p>{provider.description ? provider.description.substring(0, 100) + '...' : 'No description available.'}</p>
-                <p className="price">${provider.price}</p>
+                <p className="price">USD {provider.price.toFixed(2)}</p>
                 <Link to={`/provider/${provider._id}`} className="service-button">View Details</Link>
               </div>
             ))}
           </div>
-          {totalServiceSlides > 1 && (
+          {featuredProviders.length > 0 && (
             <>
-              <button className="services-arrow services-arrow-left" onClick={prevServiceSlide} aria-label="Previous services">
+              <button
+                className="services-arrow services-arrow-left"
+                onClick={prevServiceSlide}
+                disabled={currentServiceSlide === 0}
+                aria-label="Previous services"
+              >
                 &#10094;
               </button>
-              <button className="services-arrow services-arrow-right" onClick={nextServiceSlide} aria-label="Next services">
+              <button
+                className="services-arrow services-arrow-right"
+                onClick={nextServiceSlide}
+                disabled={currentServiceSlide === Math.ceil(featuredProviders.length / 4) - 1}
+                aria-label="Next services"
+              >
                 &#10095;
               </button>
             </>
@@ -341,48 +352,46 @@ function Home() {
           <h2>Submit a Review</h2>
           {confirmedProviders.length > 0 ? (
             <div className="form-container">
-              <form onSubmit={handleReviewSubmit}>
-                <div className="form-group">
-                  <label htmlFor="targetId">Select Service</label>
-                  <select
-                    id="targetId"
-                    name="targetId"
-                    value={reviewForm.targetId}
-                    onChange={handleReviewChange}
-                    required
-                  >
-                    <option value="">Select a service</option>
-                    {confirmedProviders.map(provider => (
-                      <option key={provider.id} value={provider.id}>{provider.serviceName}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="rating">Rating (1-5)</label>
-                  <select
-                    id="rating"
-                    name="rating"
-                    value={reviewForm.rating}
-                    onChange={handleReviewChange}
-                    required
-                  >
-                    {[1, 2, 3, 4, 5].map(num => (
-                      <option key={num} value={num}>{num}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="comment">Comment</label>
-                  <textarea
-                    id="comment"
-                    name="comment"
-                    value={reviewForm.comment}
-                    onChange={handleReviewChange}
-                    required
-                  />
-                </div>
-                <button type="submit" className="cta-button">Submit Review</button>
-              </form>
+              <div className="form-group">
+                <label htmlFor="targetId">Select Service or Product</label>
+                <select
+                  id="targetId"
+                  name="targetId"
+                  value={reviewForm.targetId}
+                  onChange={handleReviewChange}
+                  required
+                >
+                  <option value="">Select a service or product</option>
+                  {confirmedProviders.map(provider => (
+                    <option key={provider.id} value={provider.id}>{provider.serviceName}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="form-group">
+                <label htmlFor="rating">Rating (1-5)</label>
+                <select
+                  id="rating"
+                  name="rating"
+                  value={reviewForm.rating}
+                  onChange={handleReviewChange}
+                  required
+                >
+                  {[1, 2, 3, 4, 5].map(num => (
+                    <option key={num} value={num}>{num}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="form-group">
+                <label htmlFor="comment">Comment</label>
+                <textarea
+                  id="comment"
+                  name="comment"
+                  value={reviewForm.comment}
+                  onChange={handleReviewChange}
+                  required
+                />
+              </div>
+              <button className="cta-button" onClick={handleReviewSubmit}>Submit Review</button>
               {reviewError && <p className="error">{reviewError}</p>}
               {reviewSuccess && <p className="success">{reviewSuccess}</p>}
             </div>
@@ -394,7 +403,7 @@ function Home() {
 
       <section className="reviews-section container">
         <h2>Customer Reviews</h2>
-        <ReviewGridSlider reviews={reviews.filter(review => review.reviewType === 'service')} />
+        <ReviewGridSlider reviews={reviews.filter(review => review.reviewType === 'service' || review.reviewType === 'product')} />
       </section>
     </div>
   );

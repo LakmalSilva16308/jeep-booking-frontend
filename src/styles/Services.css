@@ -1,0 +1,141 @@
+.services-preview {
+  width: 100vw;
+  margin: 0;
+  padding: 3rem 0;
+}
+
+.services-preview h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #1a1a1a;
+}
+
+.services-container {
+  position: relative;
+  width: 100%;
+}
+
+.services-grid {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 100%;
+}
+
+.service-card {
+  flex: 0 0 25%;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s;
+  padding: 10px;
+  text-align: center;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+}
+
+.service-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.service-card h3 {
+  font-size: 1.5rem;
+  margin: 10px 0;
+  color: #1a1a1a;
+}
+
+.service-card p {
+  font-size: 1.2rem;
+  color: #555;
+  margin: 0 0 1rem;
+}
+
+.service-card .price {
+  font-weight: bold;
+  color: #28a745;
+  margin: 0 0 1rem;
+}
+
+.service-button {
+  display: block;
+  text-align: center;
+  padding: 10px 20px;
+  background: #28a745;
+  color: #fff;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.service-button:hover {
+  background: #218838;
+}
+
+.services-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border: none;
+  padding: 0.75rem;
+  cursor: pointer;
+  font-size: 1.25rem;
+}
+
+.services-arrow-left {
+  left: 1rem;
+}
+
+.services-arrow-right {
+  right: 1rem;
+}
+
+.services-arrow:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+@media (max-width: 768px) {
+  .services-container {
+    width: 100%;
+    overflow: visible;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+    transform: none !important;
+    width: 100%;
+  }
+
+  .service-card {
+    flex: none;
+    width: 100%;
+  }
+
+  .service-image {
+    height: 150px;
+  }
+
+  .service-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .service-card p,
+  .service-card .price {
+    font-size: 1rem;
+  }
+
+  .services-arrow {
+    display: none;
+  }
+}

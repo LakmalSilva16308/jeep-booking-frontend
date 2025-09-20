@@ -13,7 +13,7 @@ function ProviderDashboard() {
         return;
       }
       try {
-        const res = await axios.get('http://localhost:5000/api/bookings/provider-bookings', {
+        const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/bookings/provider-bookings`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setBookings(res.data);

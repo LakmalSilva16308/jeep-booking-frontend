@@ -23,7 +23,7 @@ const CheckoutForm = ({ bookingId, totalPrice, onSuccess }) => {
     const fetchClientSecret = async () => {
       try {
         const token = localStorage.getItem('token');
-        console.log('Token for payment request:', token);
+        console.log('Token for payment request:', token ? 'Present' : 'Missing');
         if (!token) {
           throw new Error('Please log in to proceed with payment');
         }
@@ -58,6 +58,8 @@ const CheckoutForm = ({ bookingId, totalPrice, onSuccess }) => {
         console.error('Error fetching client secret:', err.response?.data || err.message);
         const errorMessage = err.response?.status === 403
           ? 'Access denied: Please log in as a tourist to make a payment'
+          : err.response?.status === 400 && err.response?.data?.error.includes('Invalid signature')
+          ? 'Payment authorization failed: Please check PayHere configuration'
           : err.response?.status === 404
           ? 'Payment endpoint not found. Please check backend configuration.'
           : err.response?.data?.error || 'Failed to initialize payment. Please try again.';
@@ -69,13 +71,16 @@ const CheckoutForm = ({ bookingId, totalPrice, onSuccess }) => {
     } else {
       setError('Invalid booking ID');
     }
-  }, [bookingId, paymentMethod]);
+  }, [bookingId, paymentMethod, totalPrice]); // Added totalPrice to dependency array
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setProcessing(true);
 
-    if (paymentMethod !== 'stripe') return;
+    if (paymentMethod !== 'stripe') {
+      setProcessing(false);
+      return;
+    }
 
     if (!stripe || !elements) {
       setError('Stripe.js has not loaded. Please refresh the page.');
