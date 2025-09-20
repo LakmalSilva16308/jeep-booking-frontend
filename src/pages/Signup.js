@@ -47,7 +47,9 @@ function Signup() {
     setError('');
 
     try {
-      let endpoint = formData.role === 'tourist' ? '/api/auth/tourist/signup' : '/api/auth/provider/signup';
+      // FIX: Removed the leading '/api' from the endpoint paths.
+      // This assumes process.env.REACT_APP_API_URL already ends with '/api'.
+      let endpoint = formData.role === 'tourist' ? 'auth/tourist/signup' : 'auth/provider/signup';
       let headers = formData.role === 'tourist' ? { 'Content-Type': 'application/json' } : { 'Content-Type': 'multipart/form-data' };
       let data;
 
@@ -76,8 +78,7 @@ function Signup() {
         formData.photos.forEach((photo) => data.append('photos', photo));
       }
 
-      // Updated to use environment variable for API URL
-      const res = await axios.post(`${process.env.REACT_APP_API_URL}${endpoint}`, data, { headers });
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/${endpoint}`, data, { headers });
       console.log('Signup response:', JSON.stringify(res.data, null, 2));
       localStorage.setItem('token', res.data.token);
       navigate(formData.role === 'tourist' ? '/tourist-dashboard' : '/provider-dashboard');
