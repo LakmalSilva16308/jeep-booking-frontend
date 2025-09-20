@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import '../styles/App.css';
+import '../styles/ReviewSlider.css';
 
 const ReviewSlider = ({ reviews }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  const cleanApiUrl = apiUrl.replace(/\/+$/, '');
 
-  // Auto-scroll every 5 seconds
   useEffect(() => {
     if (reviews.length <= 1) return;
 
@@ -39,6 +40,18 @@ const ReviewSlider = ({ reviews }) => {
       >
         {reviews.map(review => (
           <div key={review._id} className="review-card">
+            {review.image && (
+              <img
+                src={review.image.startsWith('http') ? review.image : `${cleanApiUrl}/${review.image}`}
+                alt={review.reviewerId?.fullName || 'Review'}
+                className="review-image"
+                onLoad={() => console.log(`Review image loaded: ${review.image}`)}
+                onError={(e) => {
+                  console.error(`Failed to load image: ${review.image}`);
+                  e.target.src = '/images/placeholder.jpg';
+                }}
+              />
+            )}
             <p className="rating">{'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}</p>
             <p>{review.comment}</p>
             <p className="name">— {review.reviewerId?.fullName || 'Anonymous'}</p>

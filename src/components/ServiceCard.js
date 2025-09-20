@@ -1,15 +1,25 @@
 import { Link } from 'react-router-dom';
-import '../styles/App.css';
+import '../styles/Services.css';
 
 function ServiceCard({ provider }) {
+  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  const cleanApiUrl = apiUrl.replace(/\/+$/, '');
+
   return (
     <div className="service-card">
       <img
-        src={provider.profilePicture ? `http://localhost:5000${provider.profilePicture}` : '/images/placeholder.jpg'}
+        src={
+          provider.profilePicture
+            ? provider.profilePicture.startsWith('http')
+              ? provider.profilePicture
+              : `${cleanApiUrl}/${provider.profilePicture}`
+            : '/images/placeholder.jpg'
+        }
         alt={provider.serviceName}
         className="service-image"
+        onLoad={() => console.log(`Service image loaded: ${provider.profilePicture}`)}
         onError={(e) => {
-          console.error(`Failed to load image: http://localhost:5000${provider.profilePicture}`);
+          console.error(`Failed to load image: ${provider.profilePicture}`);
           e.target.src = '/images/placeholder.jpg';
         }}
       />

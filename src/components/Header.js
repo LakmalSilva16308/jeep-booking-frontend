@@ -6,6 +6,7 @@ function Header() {
   const [token, setToken] = useState(localStorage.getItem('token'));
   const [role, setRole] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,31 +35,40 @@ function Header() {
     document.body.classList.toggle('dark-mode');
   };
 
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
     <header>
       <nav>
         <Link to="/" className="logo">Adventure Booking</Link>
-        <div className="nav-links">
-          <Link to="/">Home</Link>
-          <Link to="/services">Services</Link>
-          <Link to="/about">About</Link>
-          <Link to="/contact">Contact</Link>
+        <div className={`nav-links ${isMenuOpen ? 'open' : ''}`}>
+          <Link to="/" onClick={() => isMenuOpen && toggleMenu()}>Home</Link>
+          <Link to="/services" onClick={() => isMenuOpen && toggleMenu()}>Services</Link>
+          <Link to="/about" onClick={() => isMenuOpen && toggleMenu()}>About</Link>
+          <Link to="/contact" onClick={() => isMenuOpen && toggleMenu()}>Contact</Link>
           {token ? (
             <>
-              {role === 'tourist' && <Link to="/tourist-dashboard">My Dashboard</Link>}
-              {role === 'provider' && <Link to="/provider-dashboard">Provider Dashboard</Link>}
-              {role === 'admin' && <Link to="/admin-panel">Admin Panel</Link>}
-              <button className="logout-button" onClick={handleLogout}>Logout</button>
+              {role === 'tourist' && <Link to="/tourist-dashboard" onClick={() => isMenuOpen && toggleMenu()}>My Dashboard</Link>}
+              {role === 'provider' && <Link to="/provider-dashboard" onClick={() => isMenuOpen && toggleMenu()}>Provider Dashboard</Link>}
+              {role === 'admin' && <Link to="/admin-panel" onClick={() => isMenuOpen && toggleMenu()}>Admin Panel</Link>}
+              <button className="logout-button" onClick={() => { handleLogout(); isMenuOpen && toggleMenu(); }}>Logout</button>
             </>
           ) : (
             <>
-              <Link to="/signup">Sign Up</Link>
-              <Link to="/login">Login</Link>
+              <Link to="/signup" onClick={() => isMenuOpen && toggleMenu()}>Sign Up</Link>
+              <Link to="/login" onClick={() => isMenuOpen && toggleMenu()}>Login</Link>
             </>
           )}
           <button className="theme-toggle" onClick={toggleTheme} aria-label="Toggle theme">
             <span className="theme-icon">{isDarkMode ? '☀️' : '🌙'}</span>
           </button>
+        </div>
+        <div className="hamburger" onClick={toggleMenu}>
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
       </nav>
     </header>
