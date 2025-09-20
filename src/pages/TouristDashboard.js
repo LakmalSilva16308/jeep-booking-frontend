@@ -19,9 +19,10 @@ function TouristDashboard() {
       }
       try {
         console.log('Fetching bookings with token:', token);
-        const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-        const cleanApiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl;
-        const res = await axios.get(`${cleanApiUrl}/api/bookings/my-bookings`, {
+        const apiUrl = process.env.REACT_APP_API_URL;
+        // FIX: Removed the redundant '/api' from the endpoint path.
+        // The base URL from the environment variable should be sufficient.
+        const res = await axios.get(`${apiUrl}/bookings/my-bookings`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         console.log('Bookings response:', res.data);
