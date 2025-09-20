@@ -187,7 +187,7 @@ function AdminPanel() {
             console.error('Tourists fetch failed:', err.response?.data || err.message);
             return { data: [] };
           }),
-          axios.get(`${cleanApiUrl}/reviews/admin/reviews`, { headers: { Authorization: `Bearer ${token}` } }).catch(err => {
+          axios.get(`${cleanApiUrl}/reviews/admin`, { headers: { Authorization: `Bearer ${token}` } }).catch(err => {
             console.error('Reviews fetch failed:', err.response?.data || err.message);
             return { data: [] };
           }),
@@ -492,7 +492,7 @@ function AdminPanel() {
   const handleApproveReview = async (id) => {
     try {
       const { data: { review } } = await axios.put(
-        `${cleanApiUrl}/reviews/admin/reviews/${id}/approve`,
+        `${cleanApiUrl}/reviews/admin/${id}/approve`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -506,7 +506,7 @@ function AdminPanel() {
 
   const handleDeleteReview = async (id) => {
     try {
-      await axios.delete(`${cleanApiUrl}/reviews/admin/reviews/${id}`, {
+      await axios.delete(`${cleanApiUrl}/reviews/admin/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       setReviews(prev => prev.filter(r => r._id !== id));
