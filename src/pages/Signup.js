@@ -33,9 +33,18 @@ function Signup() {
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     if (name === 'profilePicture') {
+      if (files[0] && files[0].size > 2 * 1024 * 1024) {
+        setError('Profile picture must be under 2MB');
+        return;
+      }
       setFormData({ ...formData, [name]: files[0] });
     } else if (name === 'photos') {
-      setFormData({ ...formData, [name]: Array.from(files) });
+      const validPhotos = Array.from(files).filter(file => file.size <= 2 * 1024 * 1024);
+      if (validPhotos.length !== files.length) {
+        setError('Each photo must be under 2MB');
+        return;
+      }
+      setFormData({ ...formData, [name]: validPhotos });
     } else {
       setFormData({ ...formData, [name]: value });
     }
@@ -47,8 +56,6 @@ function Signup() {
     setError('');
 
     try {
-      // FIX: Removed the leading '/api' from the endpoint paths.
-      // This assumes process.env.REACT_APP_API_URL already ends with '/api'.
       let endpoint = formData.role === 'tourist' ? 'auth/tourist/signup' : 'auth/provider/signup';
       let headers = formData.role === 'tourist' ? { 'Content-Type': 'application/json' } : { 'Content-Type': 'multipart/form-data' };
       let data;
@@ -150,11 +157,11 @@ function Signup() {
               <textarea name="description" value={formData.description} onChange={handleChange} required />
             </div>
             <div className="form-group">
-              <label>Profile Picture</label>
+              <label>Profile Picture (max 2MB)</label>
               <input type="file" name="profilePicture" accept="image/jpeg,image/png" onChange={handleChange} required />
             </div>
             <div className="form-group">
-              <label>Photos (up to 5)</label>
+              <label>Photos (up to 5, max 2MB each)</label>
               <input type="file" name="photos" accept="image/jpeg,image/png" multiple onChange={handleChange} required />
             </div>
           </>
