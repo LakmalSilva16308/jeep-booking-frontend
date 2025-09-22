@@ -46,7 +46,7 @@ function Home() {
       caption: 'Experience local life with a fun tuk-tuk tour!'
     },
     {
-      src: '/images/village_cooking.jpg',
+      src: 'images/village_cooking.jpg',
       alt: 'Village Cooking Experience',
       title: 'Cook Like a Local',
       caption: 'Learn authentic Sri Lankan recipes!'
