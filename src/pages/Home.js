@@ -24,7 +24,6 @@ function Home() {
   const [userRole, setUserRole] = useState(null);
   const token = localStorage.getItem('token');
 
-  // The API URL from the .env file is now used directly
   const apiUrl = process.env.REACT_APP_API_URL;
 
   const slides = useMemo(() => [
@@ -47,7 +46,7 @@ function Home() {
       caption: 'Experience local life with a fun tuk-tuk tour!'
     },
     {
-      src: 'images/village_cooking.jpg',
+      src: '/images/village_cooking.jpg',
       alt: 'Village Cooking Experience',
       title: 'Cook Like a Local',
       caption: 'Learn authentic Sri Lankan recipes!'
@@ -56,7 +55,6 @@ function Home() {
 
   useEffect(() => {
     console.log('Slider initialized. Slides:', slides);
-    // Preload images to ensure they load correctly
     slides.forEach(slide => {
       const img = new Image();
       img.src = slide.src;
@@ -307,7 +305,6 @@ function Home() {
           <div className="services-slider" style={{ transform: `translateX(-${currentServiceSlide * 100}%)` }}>
             {featuredProviders.map((provider) => (
               <div key={provider._id} className="service-card">
-                {/* Updated image source to use the full URL from the database, assuming the backend is updated to store public image URLs (e.g., from Cloudinary) */}
                 <img
                   src={provider.profilePicture || '/images/placeholder.jpg'}
                   alt={provider.serviceName}
