@@ -17,7 +17,8 @@ function ProviderProfile() {
     time: '',
     adults: 1,
     children: 0,
-    specialNotes: ''
+    specialNotes: '',
+    contact: { name: '', email: '', message: '', phone: '' }
   });
   const [reviewForm, setReviewForm] = useState({
     rating: 5,
@@ -34,15 +35,15 @@ function ProviderProfile() {
   const token = localStorage.getItem('token');
 
   const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-  const cleanApiUrl = apiUrl.replace(/\/+$/, ''); // Remove trailing slashes
+  const cleanApiUrl = apiUrl.replace(/\/+$/, '');
 
   useEffect(() => {
     const fetchProviderAndReviews = async () => {
       try {
         console.log('Fetching provider and reviews for ID:', id);
         const [providerRes, reviewsRes] = await Promise.all([
-          axios.get(`${cleanApiUrl}/api/providers/${id}`),
-          axios.get(`${cleanApiUrl}/api/reviews/${id}`).catch(err => {
+          axios.get(`${cleanApiUrl}/providers/${id}`),
+          axios.get(`${cleanApiUrl}/reviews/${id}`).catch(err => {
             console.warn('Reviews fetch failed:', err.response?.data || err.message);
             return { data: [] };
           })
@@ -76,7 +77,7 @@ function ProviderProfile() {
         if (decoded.role === 'tourist') {
           try {
             console.log('Fetching bookings for tourist:', decoded.id);
-            const res = await axios.get(`${cleanApiUrl}/api/bookings/my-bookings`, {
+            const res = await axios.get(`${cleanApiUrl}/bookings/my-bookings`, {
               headers: { Authorization: `Bearer ${token}` }
             });
             console.log('My bookings:', res.data);
@@ -101,7 +102,7 @@ function ProviderProfile() {
         } else if (decoded.role === 'provider') {
           try {
             console.log('Fetching bookings for provider:', decoded.id);
-            const res = await axios.get(`${cleanApiUrl}/api/bookings/provider-bookings`, {
+            const res = await axios.get(`${cleanApiUrl}/bookings/provider-bookings`, {
               headers: { Authorization: `Bearer ${token}` }
             });
             console.log('Provider bookings:', res.data);
@@ -151,7 +152,15 @@ function ProviderProfile() {
 
   const handleBookingChange = (e) => {
     const { name, value } = e.target;
-    setBookingForm(prev => ({ ...prev, [name]: value }));
+    if (name.includes('contact.')) {
+      const contactField = name.split('.')[1];
+      setBookingForm(prev => ({
+        ...prev,
+        contact: { ...prev.contact, [contactField]: value }
+      }));
+    } else {
+      setBookingForm(prev => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleBookingSubmit = async (e) => {
@@ -166,8 +175,13 @@ function ProviderProfile() {
         setBookingError('Only tourists can book services');
         return;
       }
+      const { name, email, message, phone } = bookingForm.contact;
+      if (!name || !email || !message || !phone) {
+        setBookingError('All contact details (name, email, message, phone) are required');
+        return;
+      }
       console.log('Submitting booking for user:', decoded);
-      const res = await axios.post(`${cleanApiUrl}/api/bookings`, {
+      const res = await axios.post(`${cleanApiUrl}/bookings`, {
         providerId: id,
         ...bookingForm
       }, {
@@ -177,7 +191,7 @@ function ProviderProfile() {
       setBookingSuccess(true);
       setBookingError(null);
       alert('Booking created successfully! Awaiting admin approval.');
-      setBookingForm({ date: '', time: '', adults: 1, children: 0, specialNotes: '' });
+      setBookingForm({ date: '', time: '', adults: 1, children: 0, specialNotes: '', contact: { name: '', email: '', message: '', phone: '' } });
       setTimeout(() => setBookingSuccess(false), 3000);
     } catch (err) {
       console.error('Error creating booking:', err.response?.data || err.message);
@@ -211,14 +225,14 @@ function ProviderProfile() {
         reviewType: decoded.role === 'tourist' ? 'service' : 'tourist'
       };
       console.log('Submitting review:', reviewData);
-      const res = await axios.post(`${cleanApiUrl}/api/reviews`, reviewData, {
+      const res = await axios.post(`${cleanApiUrl}/reviews`, reviewData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       console.log('Review submitted:', res.data);
       setReviewSuccess('Review submitted successfully');
       setReviewError(null);
       setReviewForm({ rating: 5, comment: '', targetId: '' });
-      const reviewsRes = await axios.get(`${cleanApiUrl}/api/reviews/${id}`);
+      const reviewsRes = await axios.get(`${cleanApiUrl}/reviews/${id}`);
       setReviews(reviewsRes.data || []);
     } catch (err) {
       console.error('Error submitting review:', err.response?.data || err.message);
@@ -241,11 +255,11 @@ function ProviderProfile() {
       <section className="provider-details">
         <h2>{provider.serviceName}</h2>
         <img
-          src={provider.profilePicture ? `${cleanApiUrl}/${provider.profilePicture}` : '/images/placeholder.jpg'}
+          src={provider.profilePicture || '/images/placeholder.jpg'}
           alt={provider.serviceName}
           className="service-image"
           onError={(e) => {
-            console.error(`Failed to load image: ${cleanApiUrl}/${provider.profilePicture}`);
+            console.error(`Failed to load image: ${provider.profilePicture}`);
             e.target.src = '/images/placeholder.jpg';
           }}
         />
@@ -262,6 +276,49 @@ function ProviderProfile() {
         {!bookingSuccess ? (
           <div className="form-container">
             <form onSubmit={handleBookingSubmit}>
+              <div className="form-group">
+                <label htmlFor="contact.name">Name</label>
+                <input
+                  type="text"
+                  id="contact.name"
+                  name="contact.name"
+                  value={bookingForm.contact.name}
+                  onChange={handleBookingChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="contact.email">Email</label>
+                <input
+                  type="email"
+                  id="contact.email"
+                  name="contact.email"
+                  value={bookingForm.contact.email}
+                  onChange={handleBookingChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="contact.phone">Phone</label>
+                <input
+                  type="tel"
+                  id="contact.phone"
+                  name="contact.phone"
+                  value={bookingForm.contact.phone}
+                  onChange={handleBookingChange}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="contact.message">Message</label>
+                <textarea
+                  id="contact.message"
+                  name="contact.message"
+                  value={bookingForm.contact.message}
+                  onChange={handleBookingChange}
+                  required
+                />
+              </div>
               <div className="form-group">
                 <label htmlFor="date">Date</label>
                 <input

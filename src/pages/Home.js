@@ -24,8 +24,8 @@ function Home() {
   const [userRole, setUserRole] = useState(null);
   const token = localStorage.getItem('token');
 
-  // The API URL from the .env file is now used directly
-  const apiUrl = process.env.REACT_APP_API_URL;
+  const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+  const cleanApiUrl = apiUrl.replace(/\/+$/, '');
 
   const slides = useMemo(() => [
     {
@@ -47,7 +47,7 @@ function Home() {
       caption: 'Experience local life with a fun tuk-tuk tour!'
     },
     {
-      src: 'images/village_cooking.jpg',
+      src: '/images/village_cooking.jpg',
       alt: 'Village Cooking Experience',
       title: 'Cook Like a Local',
       caption: 'Learn authentic Sri Lankan recipes!'
@@ -56,7 +56,6 @@ function Home() {
 
   useEffect(() => {
     console.log('Slider initialized. Slides:', slides);
-    // Preload images to ensure they load correctly
     slides.forEach(slide => {
       const img = new Image();
       img.src = slide.src;
@@ -81,8 +80,8 @@ function Home() {
       try {
         console.log('Fetching featured providers and reviews...');
         const [providersRes, reviewsRes] = await Promise.all([
-          axios.get(`${apiUrl}/providers?approved=true&limit=8`),
-          axios.get(`${apiUrl}/reviews/all`).catch(err => {
+          axios.get(`${cleanApiUrl}/providers?approved=true&limit=8`),
+          axios.get(`${cleanApiUrl}/reviews/all`).catch(err => {
             console.warn('Reviews fetch failed:', err.response?.data || err.message);
             return { data: [] };
           })
@@ -114,7 +113,7 @@ function Home() {
         if (decoded.role === 'tourist') {
           try {
             console.log('Fetching bookings for tourist:', decoded.id);
-            const res = await axios.get(`${apiUrl}/bookings/my-bookings`, {
+            const res = await axios.get(`${cleanApiUrl}/bookings/my-bookings`, {
               headers: { Authorization: `Bearer ${token}` }
             });
             console.log('Raw bookings response:', res.data);
@@ -163,7 +162,7 @@ function Home() {
     };
 
     Promise.all([fetchData(), fetchUserRoleAndBookings()]).finally(() => setLoading(false));
-  }, [token, navigate, apiUrl]);
+  }, [token, navigate, cleanApiUrl]);
 
   const prevSlide = () => {
     setCurrentSlide((prev) => {
@@ -226,14 +225,14 @@ function Home() {
         reviewType: selectedProvider?.type || (/^[0-9a-fA-F]{24}$/.test(reviewForm.targetId) ? 'service' : 'product')
       };
       console.log('Submitting review:', reviewData);
-      const res = await axios.post(`${apiUrl}/reviews`, reviewData, {
+      const res = await axios.post(`${cleanApiUrl}/reviews`, reviewData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       console.log('Review submitted:', res.data);
       setReviewSuccess('Review submitted successfully');
       setReviewError(null);
       setReviewForm({ targetId: '', rating: 5, comment: '' });
-      const reviewsRes = await axios.get(`${apiUrl}/reviews/all`);
+      const reviewsRes = await axios.get(`${cleanApiUrl}/reviews/all`);
       setReviews(reviewsRes.data || []);
     } catch (err) {
       console.error('Error submitting review:', err.response?.data || err.message);
@@ -307,7 +306,6 @@ function Home() {
           <div className="services-slider" style={{ transform: `translateX(-${currentServiceSlide * 100}%)` }}>
             {featuredProviders.map((provider) => (
               <div key={provider._id} className="service-card">
-                {/* Updated image source to use the full URL from the database, assuming the backend is updated to store public image URLs (e.g., from Cloudinary) */}
                 <img
                   src={provider.profilePicture || '/images/placeholder.jpg'}
                   alt={provider.serviceName}
