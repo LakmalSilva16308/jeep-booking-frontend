@@ -41,8 +41,8 @@ function ProviderProfile() {
       try {
         console.log('Fetching provider and reviews for ID:', id);
         const [providerRes, reviewsRes] = await Promise.all([
-          axios.get(`${cleanApiUrl}/api/providers/${id}`),
-          axios.get(`${cleanApiUrl}/api/reviews/${id}`).catch(err => {
+          axios.get(`${cleanApiUrl}/providers/${id}`),
+          axios.get(`${cleanApiUrl}/reviews/${id}`).catch(err => {
             console.warn('Reviews fetch failed:', err.response?.data || err.message);
             return { data: [] };
           })
@@ -76,7 +76,7 @@ function ProviderProfile() {
         if (decoded.role === 'tourist') {
           try {
             console.log('Fetching bookings for tourist:', decoded.id);
-            const res = await axios.get(`${cleanApiUrl}/api/bookings/my-bookings`, {
+            const res = await axios.get(`${cleanApiUrl}/bookings/my-bookings`, {
               headers: { Authorization: `Bearer ${token}` }
             });
             console.log('My bookings:', res.data);
@@ -101,7 +101,7 @@ function ProviderProfile() {
         } else if (decoded.role === 'provider') {
           try {
             console.log('Fetching bookings for provider:', decoded.id);
-            const res = await axios.get(`${cleanApiUrl}/api/bookings/provider-bookings`, {
+            const res = await axios.get(`${cleanApiUrl}/bookings/provider-bookings`, {
               headers: { Authorization: `Bearer ${token}` }
             });
             console.log('Provider bookings:', res.data);
@@ -167,7 +167,7 @@ function ProviderProfile() {
         return;
       }
       console.log('Submitting booking for user:', decoded);
-      const res = await axios.post(`${cleanApiUrl}/api/bookings`, {
+      const res = await axios.post(`${cleanApiUrl}/bookings`, {
         providerId: id,
         ...bookingForm
       }, {
@@ -211,14 +211,14 @@ function ProviderProfile() {
         reviewType: decoded.role === 'tourist' ? 'service' : 'tourist'
       };
       console.log('Submitting review:', reviewData);
-      const res = await axios.post(`${cleanApiUrl}/api/reviews`, reviewData, {
+      const res = await axios.post(`${cleanApiUrl}/reviews`, reviewData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       console.log('Review submitted:', res.data);
       setReviewSuccess('Review submitted successfully');
       setReviewError(null);
       setReviewForm({ rating: 5, comment: '', targetId: '' });
-      const reviewsRes = await axios.get(`${cleanApiUrl}/api/reviews/${id}`);
+      const reviewsRes = await axios.get(`${cleanApiUrl}/reviews/${id}`);
       setReviews(reviewsRes.data || []);
     } catch (err) {
       console.error('Error submitting review:', err.response?.data || err.message);
