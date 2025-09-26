@@ -88,18 +88,6 @@ export const COMPANY_PRODUCTS = [
     price: 5,
     image: '/images/walk.jpg',
     description: 'Stroll through a village to experience local life.'
-  },
-  {
-    name: 'Hiriwadunna Village Tour and Jeep Safari One Day Tour',
-    price: 45,
-    image: '/images/hiriwadunna_tour.jpg',
-    description: 'Embark on an immersive one-day adventure combining the cultural charm of Hiriwadunna village with an exhilarating Jeep Safari.'
-  },
-  {
-    name: 'Village Tour and Jeep Safari Sigiriya Tour Dambulla Temple',
-    price: 78,
-    image: '/images/sigiriya_dambulla_tour.jpg',
-    description: 'Discover the heart of Sri Lanka with this two-day tour, blending cultural exploration and adventure with Sigiriya Rock Fortress, Dambulla Cave Temple, and a Jeep Safari.'
   }
 ];
 
