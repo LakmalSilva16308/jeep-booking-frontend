@@ -53,10 +53,31 @@ const PRICING_STRUCTURE = {
   'Traditional Village Lunch': [
     { min: 1, max: Infinity, price: 15 }
   ],
+  'Hiriwadunna Village Tour and Jeep Safari One Day Tour': [
+    { min: 1, max: Infinity, price: 45 }
+  ],
+  'Village Tour and Jeep Safari Sigiriya Tour Dambulla Temple': [
+    { min: 1, max: Infinity, price: 78 }
+  ],
   'Sundowners Cocktail': null,
   'High Tea': null,
   'Tuk Tuk Adventures': null
 };
+
+const productTypes = [
+  'Jeep Safari',
+  'Tuk Tuk Adventures',
+  'Catamaran Boat Ride',
+  'Village Cooking Experience',
+  'Traditional Village Lunch',
+  'Sundowners Cocktail',
+  'High Tea',
+  'Bullock Cart Ride',
+  'Budget Village Tour',
+  'Village Tour',
+  'Hiriwadunna Village Tour and Jeep Safari One Day Tour',
+  'Village Tour and Jeep Safari Sigiriya Tour Dambulla Temple'
+];
 
 function AdminPanel() {
   const navigate = useNavigate();
@@ -110,13 +131,7 @@ function AdminPanel() {
   const cleanApiUrl = apiUrl.replace(/\/+$/, '');
 
   const categories = [
-    'Jeep Safari', 'Tuk Tuk Ride', 'Catamaran Boat Ride', 'Bullock Cart Ride', 'Village Lunch'
-  ];
-
-  const productTypes = [
-    'Jeep Safari', 'Tuk Tuk Adventures', 'Catamaran Boat Ride', 'Village Cooking Experience',
-    'Traditional Village Lunch', 'Sundowners Cocktail', 'High Tea', 'Bullock Cart Ride',
-    'Budget Village Tour', 'Village Tour'
+    'Jeep Safari', 'Tuk Tuk Ride', 'Catamaran Boat Ride', 'Bullock Cart Ride', 'Village Lunch', 'Village Tour'
   ];
 
   // Normalize provider data
