@@ -115,6 +115,7 @@ nav .logo:hover {
   background: var(--button-bg);
   border-radius: 8px;
   padding: 0.5rem 1rem;
+  color: white;
 }
 
 .nav-links .logout-button:hover {
