@@ -140,15 +140,15 @@ const CompanyProducts = () => {
   const prevSlide = useCallback(() => {
     setCurrentIndex((prev) => {
       const newIndex = Math.max(0, prev - 1);
-      console.log(`CompanyProducts: Previous slide, newIndex: ${newIndex}`);
+      console.log(`CompanyProducts: Previous slide, currentIndex: ${newIndex}/${totalSlides}`);
       return newIndex;
     });
-  }, []);
+  }, [totalSlides]);
 
   const nextSlide = useCallback(() => {
     setCurrentIndex((prev) => {
       const newIndex = Math.min(totalSlides - 1, prev + 1);
-      console.log(`CompanyProducts: Next slide, newIndex: ${newIndex}`);
+      console.log(`CompanyProducts: Next slide, currentIndex: ${newIndex}/${totalSlides}`);
       return newIndex;
     });
   }, [totalSlides]);
@@ -164,6 +164,7 @@ const CompanyProducts = () => {
       setIsMobile(newIsMobile);
       if (!newIsMobile && currentIndex >= totalSlides) {
         setCurrentIndex(totalSlides - 1);
+        console.log(`CompanyProducts: Resize, reset currentIndex to ${totalSlides - 1}`);
       }
       console.log(`CompanyProducts: Resize, isMobile: ${newIsMobile}, currentIndex: ${currentIndex}`);
     };
@@ -188,13 +189,20 @@ const CompanyProducts = () => {
 
   // Touch swipe support
   const handleTouchStart = (e) => {
-    setTouchStart(e.clientX || e.touches[0].clientX);
-    setTouchEnd(null);
+    const x = e.clientX || e.touches?.[0]?.clientX;
+    if (x !== undefined) {
+      setTouchStart(x);
+      setTouchEnd(null);
+      console.log(`CompanyProducts: Touch start at x=${x}`);
+    }
   };
 
   const handleTouchMove = (e) => {
     if (!touchStart) return;
-    setTouchEnd(e.clientX || e.touches[0].clientX);
+    const x = e.clientX || e.touches?.[0]?.clientX;
+    if (x !== undefined) {
+      setTouchEnd(x);
+    }
   };
 
   const handleTouchEnd = () => {
@@ -202,8 +210,10 @@ const CompanyProducts = () => {
     const deltaX = touchStart - touchEnd;
     if (deltaX > 50) {
       nextSlide();
+      console.log(`CompanyProducts: Swipe left, deltaX=${deltaX}`);
     } else if (deltaX < -50) {
       prevSlide();
+      console.log(`CompanyProducts: Swipe right, deltaX=${deltaX}`);
     }
     setTouchStart(null);
     setTouchEnd(null);
@@ -220,7 +230,7 @@ const CompanyProducts = () => {
       <div className="company-products-container">
         <div
           className="company-products-slider"
-          style={isMobile ? {} : { transform: `translateX(-${currentIndex * 100}%)` }}
+          style={isMobile ? {} : { transform: `translateX(-${(currentIndex * 100) / totalSlides}%)` }}
           ref={sliderRef}
           onMouseDown={handleTouchStart}
           onMouseMove={handleTouchMove}
@@ -230,42 +240,45 @@ const CompanyProducts = () => {
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
         >
-          {visibleProducts.map((product, index) => (
-            product ? (
-              <div key={`${product.name}-${index}`} className="company-product-card">
-                <img
-                  src={product.image}
-                  alt={product.name}
-                  className="company-product-image"
-                  onLoad={() => console.log(`CompanyProducts: Image loaded: ${product.image}`)}
-                  onError={(e) => {
-                    console.error(`CompanyProducts: Failed to load image: ${product.image}`);
-                    e.target.src = '/images/placeholder.jpg';
-                  }}
-                />
-                <div className="company-product-info">
-                  <h3>{product.name}</h3>
-                  <p className="company-product-description">
-                    {product.description.length > 100 
-                      ? product.description.substring(0, 100) + '...' 
-                      : product.description}
-                  </p>
-                  {product.price && (
-                    <p className="company-product-price">
-                      ${product.price.toFixed(1)}{product.name === 'Motor Bikes Rent' ? '/day' : '/person'}
+          {products.map((product, index) => (
+            <div
+              key={`${product.name}-${index}`}
+              className={`company-product-card ${!product ? 'company-product-card-empty' : ''}`}
+            >
+              {product && (
+                <>
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="company-product-image"
+                    onLoad={() => console.log(`CompanyProducts: Image loaded: ${product.image}`)}
+                    onError={(e) => {
+                      console.error(`CompanyProducts: Failed to load image: ${product.image}`);
+                      e.target.src = '/images/placeholder.jpg';
+                    }}
+                  />
+                  <div className="company-product-info">
+                    <h3>{product.name}</h3>
+                    <p className="company-product-description">
+                      {product.description.length > 100 
+                        ? product.description.substring(0, 100) + '...' 
+                        : product.description}
                     </p>
-                  )}
-                  <button
-                    className="cta-button"
-                    onClick={() => handleBook(product.name)}
-                  >
-                    Book Now
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div key={`empty-${index}`} className="company-product-card-empty"></div>
-            )
+                    {product.price && (
+                      <p className="company-product-price">
+                        ${product.price.toFixed(1)}{product.name === 'Motor Bikes Rent' ? '/day' : '/person'}
+                      </p>
+                    )}
+                    <button
+                      className="cta-button"
+                      onClick={() => handleBook(product.name)}
+                    >
+                      Book Now
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
           ))}
         </div>
         {!isMobile && totalSlides > 1 && (
