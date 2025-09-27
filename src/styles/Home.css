@@ -1,21 +1,7 @@
-/* Reset and base styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: 'Arial', sans-serif;
-  line-height: 1.6;
-  color: #333;
-  overflow-x: hidden;
-}
-
 /* Home container */
 .home {
   min-height: 100vh;
-  background-color: #f9fafb;
+  background-color: var(--bg-color);
   padding: 0;
   width: 100%;
 }
@@ -24,8 +10,10 @@ body {
 .hero {
   position: relative;
   width: 100%;
-  height: 50vh;
+  height: 70vh;
   overflow: hidden;
+  background: var(--gradient-bg);
+  animation: fadeIn 1s ease;
 }
 
 .hero-slider {
@@ -47,12 +35,14 @@ body {
   width: 100%;
   height: 100%;
   opacity: 0;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.6s ease-in-out, transform 0.6s ease;
+  transform: scale(1.1);
 }
 
 .slide.active {
   opacity: 1;
   z-index: 1;
+  transform: scale(1);
 }
 
 .slide-image {
@@ -60,6 +50,11 @@ body {
   height: 100%;
   object-fit: cover;
   object-position: center;
+  transition: transform 0.8s ease;
+}
+
+.slide.active .slide-image {
+  transform: scale(1.05);
 }
 
 .hero-content {
@@ -69,61 +64,63 @@ body {
   transform: translate(-50%, -50%);
   text-align: center;
   color: #fff;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  background: rgba(0, 0, 0, 0.4);
-  padding: 2rem;
-  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 2.5rem 3rem;
+  border-radius: 12px;
   max-width: 90%;
+  animation: bounceIn 0.8s ease;
+  backdrop-filter: blur(5px);
 }
 
 .hero-content h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+  font-size: 3rem;
+  font-weight: 800;
+  margin-bottom: 1.2rem;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
 .hero-content p {
-  font-size: 1.25rem;
-  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .cta-button {
   display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background-color: #1e90ff;
+  padding: 1rem 2.5rem;
+  background: var(--gradient-bg);
   color: #fff;
   text-decoration: none;
-  border-radius: 4px;
-  font-weight: bold;
-  transition: background-color 0.3s;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: var(--transition);
+  box-shadow: 0 4px 10px var(--shadow-color);
 }
 
 .cta-button:hover {
-  background-color: #007bff;
+  background: var(--button-hover);
+  transform: scale(1.1);
+  box-shadow: 0 6px 15px var(--shadow-color);
 }
 
 .slider-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.7);
   color: #fff;
   border: none;
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   z-index: 10;
-}
-
-.slider-arrow.left-arrow {
-  left: 10px;
-}
-
-.slider-arrow.right-arrow {
-  right: 10px;
+  border-radius: 50%;
+  transition: var(--transition);
 }
 
 .slider-arrow:hover {
-  background: rgba(0, 0, 0, 0.7);
+  background: var(--accent-color);
+  transform: translateY(-50%) scale(1.1);
 }
 
 .slider-arrow:disabled {
@@ -131,39 +128,47 @@ body {
   cursor: not-allowed;
 }
 
+.left-arrow {
+  left: 20px;
+}
+
+.right-arrow {
+  right: 20px;
+}
+
 .slider-dots {
   position: absolute;
-  bottom: 20px;
+  bottom: 30px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 10px;
+  gap: 12px;
   z-index: 10;
 }
 
 .dot {
-  width: 12px;
-  height: 12px;
-  background: rgba(255, 255, 255, 0.5);
+  width: 14px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.6);
   border-radius: 50%;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: var(--transition);
 }
 
 .dot.active {
-  background: #fff;
+  background: var(--highlight-color);
+  transform: scale(1.4);
 }
 
 /* Services preview */
 .services-preview {
-  padding: 3rem 0;
-  width: 100vw;
-  margin: 0;
-  background-color: #f9fafb;
+  padding: 4rem 0;
+  width: 100%;
+  background: linear-gradient(to bottom, var(--bg-color), rgba(255, 111, 97, 0.1));
 }
 
 .services-container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 2rem;
   position: relative;
@@ -172,122 +177,104 @@ body {
 
 .services-preview h2 {
   text-align: center;
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  color: #1a1a1a;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  color: var(--primary-color);
+  animation: fadeIn 1s ease;
 }
 
 .services-slider {
   display: flex;
-  transition: transform 0.5s ease-in-out;
-  width: 100%;
+  transition: transform 0.6s ease-in-out;
 }
 
 .service-card {
   flex: 0 0 25%;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 6px 12px var(--shadow-color);
   overflow: hidden;
-  transition: transform 0.3s;
-  margin: 0 0.75rem;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  margin: 0 1rem;
+  animation: slideUp 0.6s ease;
 }
 
 .service-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-10px) scale(1.03);
+  box-shadow: 0 8px 20px var(--shadow-color);
 }
 
 .service-image {
   width: 100%;
-  height: 200px;
+  height: 220px;
   object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.service-card:hover .service-image {
+  transform: scale(1.1);
 }
 
 .service-card h3 {
-  font-size: 1.25rem;
+  font-size: 1.6rem;
   margin: 1rem;
-  color: #1a1a1a;
+  color: var(--primary-color);
 }
 
 .service-card p {
   margin: 0 1rem 1rem;
-  color: #666;
+  color: var(--text-color);
+  opacity: 0.9;
 }
 
 .service-card .price {
-  font-weight: bold;
-  color: #1e90ff;
+  font-weight: 700;
+  color: var(--accent-color);
   margin: 0 1rem 1rem;
+  font-size: 1.3rem;
 }
 
 .service-button {
   display: block;
-  text-align: center;
-  padding: 0.5rem;
-  background: #1e90ff;
-  color: #fff;
-  text-decoration: none;
   margin: 1rem;
-  border-radius: 4px;
-  transition: background 0.3s;
+  padding: 0.8rem 1.5rem;
+  background: var(--gradient-bg);
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: var(--transition);
 }
 
 .service-button:hover {
-  background: #007bff;
-}
-
-.services-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.5);
-  color: #fff;
-  border: none;
-  padding: 0.75rem;
-  cursor: pointer;
-  font-size: 1.25rem;
-  z-index: 10;
-}
-
-.services-arrow-left {
-  left: 1rem;
-}
-
-.services-arrow-right {
-  right: 1rem;
-}
-
-.services-arrow:hover {
-  background: rgba(0, 0, 0, 0.7);
-}
-
-.services-arrow:disabled {
-  background: rgba(0, 0, 0, 0.3);
-  cursor: not-allowed;
+  background: var(--button-hover);
+  transform: scale(1.05);
 }
 
 /* Submit review section */
 .submit-review {
-  padding: 3rem 1rem;
+  padding: 4rem 1rem;
   max-width: 800px;
   margin: 0 auto;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: var(--card-bg);
+  border-radius: 12px;
+  box-shadow: 0 6px 12px var(--shadow-color);
+  animation: slideUp 0.6s ease;
 }
 
 .submit-review h2 {
   text-align: center;
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin-bottom: 2rem;
-  color: #1a1a1a;
+  color: var(--primary-color);
 }
 
 .form-container {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
+  gap: 1.5rem;
+  padding: 1.5rem;
 }
 
 .form-group {
@@ -297,74 +284,75 @@ body {
 }
 
 .form-group label {
-  font-weight: bold;
-  color: #1a1a1a;
+  font-weight: 600;
+  color: var(--primary-color);
 }
 
 .form-group select,
 .form-group textarea,
 .form-group input {
-  padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 0.9rem;
+  border: 1px solid var(--text-color);
+  border-radius: 8px;
   font-size: 1rem;
-  width: 100%;
-}
-
-.form-group textarea {
-  min-height: 100px;
-  resize: vertical;
+  background: var(--bg-color);
+  color: var(--text-color);
+  transition: var(--transition);
 }
 
 .form-group select:focus,
 .form-group textarea:focus,
 .form-group input:focus {
-  outline: none;
-  border-color: #1e90ff;
-  box-shadow: 0 0 0 2px rgba(30, 144, 255, 0.2);
+  border-color: var(--accent-color);
+  box-shadow: 0 0 6px rgba(255, 111, 97, 0.4);
+}
+
+.form-group textarea {
+  min-height: 120px;
+  resize: vertical;
 }
 
 .error {
   color: #dc3545;
   text-align: center;
   margin-top: 1rem;
+  font-size: 0.9rem;
+  animation: fadeIn 0.5s ease;
 }
 
 .success {
   color: #28a745;
   text-align: center;
   margin-top: 1rem;
+  font-size: 0.9rem;
+  animation: fadeIn 0.5s ease;
 }
 
 .info {
+  color: var(--text-color);
   text-align: center;
-  color: #666;
+  margin-top: 1rem;
+  font-size: 0.9rem;
 }
 
 /* Reviews section */
 .reviews-section {
-  padding: 3rem 0;
-  width: 100vw;
-  margin: 0;
-  background-color: #f9fafb;
-}
-
-.reviews-section-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  padding: 4rem 0;
+  width: 100%;
+  background: linear-gradient(to bottom, var(--bg-color), rgba(26, 60, 52, 0.1));
 }
 
 .reviews-section h2 {
   text-align: center;
-  font-size: 2rem;
-  margin-bottom: 2rem;
-  color: #1a1a1a;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  color: var(--primary-color);
+  animation: fadeIn 1s ease;
 }
 
 /* Loading and error states */
 .container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 2rem 1rem;
   text-align: center;
@@ -375,85 +363,31 @@ body {
 }
 
 /* Media queries for responsiveness */
-@media (max-width: 768px) {
-  .hero {
-    height: 60vh;
-  }
-
-  .hero-content h1 {
-    font-size: 1.75rem;
-  }
-
-  .hero-content p {
-    font-size: 1rem;
-  }
-
-  .services-slider {
-    flex-direction: row;
-  }
-
-  .service-card {
-    flex: 0 0 100%;
-    margin: 0 0.5rem;
-  }
-
-  .service-image {
-    height: 150px;
-  }
-
-  .services-arrow {
-    padding: 0.5rem;
-    font-size: 1rem;
-  }
-
-  .services-container {
-    padding: 0 1rem;
-  }
-
-  .services-arrow-left {
-    left: 0.5rem;
-  }
-
-  .services-arrow-right {
-    right: 0.5rem;
-  }
+@media (max-width: 992px) {
+  .hero { height: 60vh; }
+  .hero-content h1 { font-size: 2.5rem; }
+  .hero-content p { font-size: 1.3rem; }
+  .service-card { flex: 0 0 33.33%; }
 }
 
-@media (max-width: 480px) {
-  .hero {
-    height: 50vh;
-  }
+@media (max-width: 768px) {
+  .hero { height: 50vh; }
+  .hero-content h1 { font-size: 2rem; }
+  .hero-content p { font-size: 1.1rem; }
+  .cta-button { padding: 0.8rem 2rem; font-size: 1rem; }
+  .services-slider { flex-direction: row; overflow-x: auto; }
+  .service-card { flex: 0 0 80%; margin: 0 0.5rem; }
+  .service-image { height: 180px; }
+  .slider-arrow { font-size: 1.5rem; padding: 0.8rem; }
+}
 
-  .hero-content {
-    padding: 1rem;
-  }
-
-  .hero-content h1 {
-    font-size: 1.5rem;
-  }
-
-  .hero-content p {
-    font-size: 0.875rem;
-  }
-
-  .cta-button {
-    padding: 0.5rem 1rem;
-    font-size: 0.875rem;
-  }
-
-  .services-preview h2,
-  .submit-review h2,
-  .reviews-section h2 {
-    font-size: 1.5rem;
-  }
-
-  .service-image {
-    height: 120px;
-  }
-
-  .slider-arrow,
-  .services-arrow {
-    padding: 0.5rem;
-    font-size: 1rem;
-  }
+@media (max-width: 576px) {
+  .hero { height: 40vh; }
+  .hero-content { padding: 1.5rem; }
+  .hero-content h1 { font-size: 1.8rem; }
+  .hero-content p { font-size: 1rem; }
+  .cta-button { padding: 0.7rem 1.5rem; font-size: 0.9rem; }
+  .services-preview h2, .submit-review h2, .reviews-section h2 { font-size: 1.8rem; }
+  .service-image { height: 150px; }
+  .slider-arrow { font-size: 1.2rem; padding: 0.6rem; }
 }
