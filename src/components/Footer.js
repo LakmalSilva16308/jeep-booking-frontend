@@ -6,7 +6,7 @@ function Footer() {
     <footer className="footer">
       <div className="footer-content">
         <div className="footer-section">
-          <h3>Jeep Booking</h3>
+          <h3>SL Eco Tour</h3>
           <p>Explore thrilling adventures with our trusted providers!</p>
         </div>
         <div className="footer-section">
@@ -20,20 +20,20 @@ function Footer() {
         </div>
         <div className="footer-section">
           <h3>Contact</h3>
-          <p>Email: support@jeepbooking.com</p>
-          <p>Phone: +94 123 456 789</p>
+          <p>Email: Villagesltour@gmail.com</p>
+          <p>Phone: +94 777 393 670</p>
         </div>
         <div className="footer-section">
           <h3>Follow Us</h3>
           <div className="social-links">
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">Facebook</a>
+            <a href="https://www.facebook.com/niroshan.madushanka.341057" target="_blank" rel="noopener noreferrer">Facebook</a>
             <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
             <a href="https://instagram.com" target="_blank" rel="noopener noreferrer">Instagram</a>
           </div>
         </div>
       </div>
       <div className="footer-bottom">
-        <p>&copy; 2025 Jeep Booking. All rights reserved.</p>
+        <p>&copy; 2025 Sl Eco Tour. All rights reserved.</p>
       </div>
     </footer>
   );

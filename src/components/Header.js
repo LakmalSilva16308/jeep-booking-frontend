@@ -42,7 +42,7 @@ function Header() {
   return (
     <header>
       <nav>
-        <Link to="/" className="logo">Adventure Booking</Link>
+        <Link to="/" className="logo">SL Eco Tour</Link>
         
         <div className={`nav-links ${isMenuOpen ? 'open' : ''}`}>
           <Link to="/" onClick={() => isMenuOpen && toggleMenu()}>+94 777 393 670</Link>
