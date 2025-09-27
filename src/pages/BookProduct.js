@@ -81,7 +81,15 @@ function BookProduct() {
       navigate('/login');
       return;
     }
-    const decoded = jwtDecode(token);
+    let decoded;
+    try {
+      decoded = jwtDecode(token);
+    } catch (err) {
+      console.error('BookProduct: Error decoding token:', err.message);
+      setError('Invalid token. Please log in again.');
+      navigate('/login');
+      return;
+    }
     if (decoded.role !== 'tourist') {
       setError('Only tourists can book.');
       navigate('/login');
@@ -104,10 +112,12 @@ function BookProduct() {
     if (!isBookable) return;
     const productName = decodeURIComponent(productType).replace(/\s+/g, ' ').trim();
     const pricing = PRICING_STRUCTURE[productName];
-    const totalPersons = parseInt(formData.adults || 1) + parseInt(formData.children || 0);
+    const adults = parseInt(formData.adults) || 1;
+    const children = parseInt(formData.children) || 0;
+    const totalPersons = adults + children;
+    const childDiscount = 0.5; // 50% discount for children
 
-    console.log(`BookProduct: Calculating price for productName="${productName}", adults=${formData.adults}, children=${formData.children}, totalPersons=${totalPersons}`);
-    console.log(`BookProduct: PRICING_STRUCTURE for Jeep Safari=`, PRICING_STRUCTURE['Jeep Safari']);
+    console.log(`BookProduct: Calculating price for productName="${productName}", adults=${adults}, children=${children}, totalPersons=${totalPersons}`);
     console.log(`BookProduct: Pricing for ${productName}=`, pricing);
 
     if (pricing) {
@@ -117,8 +127,10 @@ function BookProduct() {
       console.log(`BookProduct: Selected tier for ${totalPersons} persons=`, tier);
 
       if (tier) {
-        const calculatedPrice = (totalPersons * tier.price).toFixed(2);
-        console.log(`BookProduct: Calculated totalPrice=${calculatedPrice} (${totalPersons} x $${tier.price})`);
+        const adultPrice = adults * tier.price;
+        const childPrice = children * tier.price * childDiscount;
+        const calculatedPrice = (adultPrice + childPrice).toFixed(2);
+        console.log(`BookProduct: Calculated totalPrice=${calculatedPrice} (adults: ${adults} x $${tier.price}, children: ${children} x $${tier.price} x ${childDiscount})`);
         setTotalPrice(calculatedPrice);
         setError(null);
       } else {
@@ -141,7 +153,7 @@ function BookProduct() {
     } else {
       setFormData(prev => ({
         ...prev,
-        [name]: name === 'adults' || name === 'children' ? parseInt(value) >= 0 ? parseInt(value) : prev[name] : value
+        [name]: name === 'adults' || name === 'children' ? (parseInt(value) >= 0 ? parseInt(value) : prev[name]) : value
       }));
     }
   };
