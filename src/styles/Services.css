@@ -1,13 +1,13 @@
 .services-preview {
   width: 100%;
-  padding: 4rem 0;
-  background: linear-gradient(to bottom, var(--bg-color), rgba(255, 111, 97, 0.1));
+  padding: 5rem 0;
+  background: linear-gradient(to bottom, var(--bg-color), rgba(42, 157, 143, 0.1));
 }
 
 .services-preview h2 {
   text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 3rem;
+  font-size: 3rem;
+  margin-bottom: 4rem;
   color: var(--primary-color);
   animation: fadeIn 1s ease;
 }
@@ -23,93 +23,94 @@
 .services-grid {
   display: flex;
   flex-wrap: nowrap;
-  transition: transform 0.6s ease-in-out;
-  gap: 20px;
+  transition: transform 0.8s ease-in-out;
+  gap: 25px;
 }
 
 .service-card {
-  flex: 0 0 calc(25% - 15px);
+  flex: 0 0 calc(25% - 20px);
   background: var(--card-bg);
-  border-radius: 12px;
-  box-shadow: 0 6px 12px var(--shadow-color);
+  border-radius: 15px;
+  box-shadow: 0 8px 20px var(--shadow-color);
   overflow: hidden;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-  padding: 15px;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+  padding: 20px;
   text-align: center;
-  animation: slideUp 0.6s ease;
+  animation: slideUp 0.8s ease;
+  backdrop-filter: blur(5px);
 }
 
 .service-card:hover {
-  transform: translateY(-10px) scale(1.03);
-  box-shadow: 0 8px 20px var(--shadow-color);
+  transform: translateY(-15px) rotateX(5deg);
+  box-shadow: 0 12px 30px var(--shadow-color);
 }
 
 .service-image {
   width: 100%;
-  height: 220px;
+  height: 250px;
   object-fit: cover;
   border-radius: 12px;
-  transition: transform 0.4s ease;
+  transition: transform 0.5s ease;
 }
 
 .service-card:hover .service-image {
-  transform: scale(1.1);
+  transform: scale(1.15);
 }
 
 .service-card h3 {
-  font-size: 1.6rem;
-  margin: 1rem 0;
+  font-size: 1.8rem;
+  margin: 1.5rem 0;
   color: var(--primary-color);
 }
 
 .service-card p {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: var(--text-color);
-  opacity: 0.9;
-  margin-bottom: 1rem;
+  opacity: 0.85;
+  margin-bottom: 1.5rem;
 }
 
 .service-card .price {
   font-weight: 700;
   color: var(--accent-color);
-  margin-bottom: 1rem;
-  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
 }
 
 .service-button {
   display: block;
-  padding: 0.8rem 1.5rem;
+  padding: 1rem 2rem;
   background: var(--gradient-bg);
   color: #fff;
   text-decoration: none;
-  border-radius: 25px;
+  border-radius: 30px;
   font-weight: 600;
   transition: var(--transition);
 }
 
 .service-button:hover {
   background: var(--button-hover);
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
 .services-arrow {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.6);
   color: #fff;
   border: none;
-  padding: 1rem 1.5rem;
+  padding: 1.2rem 1.8rem;
   cursor: pointer;
-  font-size: 1.8rem;
+  font-size: 2rem;
   z-index: 10;
   border-radius: 50%;
   transition: var(--transition);
 }
 
 .services-arrow:hover {
-  background: var(--accent-color);
-  transform: translateY(-50%) scale(1.1);
+  background: var(--highlight-color);
+  transform: translateY(-50%) scale(1.15);
 }
 
 .services-arrow:disabled {
@@ -118,17 +119,17 @@
 }
 
 .services-arrow-left {
-  left: 10px;
+  left: 20px;
 }
 
 .services-arrow-right {
-  right: 10px;
+  right: 20px;
 }
 
 /* Media Queries */
 @media (max-width: 992px) {
-  .service-card { flex: 0 0 calc(33.33% - 15px); }
-  .service-image { height: 200px; }
+  .service-card { flex: 0 0 calc(33.33% - 20px); }
+  .service-image { height: 220px; }
 }
 
 @media (max-width: 768px) {
@@ -140,7 +141,7 @@
     display: grid;
     grid-template-columns: 1fr;
     transform: none !important;
-    gap: 15px;
+    gap: 20px;
   }
 
   .service-card {
@@ -149,18 +150,18 @@
   }
 
   .service-image {
-    height: 180px;
+    height: 200px;
   }
 
-  .service-card h3 { font-size: 1.4rem; }
-  .service-card p, .service-card .price { font-size: 1rem; }
+  .service-card h3 { font-size: 1.6rem; }
+  .service-card p, .service-card .price { font-size: 1.1rem; }
   .services-arrow { display: none; }
 }
 
 @media (max-width: 576px) {
-  .services-preview h2 { font-size: 1.8rem; }
-  .service-image { height: 150px; }
-  .service-card h3 { font-size: 1.2rem; }
-  .service-card p, .service-card .price { font-size: 0.9rem; }
-  .service-button { padding: 0.7rem 1.5rem; font-size: 0.9rem; }
+  .services-preview h2 { font-size: 2rem; }
+  .service-image { height: 180px; }
+  .service-card h3 { font-size: 1.4rem; }
+  .service-card p, .service-card .price { font-size: 1rem; }
+  .service-button { padding: 0.8rem 1.8rem; font-size: 0.9rem; }
 }
