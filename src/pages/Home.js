@@ -36,7 +36,7 @@ function Home() {
     {
       src: '/images/catamaran_boat_ride.jpg',
       alt: 'Catamaran Boat Ride',
-      title: 'Sail Through Serenity',
+      title: 'Catamaran Bird Watching Tour',
       caption: 'Enjoy a peaceful boat ride on Hiriwadunna Lake!'
     },
     {
