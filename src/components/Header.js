@@ -43,7 +43,9 @@ function Header() {
     <header>
       <nav>
         <Link to="/" className="logo">Adventure Booking</Link>
+        
         <div className={`nav-links ${isMenuOpen ? 'open' : ''}`}>
+          <Link to="/" onClick={() => isMenuOpen && toggleMenu()}>+94 777 393 670</Link>
           <Link to="/" onClick={() => isMenuOpen && toggleMenu()}>Home</Link>
           <Link to="/services" onClick={() => isMenuOpen && toggleMenu()}>Services</Link>
           <Link to="/about" onClick={() => isMenuOpen && toggleMenu()}>About</Link>
