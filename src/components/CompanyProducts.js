@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback, useEffect } from 'react';
+import React, { useState, useMemo, useCallback, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/CompanyProducts.css';
 
@@ -111,66 +111,74 @@ const CompanyProducts = () => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const cardsPerView = 4; // Match CSS flex: 0 0 25% (100% / 25% = 4 cards)
-  const totalSlides = Math.ceil(COMPANY_PRODUCTS.length / cardsPerView); // 17 products / 4 = 5 slides
+  const cardsPerView = 4;
+  const totalSlides = Math.ceil(COMPANY_PRODUCTS.length / cardsPerView);
+  const sliderRef = useRef(null);
+  const [touchStart, setTouchStart] = useState(null);
+  const [touchEnd, setTouchEnd] = useState(null);
 
   const products = useMemo(() => COMPANY_PRODUCTS, []);
   const visibleProducts = useMemo(() => {
     if (isMobile) {
-      return products; // Show all products on mobile
+      return products;
     }
     const start = currentIndex * cardsPerView;
     const end = start + cardsPerView;
     const slicedProducts = products.slice(start, end);
-    // Pad last slide with empty placeholders to ensure 4 slots
-    if (slicedProducts.length < cardsPerView) {
-      return [
-        ...slicedProducts,
-        ...Array(cardsPerView - slicedProducts.length).fill(null)
-      ];
-    }
-    return slicedProducts;
+    return slicedProducts.length < cardsPerView
+      ? [...slicedProducts, ...Array(cardsPerView - slicedProducts.length).fill(null)]
+      : slicedProducts;
   }, [products, currentIndex, isMobile]);
 
-  // Reset currentIndex if it exceeds totalSlides - 1
   useEffect(() => {
     if (currentIndex >= totalSlides) {
       setCurrentIndex(totalSlides - 1);
-      console.log(`CompanyProducts: Reset currentIndex to ${totalSlides - 1} as it exceeded totalSlides (${totalSlides})`);
+      console.log(`CompanyProducts: Reset currentIndex to ${totalSlides - 1} (totalSlides: ${totalSlides})`);
     }
   }, [currentIndex, totalSlides]);
 
   const prevSlide = useCallback(() => {
-    setCurrentIndex((prev) => Math.max(0, prev - 1));
-    console.log('CompanyProducts: Previous slide triggered');
+    setCurrentIndex((prev) => {
+      const newIndex = Math.max(0, prev - 1);
+      console.log(`CompanyProducts: Previous slide, newIndex: ${newIndex}`);
+      return newIndex;
+    });
   }, []);
 
   const nextSlide = useCallback(() => {
-    setCurrentIndex((prev) => Math.min(totalSlides - 1, prev + 1));
-    console.log('CompanyProducts: Next slide triggered');
+    setCurrentIndex((prev) => {
+      const newIndex = Math.min(totalSlides - 1, prev + 1);
+      console.log(`CompanyProducts: Next slide, newIndex: ${newIndex}`);
+      return newIndex;
+    });
   }, [totalSlides]);
 
   const handleBook = useCallback((productName) => {
+    console.log(`CompanyProducts: Navigating to book-product/${encodeURIComponent(productName)}`);
     navigate(`/book-product/${encodeURIComponent(productName)}`);
   }, [navigate]);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-      console.log(`CompanyProducts: Window resized, isMobile=${window.innerWidth <= 768}`);
+      const newIsMobile = window.innerWidth <= 768;
+      setIsMobile(newIsMobile);
+      if (!newIsMobile && currentIndex >= totalSlides) {
+        setCurrentIndex(totalSlides - 1);
+      }
+      console.log(`CompanyProducts: Resize, isMobile: ${newIsMobile}, currentIndex: ${currentIndex}`);
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [currentIndex, totalSlides]);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (isMobile) return; // Disable key navigation on mobile
+      if (isMobile) return;
       if (e.key === 'ArrowLeft') {
-        e.preventDefault(); // Prevent page scrolling
+        e.preventDefault();
         prevSlide();
       } else if (e.key === 'ArrowRight') {
-        e.preventDefault(); // Prevent page scrolling
+        e.preventDefault();
         nextSlide();
       }
     };
@@ -178,10 +186,31 @@ const CompanyProducts = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [prevSlide, nextSlide, isMobile]);
 
+  // Touch swipe support
+  const handleTouchStart = (e) => {
+    setTouchStart(e.clientX || e.touches[0].clientX);
+    setTouchEnd(null);
+  };
+
+  const handleTouchMove = (e) => {
+    if (!touchStart) return;
+    setTouchEnd(e.clientX || e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+    const deltaX = touchStart - touchEnd;
+    if (deltaX > 50) {
+      nextSlide();
+    } else if (deltaX < -50) {
+      prevSlide();
+    }
+    setTouchStart(null);
+    setTouchEnd(null);
+  };
+
   console.log(
-    'CompanyProducts: Rendering products:',
-    isMobile ? `All ${products.length} products` : `${cardsPerView} of ${products.length} (slide ${currentIndex + 1}/${totalSlides})`,
-    'Visible:',
+    `CompanyProducts: Rendering slide ${currentIndex + 1}/${totalSlides}, visible:`,
     visibleProducts.map(p => p?.name || 'Empty')
   );
 
@@ -191,7 +220,15 @@ const CompanyProducts = () => {
       <div className="company-products-container">
         <div
           className="company-products-slider"
-          style={isMobile ? {} : { transform: `translateX(-${currentIndex * (100 / cardsPerView)}%)` }}
+          style={isMobile ? {} : { transform: `translateX(-${currentIndex * 100}%)` }}
+          ref={sliderRef}
+          onMouseDown={handleTouchStart}
+          onMouseMove={handleTouchMove}
+          onMouseUp={handleTouchEnd}
+          onMouseLeave={handleTouchEnd}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
         >
           {visibleProducts.map((product, index) => (
             product ? (
