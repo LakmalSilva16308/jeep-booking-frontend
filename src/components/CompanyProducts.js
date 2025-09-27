@@ -92,6 +92,18 @@ const COMPANY_PRODUCTS = [
     price: 5,
     description: 'Stroll through a village to experience local life.',
     image: '/images/walk.jpg'
+  },
+  {
+    name: 'Hiriwadunna Village Tour and Jeep Safari One Day Tour',
+    price: 45,
+    description: 'Embark on a full-day adventure combining a cultural village tour in Hiriwadunna with an exhilarating jeep safari through the wilderness.',
+    image: '/images/walk.jpg'
+  },
+  {
+    name: 'Village Tour and Jeep Safari Sigiriya Tour Dambulla Temple',
+    price: 78,
+    description: 'Experience a two-day journey exploring a traditional village, a thrilling jeep safari, the iconic Sigiriya Lion Rock, and the historic Dambulla Cave Temple.',
+    image: '/images/motor.jpg'
   }
 ];
 
@@ -157,7 +169,7 @@ const CompanyProducts = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [prevSlide, nextSlide, isMobile]);
 
-  console.log('Rendering products:', isMobile ? 'All 15 products' : `4 of ${products.length} (slide ${currentIndex + 1}/${totalSlides})`, 'Visible:', visibleProducts.map(p => p?.name || 'Empty'));
+  console.log('Rendering products:', isMobile ? 'All 17 products' : `4 of ${products.length} (slide ${currentIndex + 1}/${totalSlides})`, 'Visible:', visibleProducts.map(p => p?.name || 'Empty'));
 
   return (
     <section className="company-products-section">

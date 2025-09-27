@@ -55,7 +55,23 @@ const PRICING_STRUCTURE = {
   ],
   'Sundowners Cocktail': null,
   'High Tea': null,
-  'Tuk Tuk Adventures': null
+  'Tuk Tuk Adventures': null,
+  'Bicycle Tour': null,
+  'Sigiriya Lion Rock': null,
+  'Pidurangala Rock': null,
+  'Polonnaruwa City Tour': null,
+  'Motor Bikes Rent': [
+    { min: 1, max: Infinity, price: 17 }
+  ],
+  'Village Walk Tour': [
+    { min: 1, max: Infinity, price: 5 }
+  ],
+  'Hiriwadunna Village Tour and Jeep Safari One Day Tour': [
+    { min: 1, max: Infinity, price: 45 }
+  ],
+  'Village Tour and Jeep Safari Sigiriya Tour Dambulla Temple': [
+    { min: 1, max: Infinity, price: 78 }
+  ]
 };
 
 function AdminPanel() {
@@ -116,7 +132,10 @@ function AdminPanel() {
   const productTypes = [
     'Jeep Safari', 'Tuk Tuk Adventures', 'Catamaran Boat Ride', 'Village Cooking Experience',
     'Traditional Village Lunch', 'Sundowners Cocktail', 'High Tea', 'Bullock Cart Ride',
-    'Budget Village Tour', 'Village Tour'
+    'Budget Village Tour', 'Village Tour', 'Bicycle Tour', 'Sigiriya Lion Rock',
+    'Pidurangala Rock', 'Polonnaruwa City Tour', 'Motor Bikes Rent', 'Village Walk Tour',
+    'Hiriwadunna Village Tour and Jeep Safari One Day Tour',
+    'Village Tour and Jeep Safari Sigiriya Tour Dambulla Temple'
   ];
 
   // Normalize provider data
