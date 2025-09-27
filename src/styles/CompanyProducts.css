@@ -4,52 +4,46 @@
   padding: 40px 0;
   background-color: #f9fafb;
   overflow-x: hidden;
+  
+
 }
 
 .company-products-container {
   position: relative;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
+  width: 100%;
+  padding: 0 1rem;
   box-sizing: border-box;
   overflow-x: hidden;
+  
 }
 
 .company-products-section h2 {
   font-size: 2rem;
   text-align: center;
-  margin-bottom: 30px;
-  color: #1a1a1a;
+  margin-bottom: 20px;
 }
 
 .company-products-slider {
   display: flex;
   flex-wrap: nowrap;
-  width: calc(100% * 5); /* 5 slides for 17 products */
-  gap: 20px;
+  width: 100%; /* 4 slides for 15 products */
+  gap: 0;
   transition: transform 0.5s ease-in-out;
+  justify-content: flex-start;
   will-change: transform;
-  overflow-x: hidden;
+  overflow: visible;
 }
 
 .company-product-card {
-  flex: 0 0 calc(20% - 20px); /* 4 cards per view, accounting for gap */
+  flex: 0 0 20%;
   padding: 10px;
   box-sizing: border-box;
   min-width: 0;
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.company-product-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
 }
 
 .company-product-card-empty {
-  flex: 0 0 calc(25% - 20px);
+  flex: 0 0 25%;
   padding: 10px;
   box-sizing: border-box;
   min-width: 0;
@@ -63,18 +57,17 @@
 }
 
 .company-product-info {
-  padding: 15px;
+  padding: 10px;
   text-align: center;
 }
 
 .company-product-card h3 {
   font-size: 1.5rem;
   margin: 10px 0;
-  color: #1a1a1a;
 }
 
 .company-product-description {
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   color: #555;
   margin-bottom: 10px;
 }
@@ -82,7 +75,6 @@
 .company-product-price {
   font-size: 1.2rem;
   color: #28a745;
-  font-weight: bold;
   margin: 10px 0;
 }
 
@@ -94,7 +86,6 @@
   border-radius: 5px;
   cursor: pointer;
   font-size: 1rem;
-  transition: background-color 0.3s ease;
 }
 
 .cta-button:hover {
@@ -105,15 +96,14 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.5);
   color: #fff;
   border: none;
-  padding: 1rem 1.5rem;
+  padding: 0.75rem 1rem;
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   z-index: 10;
-  border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
 }
 
 .company-products-arrow:disabled {
@@ -122,19 +112,22 @@
 }
 
 .company-products-arrow-left {
-  left: -10px;
+  left: 10px;
 }
 
 .company-products-arrow-right {
-  right: -10px;
+  right: 10px;
 }
 
 .company-products-arrow:hover:not(:disabled) {
-  background: rgba(0, 0, 0, 0.8);
+  background: rgba(0, 0, 0, 0.7);
 }
 
 @media (max-width: 768px) {
   .company-products-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
     padding: 0 1rem;
     overflow: visible;
   }
@@ -143,15 +136,16 @@
     display: grid;
     grid-template-columns: 1fr;
     width: 100%;
-    gap: 15px;
+    gap: 10px;
     transform: none !important;
+    flex-wrap: unset;
     overflow: visible;
   }
 
   .company-product-card {
     flex: none;
     width: 100%;
-    margin: 0;
+    flex-shrink: unset;
   }
 
   .company-product-card-empty {
@@ -163,7 +157,7 @@
   }
 
   .company-product-card h3 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 
   .company-product-description,
@@ -176,26 +170,10 @@
   }
 }
 
-@media (max-width: 480px) {
-  .company-products-section h2 {
-    font-size: 1.5rem;
-  }
 
-  .company-product-image {
-    height: 120px;
-  }
 
-  .company-product-card h3 {
-    font-size: 1.2rem;
-  }
 
-  .company-product-description,
-  .company-product-price {
-    font-size: 0.9rem;
-  }
 
-  .cta-button {
-    padding: 8px 16px;
-    font-size: 0.9rem;
-  }
-}
+
+
+
