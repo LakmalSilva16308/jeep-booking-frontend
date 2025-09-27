@@ -48,6 +48,12 @@ const PRICING_STRUCTURE = {
   ],
   'Village Walk Tour': [
     { min: 1, max: Infinity, price: 5 }
+  ],
+  'Hiriwadunna Village Tour and Jeep Safari One Day Tour': [
+    { min: 1, max: Infinity, price: 45 }
+  ],
+  'Village Tour and Jeep Safari Sigiriya Tour Dambulla Temple': [
+    { min: 1, max: Infinity, price: 78 }
   ]
 };
 
@@ -93,7 +99,8 @@ const ProductBookingForm = () => {
       navigate('/login');
       return;
     }
-    const foundProduct = COMPANY_PRODUCTS.find(p => p.name.toLowerCase() === decodeURIComponent(productName).toLowerCase());
+    const productNameClean = decodeURIComponent(productName).replace(/\s+/g, ' ').trim();
+    const foundProduct = COMPANY_PRODUCTS.find(p => p.name.toLowerCase() === productNameClean.toLowerCase());
     if (!foundProduct) {
       setError('Product not found');
       return;
@@ -103,7 +110,6 @@ const ProductBookingForm = () => {
       ...prev,
       contact: { ...prev.contact, email: decoded.email || '' }
     }));
-    const productNameClean = decodeURIComponent(productName).replace(/\s+/g, ' ').trim();
     if (PRICING_STRUCTURE[productNameClean] === null) {
       setIsBookable(false);
       setError('This product cannot be booked online. Please contact support.');
@@ -116,22 +122,26 @@ const ProductBookingForm = () => {
     if (!product || !isBookable) return;
     const productNameClean = decodeURIComponent(productName).replace(/\s+/g, ' ').trim();
     const pricing = PRICING_STRUCTURE[productNameClean];
-    const totalPersons = parseInt(formData.adults || 1) + parseInt(formData.children || 0);
+    const adults = parseInt(formData.adults) || 1;
+    const children = parseInt(formData.children) || 0;
+    const totalPersons = adults + children;
+    const childDiscount = 0.5; // 50% discount for children
 
-    console.log(`ProductBookingForm: productName=${productNameClean}, adults=${formData.adults}, children=${formData.children}, totalPersons=${totalPersons}`);
-    console.log(`ProductBookingForm: PRICING_STRUCTURE for Jeep Safari=`, JSON.stringify(PRICING_STRUCTURE['Jeep Safari'], null, 2));
-    console.log(`ProductBookingForm: pricing=`, JSON.stringify(pricing, null, 2));
+    console.log(`ProductBookingForm: Calculating price for productName=${productNameClean}, adults=${adults}, children=${children}, totalPersons=${totalPersons}`);
+    console.log(`ProductBookingForm: Pricing for ${productNameClean}=`, pricing);
 
     if (pricing) {
       const tier = pricing.find(tier => totalPersons >= tier.min && totalPersons <= tier.max);
-      console.log(`ProductBookingForm: selected tier=`, JSON.stringify(tier, null, 2));
+      console.log(`ProductBookingForm: Selected tier=`, tier);
       if (tier) {
-        const calculatedPrice = (totalPersons * tier.price).toFixed(2);
-        console.log(`ProductBookingForm: calculated totalPrice=${calculatedPrice} (${totalPersons} x $${tier.price})`);
+        const adultPrice = adults * tier.price;
+        const childPrice = children * tier.price * childDiscount;
+        const calculatedPrice = (adultPrice + childPrice).toFixed(2);
+        console.log(`ProductBookingForm: Calculated totalPrice=${calculatedPrice} (adults: ${adults} x $${tier.price}, children: ${children} x $${tier.price} x ${childDiscount})`);
         setTotalPrice(calculatedPrice);
         setError(null);
       } else {
-        console.log(`ProductBookingForm: no tier found for ${totalPersons} persons`);
+        console.log(`ProductBookingForm: No tier found for ${totalPersons} persons`);
         setTotalPrice(0);
         setError(`No pricing available for ${totalPersons} persons. Please contact support.`);
       }
@@ -150,7 +160,7 @@ const ProductBookingForm = () => {
     } else {
       setFormData(prev => ({
         ...prev,
-        [name]: name === 'adults' || name === 'children' ? parseInt(value) >= 0 ? parseInt(value) : prev[name] : value
+        [name]: name === 'adults' || name === 'children' ? (parseInt(value) >= 0 ? parseInt(value) : prev[name]) : value
       }));
     }
   };
@@ -181,13 +191,11 @@ const ProductBookingForm = () => {
         touristId: decoded.id,
         contact: formData.contact
       };
-      console.log('ProductBookingForm: Sending booking data:', JSON.stringify(bookingData, null, 2));
-      // FIX: Removed the redundant '/api' from the endpoint path.
-      // The `cleanApiUrl` already includes it.
-      const response = await axios.post(`${cleanApiUrl}/bookings/product`, bookingData, {
+      console.log('ProductBookingForm: Sending booking data:', bookingData);
+      const response = await axios.post(`${cleanApiUrl}/api/bookings/product`, bookingData, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      console.log('ProductBookingForm: Booking created:', JSON.stringify(response.data, null, 2));
+      console.log('ProductBookingForm: Booking created:', response.data);
       setSuccess('Booking created successfully! Awaiting admin approval.');
       setTimeout(() => navigate('/tourist-dashboard'), 2000);
     } catch (err) {
