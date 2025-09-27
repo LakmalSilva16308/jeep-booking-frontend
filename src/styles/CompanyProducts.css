@@ -25,8 +25,8 @@
 
 .company-products-slider {
   display: flex;
-  flex-wrap: wrap;
-  width: 100%; /* 4 slides for 15 products */
+  flex-wrap: nowrap;
+  width: 90%; /* 4 slides for 15 products */
   gap: 0;
   transition: transform 0.5s ease-in-out;
   justify-content: flex-start;
