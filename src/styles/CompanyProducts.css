@@ -33,7 +33,7 @@
 }
 
 .company-product-card {
-  flex: 0 0 calc(10% - 15px); /* 4 cards per view, accounting for gap */
+  flex: 0 0 calc(5% - 15px); /* 4 cards per view, accounting for gap */
   padding: 10px;
   box-sizing: border-box;
   background: #fff;
