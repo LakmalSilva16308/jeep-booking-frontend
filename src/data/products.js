@@ -88,6 +88,18 @@ export const COMPANY_PRODUCTS = [
     price: 5,
     image: '/images/walk.jpg',
     description: 'Stroll through a village to experience local life.'
+  },
+  {
+    name: 'Hiriwadunna Village Tour and Jeep Safari One Day Tour',
+    price: 45,
+    image: '/images/walk.jpg',
+    description: 'Embark on a full-day adventure combining a cultural village tour in Hiriwadunna with an exhilarating jeep safari through the wilderness.'
+  },
+  {
+    name: 'Village Tour and Jeep Safari Sigiriya Tour Dambulla Temple',
+    price: 78,
+    image: '/images/motor.jpg',
+    description: 'Experience a two-day journey exploring a traditional village, a thrilling jeep safari, the iconic Sigiriya Lion Rock, and the historic Dambulla Cave Temple.'
   }
 ];
 
