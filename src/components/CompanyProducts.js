@@ -105,7 +105,6 @@ const COMPANY_PRODUCTS = [
     description: 'Stroll through a village to experience local life.',
     image: '/images/walk.jpg'
   },
-  
 ];
 
 const CompanyProducts = () => {
@@ -157,6 +156,11 @@ const CompanyProducts = () => {
   const handleBook = useCallback((productName) => {
     console.log(`CompanyProducts: Navigating to book-product/${encodeURIComponent(productName)}`);
     navigate(`/book-product/${encodeURIComponent(productName)}`);
+  }, [navigate]);
+
+  const handleLearnMore = useCallback((productName) => {
+    console.log(`CompanyProducts: Navigating to product-description/${encodeURIComponent(productName)}`);
+    navigate(`/product-description/${encodeURIComponent(productName)}`);
   }, [navigate]);
 
   useEffect(() => {
@@ -270,6 +274,12 @@ const CompanyProducts = () => {
                         ${product.price.toFixed(1)}{product.name === 'Motor Bikes Rent' ? '/day' : '/person'}
                       </p>
                     )}
+                    <button
+                      className="cta-button learn-more-button"
+                      onClick={() => handleLearnMore(product.name)}
+                    >
+                      Learn More
+                    </button>
                     <button
                       className="cta-button"
                       onClick={() => handleBook(product.name)}
