@@ -73,7 +73,10 @@ function BookProduct() {
   const [isBookable, setIsBookable] = useState(true);
   const token = localStorage.getItem('token');
   const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-  const cleanApiUrl = apiUrl.replace(/\/+$/, '');
+  const cleanApiUrl = apiUrl.replace(/\/+$/, '').replace(/\/api$/, ''); // Remove trailing slashes and any /api suffix
+  const bookingEndpoint = `${cleanApiUrl}/api/bookings/product`;
+
+  console.log('BookProduct: API configuration:', { apiUrl, cleanApiUrl, bookingEndpoint });
 
   useEffect(() => {
     if (!token) {
@@ -163,30 +166,38 @@ function BookProduct() {
     if (!isBookable) return;
     setLoading(true);
     setError(null);
-    console.log(`BookProduct: Submitting booking with totalPrice=${totalPrice}`);
+    console.log(`BookProduct: Submitting booking to ${bookingEndpoint} with totalPrice=${totalPrice}`);
+    if (!Number.isFinite(parseFloat(totalPrice)) || parseFloat(totalPrice) <= 0) {
+      setError('Invalid total price. Please check your selection.');
+      setLoading(false);
+      return;
+    }
     try {
       const decoded = jwtDecode(token);
-      const response = await axios.post(
-        `${cleanApiUrl}/api/bookings/product`,
-        {
-          productType: decodeURIComponent(productType),
-          date: formData.date,
-          time: formData.time,
-          adults: parseInt(formData.adults),
-          children: parseInt(formData.children),
-          totalPrice: parseFloat(totalPrice),
-          specialNotes: formData.specialNotes,
-          touristId: decoded.id,
-          contact: formData.contact
-        },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const bookingData = {
+        productType: decodeURIComponent(productType),
+        date: formData.date,
+        time: formData.time,
+        adults: parseInt(formData.adults),
+        children: parseInt(formData.children),
+        totalPrice: parseFloat(totalPrice),
+        specialNotes: formData.specialNotes,
+        touristId: decoded.id,
+        contact: formData.contact
+      };
+      console.log('BookProduct: Booking data:', bookingData);
+      const response = await axios.post(bookingEndpoint, bookingData, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
       console.log('BookProduct: Booking submitted, response=', response.data);
       alert('Booking submitted successfully!');
       navigate('/dashboard');
     } catch (err) {
       console.error('BookProduct: Error submitting booking:', err.response?.data || err.message);
-      setError('Error submitting booking: ' + (err.response?.data?.error || 'Server error'));
+      const errorMessage = err.response?.status === 404
+        ? 'Booking endpoint not found. Please check the API URL configuration.'
+        : err.response?.data?.error || 'Failed to submit booking. Please try again.';
+      setError(errorMessage);
     }
     setLoading(false);
   };
