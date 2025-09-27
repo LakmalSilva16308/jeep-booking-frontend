@@ -76,7 +76,10 @@ const ProductBookingForm = () => {
   const [isBookable, setIsBookable] = useState(true);
   const token = localStorage.getItem('token');
   const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-  const cleanApiUrl = apiUrl.replace(/\/+$/, '');
+  const cleanApiUrl = apiUrl.replace(/\/+$/, '').replace(/\/api$/, ''); // Remove trailing slashes and any /api suffix
+  const bookingEndpoint = `${cleanApiUrl}/api/bookings/product`;
+
+  console.log('ProductBookingForm: API configuration:', { apiUrl, cleanApiUrl, bookingEndpoint });
 
   useEffect(() => {
     if (!token) {
@@ -177,6 +180,11 @@ const ProductBookingForm = () => {
       setLoading(false);
       return;
     }
+    if (!Number.isFinite(parseFloat(totalPrice)) || parseFloat(totalPrice) <= 0) {
+      setError('Invalid total price. Please check your selection.');
+      setLoading(false);
+      return;
+    }
 
     try {
       const decoded = jwtDecode(token);
@@ -192,7 +200,7 @@ const ProductBookingForm = () => {
         contact: formData.contact
       };
       console.log('ProductBookingForm: Sending booking data:', bookingData);
-      const response = await axios.post(`${cleanApiUrl}/api/bookings/product`, bookingData, {
+      const response = await axios.post(bookingEndpoint, bookingData, {
         headers: { Authorization: `Bearer ${token}` }
       });
       console.log('ProductBookingForm: Booking created:', response.data);
@@ -200,7 +208,10 @@ const ProductBookingForm = () => {
       setTimeout(() => navigate('/tourist-dashboard'), 2000);
     } catch (err) {
       console.error('ProductBookingForm: Error creating booking:', err.response?.data || err.message);
-      setError(err.response?.data?.error || 'Failed to create booking. Please try again.');
+      const errorMessage = err.response?.status === 404
+        ? 'Booking endpoint not found. Please check the API URL configuration.'
+        : err.response?.data?.error || 'Failed to create booking. Please try again.';
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
