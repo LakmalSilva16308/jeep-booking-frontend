@@ -111,13 +111,13 @@ const CompanyProducts = () => {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-  const cardsPerView = 5;
-  const totalSlides = Math.ceil(COMPANY_PRODUCTS.length / cardsPerView);
+  const cardsPerView = 4; // Match CSS flex: 0 0 25% (100% / 25% = 4 cards)
+  const totalSlides = Math.ceil(COMPANY_PRODUCTS.length / cardsPerView); // 17 products / 4 = 5 slides
 
   const products = useMemo(() => COMPANY_PRODUCTS, []);
   const visibleProducts = useMemo(() => {
     if (isMobile) {
-      return products;
+      return products; // Show all products on mobile
     }
     const start = currentIndex * cardsPerView;
     const end = start + cardsPerView;
@@ -131,6 +131,14 @@ const CompanyProducts = () => {
     }
     return slicedProducts;
   }, [products, currentIndex, isMobile]);
+
+  // Reset currentIndex if it exceeds totalSlides - 1
+  useEffect(() => {
+    if (currentIndex >= totalSlides) {
+      setCurrentIndex(totalSlides - 1);
+      console.log(`CompanyProducts: Reset currentIndex to ${totalSlides - 1} as it exceeded totalSlides (${totalSlides})`);
+    }
+  }, [currentIndex, totalSlides]);
 
   const prevSlide = useCallback(() => {
     setCurrentIndex((prev) => Math.max(0, prev - 1));
@@ -149,6 +157,7 @@ const CompanyProducts = () => {
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 768);
+      console.log(`CompanyProducts: Window resized, isMobile=${window.innerWidth <= 768}`);
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -169,7 +178,12 @@ const CompanyProducts = () => {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [prevSlide, nextSlide, isMobile]);
 
-  console.log('Rendering products:', isMobile ? 'All 17 products' : `4 of ${products.length} (slide ${currentIndex + 1}/${totalSlides})`, 'Visible:', visibleProducts.map(p => p?.name || 'Empty'));
+  console.log(
+    'CompanyProducts: Rendering products:',
+    isMobile ? `All ${products.length} products` : `${cardsPerView} of ${products.length} (slide ${currentIndex + 1}/${totalSlides})`,
+    'Visible:',
+    visibleProducts.map(p => p?.name || 'Empty')
+  );
 
   return (
     <section className="company-products-section">
@@ -186,9 +200,9 @@ const CompanyProducts = () => {
                   src={product.image}
                   alt={product.name}
                   className="company-product-image"
-                  onLoad={() => console.log(`Company product image loaded: ${product.image}`)}
+                  onLoad={() => console.log(`CompanyProducts: Image loaded: ${product.image}`)}
                   onError={(e) => {
-                    console.error(`Failed to load company product image: ${product.image}`);
+                    console.error(`CompanyProducts: Failed to load image: ${product.image}`);
                     e.target.src = '/images/placeholder.jpg';
                   }}
                 />
