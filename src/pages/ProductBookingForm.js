@@ -63,8 +63,8 @@ const ProductBookingForm = () => {
   const [formData, setFormData] = useState({
     date: '',
     time: '',
-    adults: 1,
-    children: 0,
+    adults: '',
+    children: '',
     specialNotes: '',
     contact: { name: '', email: '', message: '', phone: '' }
   });
@@ -73,10 +73,12 @@ const ProductBookingForm = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [product, setProduct] = useState(null);
+  const [adultsError, setAdultsError] = useState(null);
+  const [childrenError, setChildrenError] = useState(null);
   const [isBookable, setIsBookable] = useState(true);
   const token = localStorage.getItem('token');
   const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-  const cleanApiUrl = apiUrl.replace(/\/+$/, '').replace(/\/api$/, ''); // Remove trailing slashes and any /api suffix
+  const cleanApiUrl = apiUrl.replace(/\/+$/, '').replace(/\/api$/, '');
   const bookingEndpoint = `${cleanApiUrl}/api/bookings/product`;
 
   console.log('ProductBookingForm: API configuration:', { apiUrl, cleanApiUrl, bookingEndpoint });
@@ -125,10 +127,10 @@ const ProductBookingForm = () => {
     if (!product || !isBookable) return;
     const productNameClean = decodeURIComponent(productName).replace(/\s+/g, ' ').trim();
     const pricing = PRICING_STRUCTURE[productNameClean];
-    const adults = parseInt(formData.adults) || 1;
-    const children = parseInt(formData.children) || 0;
+    const adults = formData.adults === '' || isNaN(parseInt(formData.adults)) ? 0 : parseInt(formData.adults);
+    const children = formData.children === '' || isNaN(parseInt(formData.children)) ? 0 : parseInt(formData.children);
     const totalPersons = adults + children;
-    const childDiscount = 0.5; // 50% discount for children
+    const childDiscount = 0.5;
 
     console.log(`ProductBookingForm: Calculating price for productName=${productNameClean}, adults=${adults}, children=${children}, totalPersons=${totalPersons}`);
     console.log(`ProductBookingForm: Pricing for ${productNameClean}=`, pricing);
@@ -136,7 +138,7 @@ const ProductBookingForm = () => {
     if (pricing) {
       const tier = pricing.find(tier => totalPersons >= tier.min && totalPersons <= tier.max);
       console.log(`ProductBookingForm: Selected tier=`, tier);
-      if (tier) {
+      if (tier && totalPersons > 0) {
         const adultPrice = adults * tier.price;
         const childPrice = children * tier.price * childDiscount;
         const calculatedPrice = (adultPrice + childPrice).toFixed(2);
@@ -146,7 +148,7 @@ const ProductBookingForm = () => {
       } else {
         console.log(`ProductBookingForm: No tier found for ${totalPersons} persons`);
         setTotalPrice(0);
-        setError(`No pricing available for ${totalPersons} persons. Please contact support.`);
+        setError(totalPersons === 0 ? 'Please enter the number of adults and children.' : `No pricing available for ${totalPersons} persons. Please contact support.`);
       }
     }
   }, [formData.adults, formData.children, productName, product, isBookable]);
@@ -163,9 +165,63 @@ const ProductBookingForm = () => {
     } else {
       setFormData(prev => ({
         ...prev,
-        [name]: name === 'adults' || name === 'children' ? (parseInt(value) >= 0 ? parseInt(value) : prev[name]) : value
+        [name]: value
       }));
+      if (name === 'adults' && (value === '' || parseInt(value) === 0)) {
+        setAdultsError('At least 1 adult is required.');
+      } else {
+        setAdultsError(null);
+      }
+      if (name === 'children' && value === '0') {
+        setChildrenError('Number of children cannot be 0.');
+      } else {
+        setChildrenError(null);
+      }
     }
+  };
+
+  const handleInput = (e) => {
+    handleChange(e);
+  };
+
+  const handleFocus = (e) => {
+    if (e.target.value === '' || e.target.value === '0') {
+      e.target.value = '';
+    }
+    e.target.select();
+  };
+
+  const handleIncrement = (field) => {
+    const currentValue = parseInt(formData[field] || '0');
+    const newValue = String(currentValue + 1);
+    setFormData(prev => ({
+      ...prev,
+      [field]: newValue
+    }));
+    if (field === 'adults') setAdultsError(null);
+    if (field === 'children') setChildrenError(null);
+    console.log(`ProductBookingForm: Incremented ${field} to ${newValue}`);
+  };
+
+  const handleDecrement = (field) => {
+    const currentValue = parseInt(formData[field] || '0');
+    if (currentValue <= (field === 'adults' ? 1 : 0)) return;
+    const newValue = String(currentValue - 1);
+    setFormData(prev => ({
+      ...prev,
+      [field]: newValue
+    }));
+    if (field === 'adults' && newValue === '0') {
+      setAdultsError('At least 1 adult is required.');
+    } else if (field === 'adults') {
+      setAdultsError(null);
+    }
+    if (field === 'children' && newValue === '0') {
+      setChildrenError('Number of children cannot be 0.');
+    } else if (field === 'children') {
+      setChildrenError(null);
+    }
+    console.log(`ProductBookingForm: Decremented ${field} to ${newValue}`);
   };
 
   const handleSubmit = async (e) => {
@@ -175,8 +231,17 @@ const ProductBookingForm = () => {
     setError(null);
     setSuccess(null);
 
-    if (!formData.date || !formData.time || !formData.adults || !formData.contact.name || !formData.contact.email || !formData.contact.message || !formData.contact.phone) {
+    const adults = formData.adults === '' || isNaN(parseInt(formData.adults)) ? 0 : parseInt(formData.adults);
+    const children = formData.children === '' || isNaN(parseInt(formData.children)) ? 0 : parseInt(formData.children);
+
+    if (!formData.date || !formData.time || adults === 0 || !formData.contact.name || !formData.contact.email || !formData.contact.message || !formData.contact.phone) {
       setError('All required fields (date, time, adults, name, email, message, phone) must be filled.');
+      setAdultsError(adults === 0 ? 'At least 1 adult is required.' : null);
+      setLoading(false);
+      return;
+    }
+    if (children === 0) {
+      setChildrenError('Number of children cannot be 0.');
       setLoading(false);
       return;
     }
@@ -192,8 +257,8 @@ const ProductBookingForm = () => {
         productType: decodeURIComponent(productName),
         date: formData.date,
         time: formData.time,
-        adults: parseInt(formData.adults),
-        children: parseInt(formData.children || 0),
+        adults,
+        children,
         totalPrice: parseFloat(totalPrice),
         specialNotes: formData.specialNotes,
         touristId: decoded.id,
@@ -287,26 +352,70 @@ const ProductBookingForm = () => {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group number-input-group">
             <label>Adults</label>
-            <input
-              type="number"
-              name="adults"
-              value={formData.adults}
-              onChange={handleChange}
-              min="1"
-              required
-            />
+            <div className="number-input-wrapper">
+              <button
+                type="button"
+                className="number-button decrement"
+                onClick={() => handleDecrement('adults')}
+                disabled={parseInt(formData.adults || '0') <= 1}
+              >
+                −
+              </button>
+              <input
+                type="number"
+                name="adults"
+                value={formData.adults}
+                onChange={handleChange}
+                onInput={handleInput}
+                onFocus={handleFocus}
+                placeholder="Enter number"
+                min="0"
+                required
+                className="number-input"
+              />
+              <button
+                type="button"
+                className="number-button increment"
+                onClick={() => handleIncrement('adults')}
+              >
+                ^
+              </button>
+            </div>
+            {adultsError && <div className="field-error">{adultsError}</div>}
           </div>
-          <div className="form-group">
+          <div className="form-group number-input-group">
             <label>Children</label>
-            <input
-              type="number"
-              name="children"
-              value={formData.children}
-              onChange={handleChange}
-              min="0"
-            />
+            <div className="number-input-wrapper">
+              <button
+                type="button"
+                className="number-button decrement"
+                onClick={() => handleDecrement('children')}
+                disabled={parseInt(formData.children || '0') <= 0}
+              >
+                −
+              </button>
+              <input
+                type="number"
+                name="children"
+                value={formData.children}
+                onChange={handleChange}
+                onInput={handleInput}
+                onFocus={handleFocus}
+                placeholder="Enter number"
+                min="0"
+                className="number-input"
+              />
+              <button
+                type="button"
+                className="number-button increment"
+                onClick={() => handleIncrement('children')}
+              >
+                ^
+              </button>
+            </div>
+            {childrenError && <div className="field-error">{childrenError}</div>}
           </div>
           <div className="form-group">
             <label>Special Notes</label>
@@ -320,7 +429,7 @@ const ProductBookingForm = () => {
             <p className="total-price">Total Price: USD {totalPrice}</p>
           </div>
           <div className="form-group">
-            <button type="submit" disabled={loading} className="cta-button">
+            <button type="submit" disabled={loading || adultsError || childrenError} className="cta-button">
               {loading ? 'Booking...' : 'Book Now'}
             </button>
           </div>
