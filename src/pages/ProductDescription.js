@@ -34,9 +34,9 @@ const PRODUCT_DETAILS = [
       Feel the adrenaline rush as you venture into the heart of Sri Lanka’s wilderness on a jeep safari. Traverse rugged terrains, dense forests, and open plains in a 4x4 vehicle, guided by experienced drivers. Keep your eyes peeled for elephants, leopards, and a variety of bird species. This adventure is perfect for nature lovers and thrill-seekers looking to explore the untamed beauty of Sri Lanka’s wildlife reserves.
     `,
     relatedImages: [
-      '/images/jeep_safari_1.jpg',
-      '/images/jeep_safari_2.jpg',
-      '/images/jeep_safari_3.jpg'
+      '/images/jeep1.jpeg',
+      '/images/jeep2.jpeg',
+      '/images/jeep3.jpeg',
     ]
   },
   {
@@ -48,7 +48,11 @@ const PRODUCT_DETAILS = [
     relatedImages: [
       '/images/tuk_tuk_1.jpg',
       '/images/tuk_tuk_2.jpg',
-      '/images/tuk_tuk_3.jpg'
+      '/images/tuk_tuk_3.jpg',
+      '/images/tuk (1).jpeg',
+      '/images/tuk (2).jpeg',
+      '/images/tuk (3).jpeg',
+      '/images/tuk (4).jpeg'
     ]
   },
   {
@@ -60,7 +64,11 @@ const PRODUCT_DETAILS = [
     relatedImages: [
       '/images/catamaran_boat_ride_1.jpg',
       '/images/catamaran_boat_ride_2.jpg',
-      '/images/catamaran_boat_ride_3.jpg'
+      '/images/catamaran_boat_ride_3.jpg',
+      '/images/catamaran_boat_ride_1.jpeg',
+      '/images/catamaran_boat_ride_2.jpeg',
+      '/images/catamaran_boat_ride_3.jpeg',
+      '/images/catamaran_boat_ride_4.jpeg'
     ]
   },
   {
@@ -72,7 +80,16 @@ const PRODUCT_DETAILS = [
     relatedImages: [
       '/images/village_cooking_1.jpg',
       '/images/village_cooking_2.jpg',
-      '/images/village_cooking_3.jpg'
+      '/images/village_cooking_3.jpg',
+      '/images/village_cooking_1.jpeg',
+      '/images/village_cooking_2.jpeg',
+      '/images/village_cooking_3.jpeg',
+      '/images/village_cooking_4.jpeg',
+      '/images/village_cooking_5.jpeg',
+      '/images/village_cooking_6.jpeg',
+      '/images/village_cooking_7.jpeg',
+      '/images/village_cooking_8.jpeg',
+      '/images/village_cooking_9.jpeg'
     ]
   },
   {
@@ -108,7 +125,9 @@ const PRODUCT_DETAILS = [
     relatedImages: [
       '/images/bullockcart_ride_1.jpeg',
       '/images/bullockcart_ride_2.jpeg',
-      '/images/bullockcart_ride_3.jpeg'
+      '/images/bullockcart_ride_3.jpeg',
+      '/images/bullockcart_ride_4.jpeg',
+      '/images/bullockcart_ride_5.jpeg'
     ]
   },
   {
