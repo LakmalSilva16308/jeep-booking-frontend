@@ -81,11 +81,7 @@ const PRODUCT_DETAILS = [
     detailedDescription: `
       Savor the flavors of Sri Lanka with a traditional village lunch served in an authentic setting. Enjoy a spread of home-cooked dishes, including rice, curries, and local delicacies, all prepared with fresh ingredients. This experience offers a taste of rural hospitality and a chance to connect with local culture through food.
     `,
-    relatedImages: [
-      '/images/village_lunch_1.jpg',
-      '/images/village_lunch_2.jpg',
-      '/images/village_lunch_3.jpg'
-    ]
+    relatedImages: []
   },
   {
     name: 'Sundowners Cocktail',
@@ -93,11 +89,7 @@ const PRODUCT_DETAILS = [
     detailedDescription: `
       Unwind with a refreshing cocktail as you watch the sun set over the stunning Sri Lankan landscape. This sundowner experience combines tropical drinks with breathtaking views, creating a perfect evening of relaxation. Whether you’re toasting with friends or enjoying a quiet moment, this is an ideal way to end your day.
     `,
-    relatedImages: [
-      '/images/sundowners_cocktail_1.jpg',
-      '/images/sundowners_cocktail_2.jpg',
-      '/images/sundowners_cocktail_3.jpg'
-    ]
+    relatedImages: []
   },
   {
     name: 'High Tea',
@@ -105,11 +97,7 @@ const PRODUCT_DETAILS = [
     detailedDescription: `
       Indulge in a classic high tea experience, featuring a selection of fine teas, delicate sandwiches, and delectable pastries. Set in a charming environment, this activity offers a taste of colonial elegance blended with Sri Lankan hospitality. Perfect for those looking to relax and enjoy a refined afternoon.
     `,
-    relatedImages: [
-      '/images/high_tea_1.jpg',
-      '/images/high_tea_2.jpg',
-      '/images/high_tea_3.jpg'
-    ]
+    relatedImages: []
   },
   {
     name: 'Bullock Cart Ride',
@@ -118,9 +106,9 @@ const PRODUCT_DETAILS = [
       Step back in time with a traditional bullock cart ride through the picturesque countryside. This leisurely journey offers a glimpse into rural Sri Lankan life, with scenic views of paddy fields and village homes. Guided by local farmers, this experience is both nostalgic and educational, ideal for families and culture enthusiasts.
     `,
     relatedImages: [
-      '/images/bullockcart_ride_1.jpg',
-      '/images/bullockcart_ride_2.jpg',
-      '/images/bullockcart_ride_3.jpg'
+      '/images/bullockcart_ride_1.jpeg',
+      '/images/bullockcart_ride_2.jpeg',
+      '/images/bullockcart_ride_3.jpeg'
     ]
   },
   {
@@ -130,9 +118,7 @@ const PRODUCT_DETAILS = [
       Discover the heart of Sri Lanka with a guided village tour. Walk through vibrant communities, interact with friendly locals, and learn about traditional crafts, farming, and daily life. This immersive experience showcases the rich cultural tapestry of rural Sri Lanka, making it a must-do for cultural explorers.
     `,
     relatedImages: [
-      '/images/tour_1.jpg',
-      '/images/tour_2.jpg',
-      '/images/tour_3.jpg'
+      '/images/village_tour_1.jpeg'
     ]
   },
   {
@@ -141,11 +127,7 @@ const PRODUCT_DETAILS = [
     detailedDescription: `
       Pedal through the scenic countryside on a guided bicycle tour, exploring hidden trails, lush paddy fields, and quaint villages. This eco-friendly adventure offers a refreshing way to connect with nature and local culture, with opportunities to stop at local markets or temples along the way.
     `,
-    relatedImages: [
-      '/images/bicycle_1.jpg',
-      '/images/bicycle_2.jpg',
-      '/images/bicycle_3.jpg'
-    ]
+    relatedImages: []
   },
   {
     name: 'Sigiriya Lion Rock',
@@ -153,11 +135,7 @@ const PRODUCT_DETAILS = [
     detailedDescription: `
       Ascend the majestic Sigiriya Lion Rock, a UNESCO World Heritage Site and one of Sri Lanka’s most iconic landmarks. Explore the ancient fortress, admire its stunning frescoes, and enjoy panoramic views from the summit. This historical adventure is perfect for those eager to uncover Sri Lanka’s rich past.
     `,
-    relatedImages: [
-      '/images/sigiriya_1.jpg',
-      '/images/sigiriya_2.jpg',
-      '/images/sigiriya_3.jpg'
-    ]
+    relatedImages: []
   },
   {
     name: 'Pidurangala Rock',
@@ -165,11 +143,7 @@ const PRODUCT_DETAILS = [
     detailedDescription: `
       Hike to the summit of Pidurangala Rock for breathtaking views and a glimpse into Sri Lanka’s spiritual heritage. This lesser-known gem offers a quieter alternative to Sigiriya, with a historic rock temple and panoramic vistas of the surrounding landscape. Ideal for hikers and history lovers.
     `,
-    relatedImages: [
-      '/images/pidurangala_1.jpg',
-      '/images/pidurangala_2.jpg',
-      '/images/pidurangala_3.jpg'
-    ]
+    relatedImages: []
   },
   {
     name: 'Polonnaruwa City Tour',
@@ -177,11 +151,7 @@ const PRODUCT_DETAILS = [
     detailedDescription: `
       Step into history with a guided tour of Polonnaruwa, an ancient royal capital and UNESCO World Heritage Site. Explore well-preserved ruins, including palaces, temples, and stupas, while learning about Sri Lanka’s medieval past. This tour is a must for history enthusiasts and cultural explorers.
     `,
-    relatedImages: [
-      '/images/polonnaruwa_1.jpg',
-      '/images/polonnaruwa_2.jpg',
-      '/images/polonnaruwa_3.jpg'
-    ]
+    relatedImages: []
   },
   {
     name: 'Motor Bikes Rent',
@@ -189,11 +159,7 @@ const PRODUCT_DETAILS = [
     detailedDescription: `
       Embark on a thrilling motorbike adventure through Sri Lanka’s scenic landscapes. Rent a reliable motorbike and explore at your own pace, from rural villages to coastal roads. This experience is perfect for adventure seekers looking for freedom and flexibility in their travels.
     `,
-    relatedImages: [
-      '/images/motor_1.jpg',
-      '/images/motor_2.jpg',
-      '/images/motor_3.jpg'
-    ]
+    relatedImages: []
   },
   {
     name: 'Village Walk Tour',
@@ -201,11 +167,7 @@ const PRODUCT_DETAILS = [
     detailedDescription: `
       Take a leisurely stroll through a traditional Sri Lankan village, guided by locals who share stories of their culture and traditions. This walking tour offers an intimate look at rural life, with opportunities to visit homes, farms, and local landmarks. Perfect for those seeking a slow-paced, authentic experience.
     `,
-    relatedImages: [
-      '/images/walk_1.jpg',
-      '/images/walk_2.jpg',
-      '/images/walk_3.jpg'
-    ]
+    relatedImages: []
   },
 ];
 
