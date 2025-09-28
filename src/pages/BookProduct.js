@@ -70,6 +70,8 @@ function BookProduct() {
   const [totalPrice, setTotalPrice] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [adultsError, setAdultsError] = useState(null);
+  const [childrenError, setChildrenError] = useState(null);
   const [isBookable, setIsBookable] = useState(true);
   const token = localStorage.getItem('token');
   const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
@@ -121,6 +123,10 @@ function BookProduct() {
     const totalPersons = adults + children;
     const childDiscount = 0.5;
 
+    // Validate for error messages
+    setAdultsError(adults === 0 ? 'At least 1 adult is required.' : null);
+    setChildrenError(children === 0 ? 'Number of children cannot be 0.' : null);
+
     console.log(`BookProduct: Calculating price for productName="${productName}", adults=${adults}, children=${children}, totalPersons=${totalPersons}`);
     console.log(`BookProduct: Pricing for ${productName}=`, pricing);
 
@@ -155,30 +161,58 @@ function BookProduct() {
         contact: { ...prev.contact, [field]: value }
       }));
     } else {
-      // Allow any input (including empty or non-numeric) for adults and children
+      // Allow any input, including empty strings
       setFormData(prev => ({
         ...prev,
         [name]: value
       }));
+      // Validate immediately for error messages
+      if (name === 'adults' && value === '0') {
+        setAdultsError('At least 1 adult is required.');
+      } else {
+        setAdultsError(null);
+      }
+      if (name === 'children' && value === '0') {
+        setChildrenError('Number of children cannot be 0.');
+      } else {
+        setChildrenError(null);
+      }
     }
   };
 
   const handleIncrement = (field) => {
+    const currentValue = parseInt(formData[field] || (field === 'adults' ? '1' : '0'));
+    const newValue = String(currentValue + 1);
     setFormData(prev => ({
       ...prev,
-      [field]: String(parseInt(prev[field] || (field === 'adults' ? '1' : '0')) + 1)
+      [field]: newValue
     }));
-    console.log(`BookProduct: Incremented ${field} to ${parseInt(formData[field] || (field === 'adults' ? '1' : '0')) + 1}`);
+    // Clear error if value becomes valid
+    if (field === 'adults' && newValue !== '0') setAdultsError(null);
+    if (field === 'children' && newValue !== '0') setChildrenError(null);
+    console.log(`BookProduct: Incremented ${field} to ${newValue}`);
   };
 
   const handleDecrement = (field) => {
     const currentValue = parseInt(formData[field] || (field === 'adults' ? '1' : '0'));
     if (currentValue <= (field === 'adults' ? 1 : 0)) return;
+    const newValue = String(currentValue - 1);
     setFormData(prev => ({
       ...prev,
-      [field]: String(currentValue - 1)
+      [field]: newValue
     }));
-    console.log(`BookProduct: Decremented ${field} to ${currentValue - 1}`);
+    // Set error if decremented to 0
+    if (field === 'adults' && newValue === '0') {
+      setAdultsError('At least 1 adult is required.');
+    } else if (field === 'adults') {
+      setAdultsError(null);
+    }
+    if (field === 'children' && newValue === '0') {
+      setChildrenError('Number of children cannot be 0.');
+    } else if (field === 'children') {
+      setChildrenError(null);
+    }
+    console.log(`BookProduct: Decremented ${field} to ${newValue}`);
   };
 
   const handleSubmit = async (e) => {
@@ -187,8 +221,22 @@ function BookProduct() {
     setLoading(true);
     setError(null);
     // Validate adults and children before submission
-    const adults = formData.adults === '' || isNaN(parseInt(formData.adults)) ? 1 : Math.max(1, parseInt(formData.adults));
-    const children = formData.children === '' || isNaN(parseInt(formData.children)) ? 0 : Math.max(0, parseInt(formData.children));
+    const adults = formData.adults === '' || isNaN(parseInt(formData.adults)) ? 1 : parseInt(formData.adults);
+    const children = formData.children === '' || isNaN(parseInt(formData.children)) ? 0 : parseInt(formData.children);
+    
+    // Prevent submission if adults is 0
+    if (adults === 0) {
+      setAdultsError('At least 1 adult is required.');
+      setLoading(false);
+      return;
+    }
+    // Prevent submission if children is 0
+    if (children === 0) {
+      setChildrenError('Number of children cannot be 0.');
+      setLoading(false);
+      return;
+    }
+
     setFormData(prev => ({
       ...prev,
       adults: String(adults),
@@ -302,7 +350,6 @@ function BookProduct() {
               <input
                 type="text"
                 inputMode="numeric"
-                pattern="[0-9]*"
                 name="adults"
                 value={formData.adults}
                 onChange={handleChange}
@@ -317,6 +364,7 @@ function BookProduct() {
                 +
               </button>
             </div>
+            {adultsError && <div className="field-error">{adultsError}</div>}
           </div>
           <div className="form-group number-input-group">
             <label>Children</label>
@@ -332,7 +380,6 @@ function BookProduct() {
               <input
                 type="text"
                 inputMode="numeric"
-                pattern="[0-9]*"
                 name="children"
                 value={formData.children}
                 onChange={handleChange}
@@ -346,6 +393,7 @@ function BookProduct() {
                 +
               </button>
             </div>
+            {childrenError && <div className="field-error">{childrenError}</div>}
           </div>
           <div className="form-group">
             <label>Total Price (USD)</label>
@@ -365,7 +413,7 @@ function BookProduct() {
               onChange={handleChange}
             />
           </div>
-          <button type="submit" className="cta-button" disabled={loading}>
+          <button type="submit" className="cta-button" disabled={loading || adultsError || childrenError}>
             {loading ? 'Submitting...' : 'Book Now'}
           </button>
           {error && <div className="error">{error}</div>}
