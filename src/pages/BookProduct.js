@@ -156,7 +156,7 @@ function BookProduct() {
         contact: { ...prev.contact, [field]: value }
       }));
     } else {
-      // Allow any input, overwriting the current value
+      // Overwrite the input value completely
       setFormData(prev => ({
         ...prev,
         [name]: value
@@ -173,6 +173,16 @@ function BookProduct() {
         setChildrenError(null);
       }
     }
+  };
+
+  const handleInput = (e) => {
+    // Handle mobile input to ensure clearing works
+    handleChange(e);
+  };
+
+  const handleFocus = (e) => {
+    // Select all text on focus to allow easy overwriting
+    e.target.select();
   };
 
   const handleIncrement = (field) => {
@@ -343,6 +353,8 @@ function BookProduct() {
                 name="adults"
                 value={formData.adults}
                 onChange={handleChange}
+                onInput={handleInput}
+                onFocus={handleFocus}
                 placeholder="Enter number"
                 required
                 className="number-input"
@@ -374,6 +386,8 @@ function BookProduct() {
                 name="children"
                 value={formData.children}
                 onChange={handleChange}
+                onInput={handleInput}
+                onFocus={handleFocus}
                 placeholder="Enter number"
                 className="number-input"
               />
