@@ -62,7 +62,7 @@ function BookProduct() {
   const [formData, setFormData] = useState({
     date: '',
     time: '',
-    adults: '1', // Store as string to allow empty input
+    adults: '1',
     children: '0',
     specialNotes: '',
     contact: { name: '', email: '', message: '' }
@@ -117,13 +117,11 @@ function BookProduct() {
     if (!isBookable) return;
     const productName = decodeURIComponent(productType).replace(/\s+/g, ' ').trim();
     const pricing = PRICING_STRUCTURE[productName];
-    // Parse inputs, default to 1 for adults and 0 for children if empty or invalid
     const adults = formData.adults === '' || isNaN(parseInt(formData.adults)) ? 1 : parseInt(formData.adults);
     const children = formData.children === '' || isNaN(parseInt(formData.children)) ? 0 : parseInt(formData.children);
     const totalPersons = adults + children;
     const childDiscount = 0.5;
 
-    // Validate for error messages
     setAdultsError(adults === 0 ? 'At least 1 adult is required.' : null);
     setChildrenError(children === 0 ? 'Number of children cannot be 0.' : null);
 
@@ -151,6 +149,22 @@ function BookProduct() {
     }
   }, [formData.adults, formData.children, productType, isBookable]);
 
+  const handleInput = (e) => {
+    const { name, value } = e.target;
+    console.log(`BookProduct: handleInput name=${name}, value=${value}`);
+    // Allow any input, including empty strings and non-numeric values
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+    // Validate for error messages
+    if (name === 'adults') {
+      setAdultsError(value === '0' ? 'At least 1 adult is required.' : null);
+    } else if (name === 'children') {
+      setChildrenError(value === '0' ? 'Number of children cannot be 0.' : null);
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     console.log(`BookProduct: handleChange name=${name}, value=${value}`);
@@ -161,22 +175,7 @@ function BookProduct() {
         contact: { ...prev.contact, [field]: value }
       }));
     } else {
-      // Allow any input, including empty strings
-      setFormData(prev => ({
-        ...prev,
-        [name]: value
-      }));
-      // Validate immediately for error messages
-      if (name === 'adults' && value === '0') {
-        setAdultsError('At least 1 adult is required.');
-      } else {
-        setAdultsError(null);
-      }
-      if (name === 'children' && value === '0') {
-        setChildrenError('Number of children cannot be 0.');
-      } else {
-        setChildrenError(null);
-      }
+      handleInput(e);
     }
   };
 
@@ -187,9 +186,8 @@ function BookProduct() {
       ...prev,
       [field]: newValue
     }));
-    // Clear error if value becomes valid
-    if (field === 'adults' && newValue !== '0') setAdultsError(null);
-    if (field === 'children' && newValue !== '0') setChildrenError(null);
+    if (field === 'adults') setAdultsError(null);
+    if (field === 'children') setChildrenError(null);
     console.log(`BookProduct: Incremented ${field} to ${newValue}`);
   };
 
@@ -201,7 +199,6 @@ function BookProduct() {
       ...prev,
       [field]: newValue
     }));
-    // Set error if decremented to 0
     if (field === 'adults' && newValue === '0') {
       setAdultsError('At least 1 adult is required.');
     } else if (field === 'adults') {
@@ -220,17 +217,14 @@ function BookProduct() {
     if (!isBookable) return;
     setLoading(true);
     setError(null);
-    // Validate adults and children before submission
     const adults = formData.adults === '' || isNaN(parseInt(formData.adults)) ? 1 : parseInt(formData.adults);
     const children = formData.children === '' || isNaN(parseInt(formData.children)) ? 0 : parseInt(formData.children);
-    
-    // Prevent submission if adults is 0
+
     if (adults === 0) {
       setAdultsError('At least 1 adult is required.');
       setLoading(false);
       return;
     }
-    // Prevent submission if children is 0
     if (children === 0) {
       setChildrenError('Number of children cannot be 0.');
       setLoading(false);
@@ -353,6 +347,7 @@ function BookProduct() {
                 name="adults"
                 value={formData.adults}
                 onChange={handleChange}
+                onInput={handleInput}
                 required
                 className="number-input"
               />
@@ -383,6 +378,7 @@ function BookProduct() {
                 name="children"
                 value={formData.children}
                 onChange={handleChange}
+                onInput={handleInput}
                 className="number-input"
               />
               <button

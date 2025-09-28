@@ -332,9 +332,12 @@ nav .logo:hover {
 
 .number-input-wrapper {
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 1.2rem;
   justify-content: center;
+  flex-wrap: nowrap;
+  min-height: 60px;
 }
 
 .number-input {
@@ -348,6 +351,8 @@ nav .logo:hover {
   color: var(--text-color);
   transition: var(--transition);
   touch-action: manipulation;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
 }
 
 .number-input:focus {
@@ -357,6 +362,7 @@ nav .logo:hover {
 }
 
 .number-button {
+  display: inline-flex;
   background: var(--button-bg);
   color: #fff;
   border: none;
@@ -367,13 +373,13 @@ nav .logo:hover {
   transition: var(--transition);
   width: 60px;
   height: 60px;
-  display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: 0 6px 15px var(--shadow-color);
   touch-action: manipulation;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+  z-index: 1;
 }
 
 .number-button:hover {
@@ -513,6 +519,7 @@ nav .logo:hover {
   .form-container { padding: 1rem; }
   .number-input { width: 100px; font-size: 1rem; }
   .number-button { width: 50px; height: 50px; font-size: 1.2rem; }
+  .number-input-wrapper { gap: 1rem; min-height: 50px; }
 }
 
 @media (max-width: 576px) {
@@ -528,4 +535,5 @@ nav .logo:hover {
   .number-button { width: 45px; height: 45px; font-size: 1.1rem; }
   .cta-button { padding: 1rem 2rem; font-size: 1rem; }
   .field-error { font-size: 0.85rem; }
+  .number-input-wrapper { gap: 0.8rem; min-height: 45px; }
 }
