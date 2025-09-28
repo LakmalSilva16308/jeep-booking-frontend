@@ -62,8 +62,8 @@ function BookProduct() {
   const [formData, setFormData] = useState({
     date: '',
     time: '',
-    adults: 1,
-    children: 0,
+    adults: '1', // Store as string to allow empty input
+    children: '0',
     specialNotes: '',
     contact: { name: '', email: '', message: '' }
   });
@@ -115,8 +115,9 @@ function BookProduct() {
     if (!isBookable) return;
     const productName = decodeURIComponent(productType).replace(/\s+/g, ' ').trim();
     const pricing = PRICING_STRUCTURE[productName];
-    const adults = parseInt(formData.adults) || 1;
-    const children = parseInt(formData.children) || 0;
+    // Parse inputs, default to 1 for adults and 0 for children if empty or invalid
+    const adults = formData.adults === '' || isNaN(parseInt(formData.adults)) ? 1 : parseInt(formData.adults);
+    const children = formData.children === '' || isNaN(parseInt(formData.children)) ? 0 : parseInt(formData.children);
     const totalPersons = adults + children;
     const childDiscount = 0.5;
 
@@ -153,13 +154,8 @@ function BookProduct() {
         ...prev,
         contact: { ...prev.contact, [field]: value }
       }));
-    } else if (name === 'adults' || name === 'children') {
-      // Allow empty input for editing, validate on blur or submit
-      setFormData(prev => ({
-        ...prev,
-        [name]: value === '' ? '' : (parseInt(value) >= 0 ? parseInt(value) : prev[name])
-      }));
     } else {
+      // Allow any input (including empty or non-numeric) for adults and children
       setFormData(prev => ({
         ...prev,
         [name]: value
@@ -170,30 +166,40 @@ function BookProduct() {
   const handleBlur = (e) => {
     const { name, value } = e.target;
     if (name === 'adults' || name === 'children') {
-      // Validate on blur: adults >= 1, children >= 0
-      const parsedValue = value === '' ? (name === 'adults' ? 1 : 0) : parseInt(value);
-      setFormData(prev => ({
-        ...prev,
-        [name]: name === 'adults' ? Math.max(1, parsedValue) : Math.max(0, parsedValue)
-      }));
-      console.log(`BookProduct: handleBlur name=${name}, value=${parsedValue}`);
+      // Only enforce non-empty input on blur
+      if (value === '' || isNaN(parseInt(value))) {
+        setFormData(prev => ({
+          ...prev,
+          [name]: name === 'adults' ? '1' : '0'
+        }));
+        console.log(`BookProduct: handleBlur name=${name}, set default to ${name === 'adults' ? '1' : '0'}`);
+      } else if (parseInt(value) < (name === 'adults' ? 1 : 0)) {
+        // Enforce minimum values
+        setFormData(prev => ({
+          ...prev,
+          [name]: name === 'adults' ? '1' : '0'
+        }));
+        console.log(`BookProduct: handleBlur name=${name}, enforced minimum ${name === 'adults' ? '1' : '0'}`);
+      }
     }
   };
 
   const handleIncrement = (field) => {
     setFormData(prev => ({
       ...prev,
-      [field]: parseInt(prev[field] || (field === 'adults' ? 1 : 0)) + 1
+      [field]: String(parseInt(prev[field] || (field === 'adults' ? '1' : '0')) + 1)
     }));
-    console.log(`BookProduct: Incremented ${field} to ${parseInt(formData[field] || (field === 'adults' ? 1 : 0)) + 1}`);
+    console.log(`BookProduct: Incremented ${field} to ${parseInt(formData[field] || (field === 'adults' ? '1' : '0')) + 1}`);
   };
 
   const handleDecrement = (field) => {
+    const currentValue = parseInt(formData[field] || (field === 'adults' ? '1' : '0'));
+    if (currentValue <= (field === 'adults' ? 1 : 0)) return;
     setFormData(prev => ({
       ...prev,
-      [field]: Math.max(field === 'adults' ? 1 : 0, parseInt(prev[field] || (field === 'adults' ? 1 : 0)) - 1)
+      [field]: String(currentValue - 1)
     }));
-    console.log(`BookProduct: Decremented ${field} to ${Math.max(field === 'adults' ? 1 : 0, parseInt(formData[field] || (field === 'adults' ? 1 : 0)) - 1)}`);
+    console.log(`BookProduct: Decremented ${field} to ${currentValue - 1}`);
   };
 
   const handleSubmit = async (e) => {
@@ -201,13 +207,13 @@ function BookProduct() {
     if (!isBookable) return;
     setLoading(true);
     setError(null);
-    // Ensure adults and children are valid before submission
-    const adults = formData.adults === '' ? 1 : parseInt(formData.adults);
-    const children = formData.children === '' ? 0 : parseInt(formData.children);
+    // Validate adults and children before submission
+    const adults = formData.adults === '' || isNaN(parseInt(formData.adults)) ? 1 : Math.max(1, parseInt(formData.adults));
+    const children = formData.children === '' || isNaN(parseInt(formData.children)) ? 0 : Math.max(0, parseInt(formData.children));
     setFormData(prev => ({
       ...prev,
-      adults,
-      children
+      adults: String(adults),
+      children: String(children)
     }));
     console.log(`BookProduct: Submitting booking to ${bookingEndpoint} with totalPrice=${totalPrice}`);
     if (!Number.isFinite(parseFloat(totalPrice)) || parseFloat(totalPrice) <= 0) {
@@ -310,7 +316,7 @@ function BookProduct() {
                 type="button"
                 className="number-button decrement"
                 onClick={() => handleDecrement('adults')}
-                disabled={formData.adults <= 1}
+                disabled={parseInt(formData.adults || '1') <= 1}
               >
                 −
               </button>
@@ -340,7 +346,7 @@ function BookProduct() {
                 type="button"
                 className="number-button decrement"
                 onClick={() => handleDecrement('children')}
-                disabled={formData.children <= 0}
+                disabled={parseInt(formData.children || '0') <= 0}
               >
                 −
               </button>
