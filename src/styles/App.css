@@ -335,51 +335,66 @@ nav .logo:hover {
 }
 
 .number-input {
-  width: 100px;
-  padding: 1rem;
+  width: 120px;
+  padding: 1.2rem;
   text-align: center;
   border: 2px solid var(--primary-color);
   border-radius: 10px;
-  font-size: 1rem;
-  background: rgba(255, 255, 255, 0.7);
+  font-size: 1.1rem;
+  background: rgba(255, 255, 255, 0.9);
   color: var(--text-color);
   transition: var(--transition);
-  -webkit-appearance: none; /* Remove default spinner */
-  -moz-appearance: textfield; /* Remove default spinner */
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+  touch-action: manipulation; /* Prevent double-tap zoom */
 }
 
 .number-input:focus {
   border-color: var(--highlight-color);
-  box-shadow: 0 0 10px rgba(255, 209, 102, 0.5);
+  box-shadow: 0 0 12px rgba(255, 209, 102, 0.6);
+  outline: none;
+}
+
+.number-input::-webkit-inner-spin-button,
+.number-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .number-button {
   background: var(--button-bg);
   color: #fff;
   border: none;
-  padding: 0.8rem 1.2rem;
-  font-size: 1.2rem;
-  border-radius: 8px;
+  padding: 0.8rem;
+  font-size: 1.4rem;
+  border-radius: 12px;
   cursor: pointer;
   transition: var(--transition);
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 10px var(--shadow-color);
-  touch-action: manipulation; /* Prevent double-tap zoom on mobile */
+  box-shadow: 0 6px 12px var(--shadow-color);
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent; /* Remove tap highlight on mobile */
 }
 
 .number-button:hover {
   background: var(--button-hover);
-  transform: scale(1.1);
+  transform: scale(1.15);
+}
+
+.number-button:active {
+  transform: scale(0.95);
 }
 
 .number-button:disabled {
   background: rgba(0, 0, 0, 0.3);
   cursor: not-allowed;
   transform: none;
+  box-shadow: none;
 }
 
 .number-button.increment {
@@ -403,14 +418,15 @@ nav .logo:hover {
 .cta-button {
   background: var(--gradient-bg);
   color: #fff;
-  padding: 1rem 2.5rem;
+  padding: 1.2rem 3rem;
   border-radius: 30px;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: 600;
   border: none;
   cursor: pointer;
   transition: var(--transition);
-  box-shadow: 0 6px 15px var(--shadow-color);
+  box-shadow: 0 8px 20px var(--shadow-color);
+  touch-action: manipulation;
 }
 
 .cta-button:hover {
@@ -418,10 +434,15 @@ nav .logo:hover {
   transform: translateY(-3px) scale(1.05);
 }
 
+.cta-button:active {
+  transform: scale(0.95);
+}
+
 .cta-button:disabled {
   background: rgba(0, 0, 0, 0.3);
   cursor: not-allowed;
   transform: none;
+  box-shadow: none;
 }
 
 /* Animations */
@@ -487,8 +508,8 @@ nav .logo:hover {
 
   .container { padding: 1.5rem; }
   .form-container { padding: 1rem; }
-  .number-input { width: 80px; }
-  .number-button { width: 40px; height: 40px; font-size: 1rem; }
+  .number-input { width: 100px; }
+  .number-button { width: 50px; height: 50px; font-size: 1.2rem; }
 }
 
 @media (max-width: 576px) {
@@ -499,7 +520,8 @@ nav .logo:hover {
   .container h2 { font-size: 1.8rem; }
   .form-container h3 { font-size: 1.5rem; }
   .form-group label { font-size: 1rem; }
-  .form-group input, .form-group textarea { font-size: 0.9rem; }
-  .number-input { width: 60px; }
-  .number-button { width: 35px; height: 35px; font-size: 0.9rem; }
+  .form-group input, .form-group textarea { font-size: 0.9rem; padding: 0.8rem; }
+  .number-input { width: 80px; font-size: 0.9rem; }
+  .number-button { width: 40px; height: 40px; font-size: 1rem; }
+  .cta-button { padding: 1rem 2rem; font-size: 1rem; }
 }
