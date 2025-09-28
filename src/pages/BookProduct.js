@@ -62,8 +62,8 @@ function BookProduct() {
   const [formData, setFormData] = useState({
     date: '',
     time: '',
-    adults: '1',
-    children: '0',
+    adults: '',
+    children: '',
     specialNotes: '',
     contact: { name: '', email: '', message: '' }
   });
@@ -117,13 +117,10 @@ function BookProduct() {
     if (!isBookable) return;
     const productName = decodeURIComponent(productType).replace(/\s+/g, ' ').trim();
     const pricing = PRICING_STRUCTURE[productName];
-    const adults = formData.adults === '' || isNaN(parseInt(formData.adults)) ? 1 : parseInt(formData.adults);
+    const adults = formData.adults === '' || isNaN(parseInt(formData.adults)) ? 0 : parseInt(formData.adults);
     const children = formData.children === '' || isNaN(parseInt(formData.children)) ? 0 : parseInt(formData.children);
     const totalPersons = adults + children;
     const childDiscount = 0.5;
-
-    setAdultsError(adults === 0 ? 'At least 1 adult is required.' : null);
-    setChildrenError(children === 0 ? 'Number of children cannot be 0.' : null);
 
     console.log(`BookProduct: Calculating price for productName="${productName}", adults=${adults}, children=${children}, totalPersons=${totalPersons}`);
     console.log(`BookProduct: Pricing for ${productName}=`, pricing);
@@ -134,7 +131,7 @@ function BookProduct() {
       );
       console.log(`BookProduct: Selected tier for ${totalPersons} persons=`, tier);
 
-      if (tier) {
+      if (tier && totalPersons > 0) {
         const adultPrice = adults * tier.price;
         const childPrice = children * tier.price * childDiscount;
         const calculatedPrice = (adultPrice + childPrice).toFixed(2);
@@ -144,26 +141,10 @@ function BookProduct() {
       } else {
         console.log(`BookProduct: No tier found for ${totalPersons} persons, setting totalPrice=0`);
         setTotalPrice(0);
-        setError(`No pricing available for ${totalPersons} persons. Please contact support.`);
+        setError(totalPersons === 0 ? 'Please enter the number of adults and children.' : `No pricing available for ${totalPersons} persons. Please contact support.`);
       }
     }
   }, [formData.adults, formData.children, productType, isBookable]);
-
-  const handleInput = (e) => {
-    const { name, value } = e.target;
-    console.log(`BookProduct: handleInput name=${name}, value=${value}`);
-    // Allow any input, including empty strings and non-numeric values
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-    // Validate for error messages
-    if (name === 'adults') {
-      setAdultsError(value === '0' ? 'At least 1 adult is required.' : null);
-    } else if (name === 'children') {
-      setChildrenError(value === '0' ? 'Number of children cannot be 0.' : null);
-    }
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -175,12 +156,27 @@ function BookProduct() {
         contact: { ...prev.contact, [field]: value }
       }));
     } else {
-      handleInput(e);
+      // Allow any input, overwriting the current value
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+      // Validate for error messages
+      if (name === 'adults' && value === '0') {
+        setAdultsError('At least 1 adult is required.');
+      } else {
+        setAdultsError(null);
+      }
+      if (name === 'children' && value === '0') {
+        setChildrenError('Number of children cannot be 0.');
+      } else {
+        setChildrenError(null);
+      }
     }
   };
 
   const handleIncrement = (field) => {
-    const currentValue = parseInt(formData[field] || (field === 'adults' ? '1' : '0'));
+    const currentValue = parseInt(formData[field] || '0');
     const newValue = String(currentValue + 1);
     setFormData(prev => ({
       ...prev,
@@ -192,7 +188,7 @@ function BookProduct() {
   };
 
   const handleDecrement = (field) => {
-    const currentValue = parseInt(formData[field] || (field === 'adults' ? '1' : '0'));
+    const currentValue = parseInt(formData[field] || '0');
     if (currentValue <= (field === 'adults' ? 1 : 0)) return;
     const newValue = String(currentValue - 1);
     setFormData(prev => ({
@@ -217,7 +213,7 @@ function BookProduct() {
     if (!isBookable) return;
     setLoading(true);
     setError(null);
-    const adults = formData.adults === '' || isNaN(parseInt(formData.adults)) ? 1 : parseInt(formData.adults);
+    const adults = formData.adults === '' || isNaN(parseInt(formData.adults)) ? 0 : parseInt(formData.adults);
     const children = formData.children === '' || isNaN(parseInt(formData.children)) ? 0 : parseInt(formData.children);
 
     if (adults === 0) {
@@ -337,7 +333,7 @@ function BookProduct() {
                 type="button"
                 className="number-button decrement"
                 onClick={() => handleDecrement('adults')}
-                disabled={parseInt(formData.adults || '1') <= 1}
+                disabled={parseInt(formData.adults || '0') <= 1}
               >
                 −
               </button>
@@ -347,7 +343,7 @@ function BookProduct() {
                 name="adults"
                 value={formData.adults}
                 onChange={handleChange}
-                onInput={handleInput}
+                placeholder="Enter number"
                 required
                 className="number-input"
               />
@@ -378,7 +374,7 @@ function BookProduct() {
                 name="children"
                 value={formData.children}
                 onChange={handleChange}
-                onInput={handleInput}
+                placeholder="Enter number"
                 className="number-input"
               />
               <button
