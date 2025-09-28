@@ -345,8 +345,6 @@ nav .logo:hover {
   background: rgba(255, 255, 255, 0.9);
   color: var(--text-color);
   transition: var(--transition);
-  -webkit-appearance: none;
-  -moz-appearance: textfield;
   touch-action: manipulation;
 }
 
@@ -354,12 +352,6 @@ nav .logo:hover {
   border-color: var(--highlight-color);
   box-shadow: 0 0 15px rgba(255, 209, 102, 0.7);
   outline: none;
-}
-
-.number-input::-webkit-inner-spin-button,
-.number-input::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
 }
 
 .number-button {

@@ -163,27 +163,6 @@ function BookProduct() {
     }
   };
 
-  const handleBlur = (e) => {
-    const { name, value } = e.target;
-    if (name === 'adults' || name === 'children') {
-      // Only enforce non-empty input on blur
-      if (value === '' || isNaN(parseInt(value))) {
-        setFormData(prev => ({
-          ...prev,
-          [name]: name === 'adults' ? '1' : '0'
-        }));
-        console.log(`BookProduct: handleBlur name=${name}, set default to ${name === 'adults' ? '1' : '0'}`);
-      } else if (parseInt(value) < (name === 'adults' ? 1 : 0)) {
-        // Enforce minimum values
-        setFormData(prev => ({
-          ...prev,
-          [name]: name === 'adults' ? '1' : '0'
-        }));
-        console.log(`BookProduct: handleBlur name=${name}, enforced minimum ${name === 'adults' ? '1' : '0'}`);
-      }
-    }
-  };
-
   const handleIncrement = (field) => {
     setFormData(prev => ({
       ...prev,
@@ -321,12 +300,12 @@ function BookProduct() {
                 −
               </button>
               <input
-                type="number"
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
                 name="adults"
                 value={formData.adults}
                 onChange={handleChange}
-                onBlur={handleBlur}
-                min="1"
                 required
                 className="number-input"
               />
@@ -351,12 +330,12 @@ function BookProduct() {
                 −
               </button>
               <input
-                type="number"
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
                 name="children"
                 value={formData.children}
                 onChange={handleChange}
-                onBlur={handleBlur}
-                min="0"
                 className="number-input"
               />
               <button
