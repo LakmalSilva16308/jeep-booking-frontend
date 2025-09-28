@@ -380,7 +380,7 @@ const ProductBookingForm = () => {
                 className="number-button increment"
                 onClick={() => handleIncrement('adults')}
               >
-                ^
+                +
               </button>
             </div>
             {adultsError && <div className="field-error">{adultsError}</div>}
@@ -412,7 +412,7 @@ const ProductBookingForm = () => {
                 className="number-button increment"
                 onClick={() => handleIncrement('children')}
               >
-                ^
+                +
               </button>
             </div>
             {childrenError && <div className="field-error">{childrenError}</div>}
