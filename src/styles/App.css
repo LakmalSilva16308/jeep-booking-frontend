@@ -315,6 +315,16 @@ nav .logo:hover {
   opacity: 0.8;
 }
 
+.form-group input[type="number"]::-webkit-inner-spin-button,
+.form-group input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form-group input[type="number"] {
+  -moz-appearance: textfield;
+}
+
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: var(--highlight-color);
@@ -346,6 +356,7 @@ nav .logo:hover {
   min-width: 100% !important;
   visibility: visible !important;
   overflow: visible !important;
+  position: relative !important;
 }
 
 .number-input {
@@ -359,8 +370,6 @@ nav .logo:hover {
   color: var(--text-color);
   transition: var(--transition);
   touch-action: manipulation;
-  -webkit-appearance: none;
-  -moz-appearance: textfield;
 }
 
 .number-input:focus {
@@ -388,13 +397,14 @@ nav .logo:hover {
   touch-action: manipulation;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  z-index: 100 !important;
-  /* Debug border to confirm visibility */
-  border: 1px solid var(--highlight-color);
+  z-index: 1000 !important;
+  position: relative !important;
+  /* Debug background to confirm visibility */
+  background: var(--button-bg) !important;
 }
 
 .number-button:hover {
-  background: var(--button-hover);
+  background: var(--button-hover) !important;
   transform: scale(1.15);
 }
 
@@ -403,18 +413,18 @@ nav .logo:hover {
 }
 
 .number-button:disabled {
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.3) !important;
   cursor: not-allowed;
   transform: none;
   box-shadow: none;
 }
 
 .number-button.increment {
-  background: var(--gradient-bg);
+  background: var(--gradient-bg) !important;
 }
 
 .number-button.decrement {
-  background: var(--primary-color);
+  background: var(--primary-color) !important;
 }
 
 /* Error and Loading States */

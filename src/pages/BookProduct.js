@@ -156,7 +156,7 @@ function BookProduct() {
         contact: { ...prev.contact, [field]: value }
       }));
     } else {
-      // Overwrite the input value completely
+      // Overwrite with the new value, allowing empty strings
       setFormData(prev => ({
         ...prev,
         [name]: value
@@ -176,12 +176,15 @@ function BookProduct() {
   };
 
   const handleInput = (e) => {
-    // Handle mobile input to ensure clearing works
+    // Ensure mobile input overwrites the value
     handleChange(e);
   };
 
   const handleFocus = (e) => {
-    // Select all text on focus to allow easy overwriting
+    // Select all text and clear if empty to ensure overwriting
+    if (e.target.value === '') {
+      e.target.value = '';
+    }
     e.target.select();
   };
 
@@ -348,14 +351,14 @@ function BookProduct() {
                 −
               </button>
               <input
-                type="text"
-                inputMode="numeric"
+                type="number"
                 name="adults"
                 value={formData.adults}
                 onChange={handleChange}
                 onInput={handleInput}
                 onFocus={handleFocus}
                 placeholder="Enter number"
+                min="0"
                 required
                 className="number-input"
               />
@@ -381,14 +384,14 @@ function BookProduct() {
                 −
               </button>
               <input
-                type="text"
-                inputMode="numeric"
+                type="number"
                 name="children"
                 value={formData.children}
                 onChange={handleChange}
                 onInput={handleInput}
                 onFocus={handleFocus}
                 placeholder="Enter number"
+                min="0"
                 className="number-input"
               />
               <button
