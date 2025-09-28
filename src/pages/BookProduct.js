@@ -73,7 +73,7 @@ function BookProduct() {
   const [isBookable, setIsBookable] = useState(true);
   const token = localStorage.getItem('token');
   const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-  const cleanApiUrl = apiUrl.replace(/\/+$/, '').replace(/\/api$/, ''); // Remove trailing slashes and any /api suffix
+  const cleanApiUrl = apiUrl.replace(/\/+$/, '').replace(/\/api$/, '');
   const bookingEndpoint = `${cleanApiUrl}/api/bookings/product`;
 
   console.log('BookProduct: API configuration:', { apiUrl, cleanApiUrl, bookingEndpoint });
@@ -118,7 +118,7 @@ function BookProduct() {
     const adults = parseInt(formData.adults) || 1;
     const children = parseInt(formData.children) || 0;
     const totalPersons = adults + children;
-    const childDiscount = 0.5; // 50% discount for children
+    const childDiscount = 0.5;
 
     console.log(`BookProduct: Calculating price for productName="${productName}", adults=${adults}, children=${children}, totalPersons=${totalPersons}`);
     console.log(`BookProduct: Pricing for ${productName}=`, pricing);
@@ -159,6 +159,22 @@ function BookProduct() {
         [name]: name === 'adults' || name === 'children' ? (parseInt(value) >= 0 ? parseInt(value) : prev[name]) : value
       }));
     }
+  };
+
+  const handleIncrement = (field) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: parseInt(prev[field]) + 1
+    }));
+    console.log(`BookProduct: Incremented ${field} to ${parseInt(formData[field]) + 1}`);
+  };
+
+  const handleDecrement = (field) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: Math.max(field === 'adults' ? 1 : 0, parseInt(prev[field]) - 1)
+    }));
+    console.log(`BookProduct: Decremented ${field} to ${Math.max(field === 'adults' ? 1 : 0, parseInt(formData[field]) - 1)}`);
   };
 
   const handleSubmit = async (e) => {
@@ -260,26 +276,62 @@ function BookProduct() {
               required
             />
           </div>
-          <div className="form-group">
+          <div className="form-group number-input-group">
             <label>Adults</label>
-            <input
-              type="number"
-              name="adults"
-              value={formData.adults}
-              onChange={handleChange}
-              min="1"
-              required
-            />
+            <div className="number-input-wrapper">
+              <button
+                type="button"
+                className="number-button decrement"
+                onClick={() => handleDecrement('adults')}
+                disabled={formData.adults <= 1}
+              >
+                −
+              </button>
+              <input
+                type="number"
+                name="adults"
+                value={formData.adults}
+                onChange={handleChange}
+                min="1"
+                required
+                className="number-input"
+              />
+              <button
+                type="button"
+                className="number-button increment"
+                onClick={() => handleIncrement('adults')}
+              >
+                +
+              </button>
+            </div>
           </div>
-          <div className="form-group">
+          <div className="form-group number-input-group">
             <label>Children</label>
-            <input
-              type="number"
-              name="children"
-              value={formData.children}
-              onChange={handleChange}
-              min="0"
-            />
+            <div className="number-input-wrapper">
+              <button
+                type="button"
+                className="number-button decrement"
+                onClick={() => handleDecrement('children')}
+                disabled={formData.children <= 0}
+              >
+                −
+              </button>
+              <input
+                type="number"
+                name="children"
+                value={formData.children}
+                onChange={handleChange}
+                min="0"
+                className="number-input"
+              />
+              <button
+                type="button"
+                className="number-button increment"
+                onClick={() => handleIncrement('children')}
+              >
+                +
+              </button>
+            </div>
           </div>
           <div className="form-group">
             <label>Total Price (USD)</label>
