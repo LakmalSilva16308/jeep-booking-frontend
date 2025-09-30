@@ -61,7 +61,7 @@ const COMPANY_PRODUCTS = [
     name: 'High Tea', 
     price: null,
     description: 'Indulge in a classic high tea experience.', 
-    image: '/images/high_tea.jpg' 
+    image: '/images/high_tea_1.webp' 
   },
   { 
     name: 'Bullock Cart Ride', 
