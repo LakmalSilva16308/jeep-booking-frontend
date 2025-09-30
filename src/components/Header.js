@@ -45,7 +45,7 @@ function Header() {
         <Link to="/" className="logo">SL ECO TOUR</Link>
         
         <div className={`nav-links ${isMenuOpen ? 'open' : ''}`}>
-          <Link to="/" onClick={() => isMenuOpen && toggleMenu()}>+94 777 393 670</Link>
+          <Link to="/https://wa.me/+94777393670" onClick={() => isMenuOpen && toggleMenu()}>+94 777 393 670</Link>
           <Link to="/" onClick={() => isMenuOpen && toggleMenu()}>Home</Link>
           <Link to="/services" onClick={() => isMenuOpen && toggleMenu()}>Services</Link>
           <Link to="/about" onClick={() => isMenuOpen && toggleMenu()}>About</Link>
