@@ -74,7 +74,6 @@ const ProductBookingForm = () => {
   const [success, setSuccess] = useState(null);
   const [product, setProduct] = useState(null);
   const [adultsError, setAdultsError] = useState(null);
-  const [childrenError, setChildrenError] = useState(null);
   const [isBookable, setIsBookable] = useState(true);
   const token = localStorage.getItem('token');
   const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
@@ -148,7 +147,7 @@ const ProductBookingForm = () => {
       } else {
         console.log(`ProductBookingForm: No tier found for ${totalPersons} persons`);
         setTotalPrice(0);
-        setError(totalPersons === 0 ? 'Please enter the number of adults and children.' : `No pricing available for ${totalPersons} persons. Please contact support.`);
+        setError(totalPersons === 0 ? 'Please enter the number of adults.' : `No pricing available for ${totalPersons} persons. Please contact support.`);
       }
     }
   }, [formData.adults, formData.children, productName, product, isBookable]);
@@ -172,11 +171,6 @@ const ProductBookingForm = () => {
       } else {
         setAdultsError(null);
       }
-      if (name === 'children' && value === '0') {
-        setChildrenError('Number of children cannot be 0.');
-      } else {
-        setChildrenError(null);
-      }
     }
   };
 
@@ -199,7 +193,6 @@ const ProductBookingForm = () => {
       [field]: newValue
     }));
     if (field === 'adults') setAdultsError(null);
-    if (field === 'children') setChildrenError(null);
     console.log(`ProductBookingForm: Incremented ${field} to ${newValue}`);
   };
 
@@ -215,11 +208,6 @@ const ProductBookingForm = () => {
       setAdultsError('At least 1 adult is required.');
     } else if (field === 'adults') {
       setAdultsError(null);
-    }
-    if (field === 'children' && newValue === '0') {
-      setChildrenError('Number of children cannot be 0.');
-    } else if (field === 'children') {
-      setChildrenError(null);
     }
     console.log(`ProductBookingForm: Decremented ${field} to ${newValue}`);
   };
@@ -237,11 +225,6 @@ const ProductBookingForm = () => {
     if (!formData.date || !formData.time || adults === 0 || !formData.contact.name || !formData.contact.email || !formData.contact.message || !formData.contact.phone) {
       setError('All required fields (date, time, adults, name, email, message, phone) must be filled.');
       setAdultsError(adults === 0 ? 'At least 1 adult is required.' : null);
-      setLoading(false);
-      return;
-    }
-    if (children === 0) {
-      setChildrenError('Number of children cannot be 0.');
       setLoading(false);
       return;
     }
@@ -415,7 +398,6 @@ const ProductBookingForm = () => {
                 +
               </button>
             </div>
-            {childrenError && <div className="field-error">{childrenError}</div>}
           </div>
           <div className="form-group">
             <label>Special Notes</label>
@@ -429,7 +411,7 @@ const ProductBookingForm = () => {
             <p className="total-price">Total Price: USD {totalPrice}</p>
           </div>
           <div className="form-group">
-            <button type="submit" disabled={loading || adultsError || childrenError} className="cta-button">
+            <button type="submit" disabled={loading || adultsError} className="cta-button">
               {loading ? 'Booking...' : 'Book Now'}
             </button>
           </div>
