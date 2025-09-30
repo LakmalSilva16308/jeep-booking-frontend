@@ -60,7 +60,7 @@ function TouristDashboard() {
                 <p><strong>Time:</strong> {booking.time}</p>
                 <p><strong>Adults:</strong> {booking.adults}</p>
                 <p><strong>Children:</strong> {booking.children}</p>
-                <p><strong>Total Price:</strong> USD {booking.totalPrice.toFixed(2)}</p>
+                <p><strong>Total Price:</strong> LKR {booking.totalPrice.toFixed(2)}</p>
               </div>
             </div>
           ))}
