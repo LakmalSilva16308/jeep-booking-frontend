@@ -15,8 +15,8 @@ const PRODUCT_DETAILS = [
       '/images/hiriwadunna_3.jpg',
       '/images/catamaran_boat_ride_1.jpeg',
       '/images/jeep_safari_1.jpg',
-      './images/village_cooking_1.jpeg',
-      './images/village_cooking_4.jpeg'
+      './images/village_cooking_5.jpeg',
+      './images/village_cooking_6.jpeg'
     ],
     additionalDetails: {
       duration: [
