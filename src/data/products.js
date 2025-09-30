@@ -103,4 +103,4 @@ export const COMPANY_PRODUCTS = [
   }
 ];
 
-export const USD_TO_LKR_RATE = 300;
+export const USD_TO_LKR_RATE = 0;
