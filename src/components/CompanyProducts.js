@@ -22,6 +22,12 @@ const COMPANY_PRODUCTS = [
     image: '/images/jeep_safari.jpg' 
   },
   { 
+    name: 'Village Tour', 
+    price: 19.9,
+    description: 'Immerse yourself in the rich culture and traditions of a local village.', 
+    image: '/images/tour.jpg' 
+  },
+  { 
     name: 'Tuk Tuk Adventures', 
     price: null,
     description: 'Experience the local culture with a thrilling tuk-tuk ride.', 
@@ -41,7 +47,7 @@ const COMPANY_PRODUCTS = [
   },
   { 
     name: 'Traditional Village Lunch', 
-    price: 15,
+    price: 9,
     description: 'Enjoy a delicious traditional meal in a village setting.', 
     image: '/images/village_lunch.jpg' 
   },
@@ -62,12 +68,6 @@ const COMPANY_PRODUCTS = [
     price: 9.9,
     description: 'Travel back in time with a traditional bullock cart ride.', 
     image: '/images/bullockcart_ride.jpg' 
-  },
-  { 
-    name: 'Village Tour', 
-    price: 19.9,
-    description: 'Immerse yourself in the rich culture and traditions of a local village.', 
-    image: '/images/tour.jpg' 
   },
   {
     name: 'Bicycle Tour',

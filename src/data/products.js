@@ -25,7 +25,7 @@ export const COMPANY_PRODUCTS = [
   },
   {
     name: 'Traditional Village Lunch',
-    price: 15,
+    price: 9,
     image: '/images/village_lunch.jpg',
     description: 'Enjoy a delicious traditional meal in a village setting.'
   },
