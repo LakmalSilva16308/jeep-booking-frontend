@@ -13,10 +13,21 @@ const PRODUCT_DETAILS = [
       '/images/hiriwadunna_1.jpg',
       '/images/hiriwadunna_2.jpg',
       '/images/hiriwadunna_3.jpg'
-    ]
+    ],
+    additionalDetails: {
+      duration: [
+        'Village Tour: 2 - 2.5 hours',
+        'Bullock Cart Ride: 20 - 30 minutes',
+        'Boat Ride: 20 - 40 minutes',
+        'Village Lunch: 30 minutes - 1.5 hours',
+        'Jeep Safari: 2 - 2.5 hours'
+      ],
+      included: ['Village tour ticket'],
+      excluded: ['Jeep safari entrance']
+    }
   },
   {
-    name: 'Village Tour and Jeep Safari Sigiriya Tour Dambulla Temple',
+    name: 'Dambulla Temple and Sigiriya Tour Two Days Tour',
     image: '/images/dambulla.jpg',
     detailedDescription: `
       This two-day immersive journey takes you deep into Sri Lanka’s cultural and natural treasures. Day one includes a village tour where you’ll engage with local traditions, followed by a thrilling jeep safari through untamed landscapes teeming with wildlife. On day two, climb the iconic Sigiriya Lion Rock, a UNESCO World Heritage Site, and marvel at its ancient frescoes and breathtaking views. Conclude your adventure with a visit to the historic Dambulla Cave Temple, adorned with intricate Buddhist murals and statues. This tour is perfect for history buffs and adventure seekers alike.
@@ -25,7 +36,11 @@ const PRODUCT_DETAILS = [
       '/images/dambulla_1.jpg',
       '/images/dambulla_2.jpg',
       '/images/dambulla_3.jpg'
-    ]
+    ],
+    additionalDetails: {
+      included: ['Village tour ticket'],
+      excluded: ['Dambulla temple ticket', 'Sigiriya ticket', 'Jeep safari ticket']
+    }
   },
   {
     name: 'Jeep Safari',
@@ -36,8 +51,12 @@ const PRODUCT_DETAILS = [
     relatedImages: [
       '/images/jeep1.jpeg',
       '/images/jeep2.jpeg',
-      '/images/jeep3.jpeg',
-    ]
+      '/images/jeep3.jpeg'
+    ],
+    additionalDetails: {
+      included: ['Water bottle', 'Welcome drink'],
+      excluded: ['Jeep safari ticket']
+    }
   },
   {
     name: 'Tuk Tuk Adventures',
@@ -53,7 +72,8 @@ const PRODUCT_DETAILS = [
       '/images/tuk (2).jpeg',
       '/images/tuk (3).jpeg',
       '/images/tuk (4).jpeg'
-    ]
+    ],
+    additionalDetails: {}
   },
   {
     name: 'Catamaran Boat Ride',
@@ -69,7 +89,8 @@ const PRODUCT_DETAILS = [
       '/images/catamaran_boat_ride_2.jpeg',
       '/images/catamaran_boat_ride_3.jpeg',
       '/images/catamaran_boat_ride_4.jpeg'
-    ]
+    ],
+    additionalDetails: {}
   },
   {
     name: 'Village Cooking Experience',
@@ -90,7 +111,10 @@ const PRODUCT_DETAILS = [
       '/images/village_cooking_7.jpeg',
       '/images/village_cooking_8.jpeg',
       '/images/village_cooking_9.jpeg'
-    ]
+    ],
+    additionalDetails: {
+      duration: ['1.5 - 2 hours']
+    }
   },
   {
     name: 'Traditional Village Lunch',
@@ -98,7 +122,8 @@ const PRODUCT_DETAILS = [
     detailedDescription: `
       Savor the flavors of Sri Lanka with a traditional village lunch served in an authentic setting. Enjoy a spread of home-cooked dishes, including rice, curries, and local delicacies, all prepared with fresh ingredients. This experience offers a taste of rural hospitality and a chance to connect with local culture through food.
     `,
-    relatedImages: []
+    relatedImages: [],
+    additionalDetails: {}
   },
   {
     name: 'Sundowners Cocktail',
@@ -106,7 +131,8 @@ const PRODUCT_DETAILS = [
     detailedDescription: `
       Unwind with a refreshing cocktail as you watch the sun set over the stunning Sri Lankan landscape. This sundowner experience combines tropical drinks with breathtaking views, creating a perfect evening of relaxation. Whether you’re toasting with friends or enjoying a quiet moment, this is an ideal way to end your day.
     `,
-    relatedImages: []
+    relatedImages: [],
+    additionalDetails: {}
   },
   {
     name: 'High Tea',
@@ -114,7 +140,8 @@ const PRODUCT_DETAILS = [
     detailedDescription: `
       Indulge in a classic high tea experience, featuring a selection of fine teas, delicate sandwiches, and delectable pastries. Set in a charming environment, this activity offers a taste of colonial elegance blended with Sri Lankan hospitality. Perfect for those looking to relax and enjoy a refined afternoon.
     `,
-    relatedImages: []
+    relatedImages: [],
+    additionalDetails: {}
   },
   {
     name: 'Bullock Cart Ride',
@@ -128,7 +155,10 @@ const PRODUCT_DETAILS = [
       '/images/bullockcart_ride_3.jpeg',
       '/images/bullockcart_ride_4.jpeg',
       '/images/bullockcart_ride_5.jpeg'
-    ]
+    ],
+    additionalDetails: {
+      duration: ['25 - 45 minutes']
+    }
   },
   {
     name: 'Village Tour',
@@ -138,7 +168,10 @@ const PRODUCT_DETAILS = [
     `,
     relatedImages: [
       '/images/village_tour_1.jpeg'
-    ]
+    ],
+    additionalDetails: {
+      duration: ['2 - 2.5 hours']
+    }
   },
   {
     name: 'Bicycle Tour',
@@ -146,7 +179,8 @@ const PRODUCT_DETAILS = [
     detailedDescription: `
       Pedal through the scenic countryside on a guided bicycle tour, exploring hidden trails, lush paddy fields, and quaint villages. This eco-friendly adventure offers a refreshing way to connect with nature and local culture, with opportunities to stop at local markets or temples along the way.
     `,
-    relatedImages: []
+    relatedImages: [],
+    additionalDetails: {}
   },
   {
     name: 'Sigiriya Lion Rock',
@@ -154,7 +188,13 @@ const PRODUCT_DETAILS = [
     detailedDescription: `
       Ascend the majestic Sigiriya Lion Rock, a UNESCO World Heritage Site and one of Sri Lanka’s most iconic landmarks. Explore the ancient fortress, admire its stunning frescoes, and enjoy panoramic views from the summit. This historical adventure is perfect for those eager to uncover Sri Lanka’s rich past.
     `,
-    relatedImages: []
+    relatedImages: [],
+    additionalDetails: {
+      duration: ['3 - 4 hours'],
+      included: ['Water bottle'],
+      excluded: ['Ticket'],
+      notes: ['Transport dependent']
+    }
   },
   {
     name: 'Pidurangala Rock',
@@ -162,7 +202,10 @@ const PRODUCT_DETAILS = [
     detailedDescription: `
       Hike to the summit of Pidurangala Rock for breathtaking views and a glimpse into Sri Lanka’s spiritual heritage. This lesser-known gem offers a quieter alternative to Sigiriya, with a historic rock temple and panoramic vistas of the surrounding landscape. Ideal for hikers and history lovers.
     `,
-    relatedImages: []
+    relatedImages: [],
+    additionalDetails: {
+      duration: ['3 - 4 hours']
+    }
   },
   {
     name: 'Polonnaruwa City Tour',
@@ -170,7 +213,8 @@ const PRODUCT_DETAILS = [
     detailedDescription: `
       Step into history with a guided tour of Polonnaruwa, an ancient royal capital and UNESCO World Heritage Site. Explore well-preserved ruins, including palaces, temples, and stupas, while learning about Sri Lanka’s medieval past. This tour is a must for history enthusiasts and cultural explorers.
     `,
-    relatedImages: []
+    relatedImages: [],
+    additionalDetails: {}
   },
   {
     name: 'Motor Bikes Rent',
@@ -178,7 +222,8 @@ const PRODUCT_DETAILS = [
     detailedDescription: `
       Embark on a thrilling motorbike adventure through Sri Lanka’s scenic landscapes. Rent a reliable motorbike and explore at your own pace, from rural villages to coastal roads. This experience is perfect for adventure seekers looking for freedom and flexibility in their travels.
     `,
-    relatedImages: []
+    relatedImages: [],
+    additionalDetails: {}
   },
   {
     name: 'Village Walk Tour',
@@ -186,7 +231,12 @@ const PRODUCT_DETAILS = [
     detailedDescription: `
       Take a leisurely stroll through a traditional Sri Lankan village, guided by locals who share stories of their culture and traditions. This walking tour offers an intimate look at rural life, with opportunities to visit homes, farms, and local landmarks. Perfect for those seeking a slow-paced, authentic experience.
     `,
-    relatedImages: []
+    relatedImages: [],
+    additionalDetails: {
+      duration: ['1.5 - 2.5 hours'],
+      included: ['Water bottle'],
+      notes: ['Open 6 AM - 4 PM']
+    }
   },
 ];
 
@@ -222,6 +272,51 @@ const ProductDescription = () => {
             <p key={index}>{paragraph}</p>
           ))}
         </div>
+        {product.additionalDetails && (product.additionalDetails.duration?.length > 0 || product.additionalDetails.included?.length > 0 || product.additionalDetails.excluded?.length > 0 || product.additionalDetails.notes?.length > 0) && (
+          <div className="additional-details">
+            <h3>Additional Details</h3>
+            {product.additionalDetails.duration?.length > 0 && (
+              <div className="details-section">
+                <h4>Duration</h4>
+                <ul className="details-list">
+                  {product.additionalDetails.duration.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {product.additionalDetails.included?.length > 0 && (
+              <div className="details-section">
+                <h4>Included</h4>
+                <ul className="details-list">
+                  {product.additionalDetails.included.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {product.additionalDetails.excluded?.length > 0 && (
+              <div className="details-section">
+                <h4>Excluded</h4>
+                <ul className="details-list">
+                  {product.additionalDetails.excluded.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {product.additionalDetails.notes?.length > 0 && (
+              <div className="details-section">
+                <h4>Notes</h4>
+                <ul className="details-list">
+                  {product.additionalDetails.notes.map((item, index) => (
+                    <li key={index}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        )}
         <div className="product-description-actions">
           <Link to={`/book-product/${encodeURIComponent(product.name)}`} className="cta-button">
             Book Now
