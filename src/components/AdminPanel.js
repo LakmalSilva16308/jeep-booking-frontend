@@ -1109,7 +1109,7 @@ function AdminPanel() {
               <p><strong>Tourist Email:</strong> {selectedBooking.touristId?.email || 'N/A'}</p>
               <p><strong>Tourist Phone:</strong> {selectedBooking.contactId?.phone || 'N/A'}</p>
               <p><strong>Service/Product:</strong> {(typeof selectedBooking.providerId === 'object' && selectedBooking.providerId?.serviceName) || selectedBooking.productType || 'N/A'}</p>
-              <p><strong>Total Price:</strong> USD {(selectedBooking.totalPrice / 300).toFixed(2)}</p>
+              <p><strong>Total Price:</strong> USD {(selectedBooking.totalPrice / 300)}</p>
               <p><strong>Date:</strong> {new Date(selectedBooking.date).toLocaleDateString()}</p>
               <p><strong>Time:</strong> {selectedBooking.time}</p>
               <p><strong>Adults:</strong> {selectedBooking.adults}</p>
