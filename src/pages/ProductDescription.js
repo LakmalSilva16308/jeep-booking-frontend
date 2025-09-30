@@ -31,7 +31,7 @@ const PRODUCT_DETAILS = [
     }
   },
   {
-    name: 'Dambulla Temple, Sigiriya Tour,Village Tour and jeep Safari Two Days Tour',
+    name: 'Village Tour and Jeep Safari Sigiriya Tour Dambulla Temple',
     image: '/images/dambulla.jpg',
     detailedDescription: `
       This two-day immersive journey takes you deep into Sri Lanka’s cultural and natural treasures. Day one includes a village tour where you’ll engage with local traditions, followed by a thrilling jeep safari through untamed landscapes teeming with wildlife. On day two, climb the iconic Sigiriya Lion Rock, a UNESCO World Heritage Site, and marvel at its ancient frescoes and breathtaking views. Conclude your adventure with a visit to the historic Dambulla Cave Temple, adorned with intricate Buddhist murals and statues. This tour is perfect for history buffs and adventure seekers alike.
