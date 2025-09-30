@@ -1,99 +1,116 @@
 /* General Admin Panel Styles */
 .admin-panel {
-  padding: 1rem;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
+  padding: clamp(0.75rem, 2vw, 1.5rem);
+  background: linear-gradient(135deg, #e6ecea 0%, #d4dedb 100%); /* Subtle green-tinted gradient */
   min-height: 100vh;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   box-sizing: border-box;
+  color: #1a3c34; /* Dark green for text */
+  overflow-x: hidden;
 }
 
 .admin-panel h2 {
   text-align: center;
-  color: #2c3e50;
-  margin-bottom: 1.5rem;
-  font-size: clamp(1.5rem, 5vw, 2rem);
+  color: #1a3c34;
+  margin-bottom: clamp(1rem, 3vw, 1.75rem);
+  font-size: clamp(1.5rem, 5vw, 2.25rem);
+  font-weight: 600;
 }
 
 /* Responsive Grid Layout */
 .admin-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(260px, 30vw, 300px), 1fr));
+  gap: clamp(0.75rem, 2vw, 1.25rem);
   width: 100%;
-  overflow-x: hidden;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 /* Admin Card Styles */
 .admin-card {
   background: #ffffff;
-  border-radius: 12px;
-  padding: 1rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: clamp(0.75rem, 2vw, 1.25rem);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   box-sizing: border-box;
 }
 
 .admin-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .admin-card h3 {
-  color: #34495e;
-  margin-bottom: 1rem;
-  font-size: clamp(1.1rem, 4vw, 1.4rem);
+  color: #2e5a50; /* Slightly lighter green for headers */
+  margin-bottom: clamp(0.75rem, 2vw, 1rem);
+  font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+  font-weight: 600;
 }
 
 .admin-card p {
-  color: #7f8c8d;
-  font-size: clamp(0.9rem, 3vw, 1rem);
-  margin: 0.5rem 0;
+  color: #4a6a60; /* Medium green for text */
+  font-size: clamp(0.85rem, 2.8vw, 1rem);
+  margin: clamp(0.3rem, 1vw, 0.5rem) 0;
+  line-height: 1.5;
 }
 
 /* Buttons */
 .admin-button {
-  padding: 0.5rem 1rem;
+  padding: clamp(0.4rem, 1.5vw, 0.6rem) clamp(0.8rem, 2vw, 1rem);
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-size: clamp(0.8rem, 3vw, 1rem);
-  transition: background-color 0.3s ease;
-  margin: 0.25rem;
-  min-width: fit-content;
+  font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin: clamp(0.2rem, 0.8vw, 0.3rem);
+  min-width: clamp(80px, 10vw, 100px);
+  text-align: center;
+}
+
+.admin-button:hover {
+  transform: scale(1.05);
+}
+
+.admin-button:focus {
+  outline: 2px solid #1a3c34;
+  outline-offset: 2px;
 }
 
 .cta-button {
-  background-color: #3498db;
-  color: white;
+  background-color: #2e5a50;
+  color: #ffffff;
 }
 
 .cta-button:hover {
-  background-color: #2980b9;
+  background-color: #1a3c34;
 }
 
 .approve {
-  background-color: #2ecc71;
+  background-color: #4caf50; /* Green for approve buttons */
 }
 
 .approve:hover {
-  background-color: #27ae60;
+  background-color: #388e3c;
 }
 
 .danger {
-  background-color: #e74c3c;
+  background-color: #d32f2f;
 }
 
 .danger:hover {
-  background-color: #c0392b;
+  background-color: #b71c1c;
 }
 
 /* Lists */
 .admin-list {
   list-style: none;
   padding: 0;
-  max-height: 250px;
+  max-height: clamp(200px, 50vh, 300px);
   overflow-y: auto;
   border-radius: 6px;
+  background: #f8faf9;
 }
 
 .admin-list li {
@@ -101,10 +118,11 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  padding: 0.5rem;
-  border-bottom: 1px solid #ecf0f1;
-  font-size: clamp(0.8rem, 2.8vw, 0.95rem);
-  word-wrap: break-word;
+  padding: clamp(0.4rem, 1.5vw, 0.6rem);
+  border-bottom: 1px solid #e0e6e3;
+  font-size: clamp(0.8rem, 2.5vw, 0.9rem);
+  word-break: break-word;
+  gap: clamp(0.3rem, 1vw, 0.5rem);
 }
 
 .admin-list li:last-child {
@@ -112,113 +130,129 @@
 }
 
 .provider-image {
-  width: 40px;
-  height: 40px;
+  width: clamp(35px, 8vw, 45px);
+  height: clamp(35px, 8vw, 45px);
   object-fit: cover;
   border-radius: 6px;
-  margin-left: 0.5rem;
+  margin: clamp(0.3rem, 1vw, 0.5rem) 0;
   flex-shrink: 0;
 }
 
 /* Table Styles */
 .bookings-table-container {
-  max-height: 250px;
+  max-height: clamp(200px, 50vh, 300px);
   overflow-y: auto;
-  overflow-x: hidden;
+  overflow-x: auto;
   width: 100%;
   border-radius: 6px;
+  background: #f8faf9;
 }
 
 .bookings-table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
   font-size: clamp(0.75rem, 2.5vw, 0.85rem);
 }
 
 .bookings-table th,
 .bookings-table td {
-  padding: 0.5rem;
+  padding: clamp(0.4rem, 1.5vw, 0.6rem);
   text-align: left;
-  border-bottom: 1px solid #ecf0f1;
-  word-wrap: break-word;
+  border-bottom: 1px solid #e0e6e3;
+  word-break: break-word;
   white-space: normal;
-  max-width: 120px;
+  min-width: clamp(80px, 15vw, 100px);
 }
 
 .bookings-table th {
-  background-color: #3498db;
-  color: white;
+  background-color: #2e5a50;
+  color: #ffffff;
   position: sticky;
   top: 0;
   z-index: 10;
   font-weight: 600;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
 }
 
 .bookings-table td {
-  color: #2c3e50;
+  color: #1a3c34;
 }
 
 .bookings-table tr:hover {
-  background-color: #f5f6fa;
+  background-color: #e6ecea;
 }
 
 .status-badge {
-  padding: 0.25rem 0.5rem;
+  display: inline-block;
+  padding: clamp(0.2rem, 1vw, 0.3rem) clamp(0.4rem, 1.5vw, 0.6rem);
   border-radius: 12px;
-  font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+  font-size: clamp(0.7rem, 2.3vw, 0.8rem);
   font-weight: 500;
+  text-align: center;
+  min-width: clamp(60px, 10vw, 80px);
 }
 
 .status-pending {
-  background-color: #f1c40f;
-  color: #fff;
+  background-color: #f39c12;
+  color: #ffffff;
 }
 
 .status-confirmed {
-  background-color: #2ecc71;
-  color: #fff;
+  background-color: #4caf50;
+  color: #ffffff;
 }
 
 .status-cancelled {
-  background-color: #e74c3c;
-  color: #fff;
+  background-color: #d32f2f;
+  color: #ffffff;
 }
 
 /* Form Styles */
 .form-container {
-  background: #fff;
-  padding: 1rem;
+  background: #ffffff;
+  padding: clamp(0.75rem, 2vw, 1rem);
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin-top: 1rem;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+  margin-top: clamp(0.5rem, 1.5vw, 0.75rem);
   width: 100%;
   box-sizing: border-box;
 }
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: clamp(0.75rem, 2vw, 1rem);
 }
 
 .form-group label {
   display: block;
-  color: #34495e;
-  margin-bottom: 0.5rem;
-  font-size: clamp(0.8rem, 3vw, 0.95rem);
+  color: #2e5a50;
+  margin-bottom: clamp(0.3rem, 1vw, 0.5rem);
+  font-size: clamp(0.85rem, 2.8vw, 1rem);
+  font-weight: 500;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
   width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #bdc3c7;
+  padding: clamp(0.4rem, 1.5vw, 0.6rem);
+  border: 1px solid #a3b2a8;
   border-radius: 6px;
-  font-size: clamp(0.8rem, 2.8vw, 0.9rem);
+  font-size: clamp(0.8rem, 2.5vw, 0.9rem);
   box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #1a3c34;
+  outline: none;
 }
 
 .form-group textarea {
-  min-height: 80px;
+  min-height: clamp(60px, 15vw, 80px);
   resize: vertical;
 }
 
@@ -229,101 +263,230 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
-  padding: 1rem;
+  padding: clamp(0.5rem, 2vw, 1rem);
+  overflow-y: auto;
 }
 
 .modal-content {
-  background: #fff;
-  padding: 1.5rem;
-  border-radius: 8px;
-  max-width: 95%;
+  background: #ffffff;
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+  border-radius: 10px;
+  max-width: clamp(300px, 90vw, 600px);
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   box-sizing: border-box;
 }
 
-.modal-content h3,
+.modal-content h3 {
+  color: #2e5a50;
+  margin-bottom: clamp(0.75rem, 2vw, 1rem);
+  font-size: clamp(1.2rem, 3.5vw, 1.6rem);
+}
+
 .modal-content h4 {
-  color: #34495e;
-  margin-bottom: 1rem;
+  color: #2e5a50;
+  margin: clamp(0.5rem, 1.5vw, 0.75rem) 0;
+  font-size: clamp(1rem, 3vw, 1.3rem);
 }
 
 .modal-content p {
-  color: #7f8c8d;
-  font-size: clamp(0.85rem, 3vw, 1rem);
-  margin: 0.5rem 0;
-  word-wrap: break-word;
+  color: #4a6a60;
+  font-size: clamp(0.85rem, 2.8vw, 1rem);
+  margin: clamp(0.3rem, 1vw, 0.5rem) 0;
+  line-height: 1.5;
+}
+
+/* Error Message */
+.error {
+  color: #d32f2f;
+  font-size: clamp(0.9rem, 2.8vw, 1rem);
+  text-align: center;
+  margin: clamp(0.5rem, 2vw, 1rem) 0;
+}
+
+/* Scrollbar Customization */
+.admin-list::-webkit-scrollbar,
+.bookings-table-container::-webkit-scrollbar,
+.modal-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.admin-list::-webkit-scrollbar-track,
+.bookings-table-container::-webkit-scrollbar-track,
+.modal-content::-webkit-scrollbar-track {
+  background: #e0e6e3;
+  border-radius: 4px;
+}
+
+.admin-list::-webkit-scrollbar-thumb,
+.bookings-table-container::-webkit-scrollbar-thumb,
+.modal-content::-webkit-scrollbar-thumb {
+  background: #2e5a50;
+  border-radius: 4px;
+}
+
+.admin-list::-webkit-scrollbar-thumb:hover,
+.bookings-table-container::-webkit-scrollbar-thumb:hover,
+.modal-content::-webkit-scrollbar-thumb:hover {
+  background: #1a3c34;
 }
 
 /* Responsive Breakpoints */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .admin-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: clamp(0.5rem, 1.5vw, 1rem);
   }
 
   .bookings-table th,
   .bookings-table td {
-    padding: 0.4rem;
-    font-size: clamp(0.7rem, 2.5vw, 0.8rem);
-    max-width: 80px;
-  }
-
-  .admin-card {
-    padding: 1rem;
+    min-width: clamp(70px, 12vw, 90px);
+    font-size: clamp(0.7rem, 2.3vw, 0.8rem);
   }
 
   .admin-button {
-    padding: 0.4rem 0.8rem;
-    font-size: clamp(0.75rem, 2.5vw, 0.85rem);
-    margin: 0.25rem;
+    min-width: clamp(70px, 8vw, 90px);
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-grid {
+    grid-template-columns: 1fr;
+    gap: clamp(0.5rem, 1.5vw, 0.75rem);
+  }
+
+  .admin-card {
+    padding: clamp(0.6rem, 1.8vw, 1rem);
+  }
+
+  .admin-card h3 {
+    font-size: clamp(1rem, 3.2vw, 1.3rem);
   }
 
   .admin-list li {
     flex-direction: column;
     align-items: flex-start;
+    gap: clamp(0.4rem, 1.2vw, 0.6rem);
   }
 
   .provider-image {
-    margin: 0.5rem 0;
+    margin: clamp(0.4rem, 1.2vw, 0.6rem) 0;
+  }
+
+  .bookings-table-container {
+    max-height: clamp(180px, 45vh, 250px);
+  }
+
+  .bookings-table th,
+  .bookings-table td {
+    padding: clamp(0.3rem, 1.2vw, 0.5rem);
+    font-size: clamp(0.65rem, 2.2vw, 0.75rem);
+    min-width: clamp(60px, 10vw, 80px);
+  }
+
+  .modal-content {
+    max-width: clamp(280px, 95vw, 500px);
+    padding: clamp(0.75rem, 2vw, 1.25rem);
   }
 }
 
 @media (max-width: 480px) {
   .admin-panel {
-    padding: 0.5rem;
+    padding: clamp(0.5rem, 1.5vw, 0.75rem);
   }
 
   .admin-panel h2 {
-    font-size: clamp(1.2rem, 4vw, 1.5rem);
+    font-size: clamp(1.2rem, 4vw, 1.6rem);
   }
 
   .admin-card {
-    padding: 0.75rem;
+    padding: clamp(0.5rem, 1.5vw, 0.75rem);
   }
 
   .admin-card h3 {
-    font-size: clamp(1rem, 3.5vw, 1.2rem);
+    font-size: clamp(0.9rem, 3vw, 1.1rem);
+  }
+
+  .admin-button {
+    padding: clamp(0.3rem, 1.2vw, 0.5rem) clamp(0.6rem, 1.8vw, 0.8rem);
+    font-size: clamp(0.7rem, 2.3vw, 0.85rem);
+    min-width: clamp(60px, 8vw, 80px);
   }
 
   .form-group input,
   .form-group select,
   .form-group textarea {
-    font-size: clamp(0.75rem, 2.5vw, 0.85rem);
+    font-size: clamp(0.7rem, 2.3vw, 0.85rem);
+    padding: clamp(0.3rem, 1.2vw, 0.5rem);
+  }
+
+  .form-group label {
+    font-size: clamp(0.75rem, 2.5vw, 0.9rem);
   }
 
   .modal-content {
-    padding: 1rem;
-    max-width: 98%;
+    max-width: clamp(260px, 98vw, 400px);
+    padding: clamp(0.6rem, 1.8vw, 1rem);
   }
 
   .bookings-table-container {
-    max-height: 200px;
+    max-height: clamp(150px, 40vh, 200px);
+  }
+
+  .bookings-table th,
+  .bookings-table td {
+    min-width: clamp(50px, 8vw, 70px);
+    font-size: clamp(0.6rem, 2vw, 0.7rem);
+  }
+
+  .status-badge {
+    min-width: clamp(50px, 8vw, 70px);
+    font-size: clamp(0.6rem, 2vw, 0.75rem);
+  }
+
+  .provider-image {
+    width: clamp(30px, 7vw, 40px);
+    height: clamp(30px, 7vw, 40px);
+  }
+}
+
+@media (max-width: 320px) {
+  .admin-grid {
+    grid-template-columns: 1fr;
+    gap: clamp(0.4rem, 1.2vw, 0.6rem);
+  }
+
+  .admin-card {
+    padding: clamp(0.4rem, 1.2vw, 0.6rem);
+  }
+
+  .admin-panel h2 {
+    font-size: clamp(1rem, 3.5vw, 1.4rem);
+  }
+
+  .admin-card h3 {
+    font-size: clamp(0.85rem, 2.8vw, 1rem);
+  }
+
+  .bookings-table th,
+  .bookings-table td {
+    min-width: clamp(40px, 7vw, 60px);
+    font-size: clamp(0.55rem, 1.8vw, 0.65rem);
+  }
+
+  .admin-button {
+    min-width: clamp(50px, 7vw, 70px);
+    font-size: clamp(0.65rem, 2vw, 0.8rem);
+  }
+
+  .modal-content {
+    max-width: clamp(240px, 96vw, 300px);
+    padding: clamp(0.5rem, 1.5vw, 0.75rem);
   }
 }
