@@ -12,7 +12,11 @@ const PRODUCT_DETAILS = [
     relatedImages: [
       '/images/hiriwadunna_1.jpg',
       '/images/hiriwadunna_2.jpg',
-      '/images/hiriwadunna_3.jpg'
+      '/images/hiriwadunna_3.jpg',
+      '/images/catamaran_boat_ride_1.jpeg',
+      '/images/jeep_safari_1.jpg',
+      './images/village_cooking_1.jpeg',
+      './images/village_cooking_4.jpeg'
     ],
     additionalDetails: {
       duration: [
@@ -27,7 +31,7 @@ const PRODUCT_DETAILS = [
     }
   },
   {
-    name: 'Dambulla Temple and Sigiriya Tour Two Days Tour',
+    name: 'Dambulla Temple, Sigiriya Tour,Village Tour and jeep Safari Two Days Tour',
     image: '/images/dambulla.jpg',
     detailedDescription: `
       This two-day immersive journey takes you deep into Sri Lanka’s cultural and natural treasures. Day one includes a village tour where you’ll engage with local traditions, followed by a thrilling jeep safari through untamed landscapes teeming with wildlife. On day two, climb the iconic Sigiriya Lion Rock, a UNESCO World Heritage Site, and marvel at its ancient frescoes and breathtaking views. Conclude your adventure with a visit to the historic Dambulla Cave Temple, adorned with intricate Buddhist murals and statues. This tour is perfect for history buffs and adventure seekers alike.
@@ -136,7 +140,7 @@ const PRODUCT_DETAILS = [
   },
   {
     name: 'High Tea',
-    image: '/images/high_tea.jpg',
+    image: '/images/high_tea_1.webp',
     detailedDescription: `
       Indulge in a classic high tea experience, featuring a selection of fine teas, delicate sandwiches, and delectable pastries. Set in a charming environment, this activity offers a taste of colonial elegance blended with Sri Lankan hospitality. Perfect for those looking to relax and enjoy a refined afternoon.
     `,
@@ -167,7 +171,10 @@ const PRODUCT_DETAILS = [
       Discover the heart of Sri Lanka with a guided village tour. Walk through vibrant communities, interact with friendly locals, and learn about traditional crafts, farming, and daily life. This immersive experience showcases the rich cultural tapestry of rural Sri Lanka, making it a must-do for cultural explorers.
     `,
     relatedImages: [
-      '/images/village_tour_1.jpeg'
+      '/images/village_tour_1.jpeg',
+      '/images/catamaran_boat_ride_4.jpeg',
+      '/images/village_lunch.jpg',
+      '/images/catamaran_boat_ride_2.jpg'
     ],
     additionalDetails: {
       duration: ['2 - 2.5 hours']
@@ -202,7 +209,12 @@ const PRODUCT_DETAILS = [
     detailedDescription: `
       Hike to the summit of Pidurangala Rock for breathtaking views and a glimpse into Sri Lanka’s spiritual heritage. This lesser-known gem offers a quieter alternative to Sigiriya, with a historic rock temple and panoramic vistas of the surrounding landscape. Ideal for hikers and history lovers.
     `,
-    relatedImages: [],
+    relatedImages: [
+      '/images/pidurangala_1.jpg',
+      '/images/pidurangala_2.jpg',
+      '/images/pidurangala_3.jpg',
+      '/images/pidurangala.webp'
+    ],
     additionalDetails: {
       duration: ['3 - 4 hours']
     }
@@ -213,7 +225,12 @@ const PRODUCT_DETAILS = [
     detailedDescription: `
       Step into history with a guided tour of Polonnaruwa, an ancient royal capital and UNESCO World Heritage Site. Explore well-preserved ruins, including palaces, temples, and stupas, while learning about Sri Lanka’s medieval past. This tour is a must for history enthusiasts and cultural explorers.
     `,
-    relatedImages: [],
+    relatedImages: [
+      '/images/polonnaruwa_1.jpg',
+      '/images/polonnaruwa_2.jpg',
+      '/images/polonnaruwa_3.jpg',
+      '/images/polonnaruwa_4.jpg'
+    ],
     additionalDetails: {}
   },
   {
@@ -231,7 +248,12 @@ const PRODUCT_DETAILS = [
     detailedDescription: `
       Take a leisurely stroll through a traditional Sri Lankan village, guided by locals who share stories of their culture and traditions. This walking tour offers an intimate look at rural life, with opportunities to visit homes, farms, and local landmarks. Perfect for those seeking a slow-paced, authentic experience.
     `,
-    relatedImages: [],
+    relatedImages: [
+      '/images/village_walk_1.jpg',
+      '/images/village_walk_2.jpg',
+      '/images/village_walk_3.webp',
+      '/images/village_walk_4.webp'
+    ],
     additionalDetails: {
       duration: ['1.5 - 2.5 hours'],
       included: ['Water bottle'],
