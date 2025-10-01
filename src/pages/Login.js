@@ -1,25 +1,25 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import '../styles/App.css'; // Assuming you're using this for styles
+import '../styles/App.css';
 
 function Login() {
   const [formData, setFormData] = useState({ email: '', password: '', role: 'tourist' });
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null); // Added state for error message
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
-  // Using a clean URL by removing any trailing slashes from the environment variable
   const cleanApiUrl = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL.replace(/\/+$/, '') : 'http://localhost:5000/api';
+
+  console.log('API URL:', cleanApiUrl); // Debug the API URL
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setError(null); // Clear previous errors
+    setError(null);
     try {
-      // FIX: Corrected the API endpoint to prevent the duplicate '/api' path.
-      // The `cleanApiUrl` now handles this correctly.
+      console.log('Sending request to:', `${cleanApiUrl}/auth/login`, 'with data:', formData); // Debug the request
       const res = await axios.post(`${cleanApiUrl}/auth/login`, formData);
       localStorage.setItem('token', res.data.token);
       if (formData.role === 'tourist') navigate('/tourist-dashboard');
@@ -27,7 +27,6 @@ function Login() {
       else if (formData.role === 'admin') navigate('/admin-panel');
     } catch (err) {
       console.error('Login.js: Error logging in:', err.response?.data?.error || err.message);
-      // FIX: Replaced alert with a state-based error message
       setError(err.response?.data?.error || 'Failed to log in. Please check your credentials.');
     } finally {
       setLoading(false);
