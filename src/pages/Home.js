@@ -46,7 +46,7 @@ function Home() {
       caption: 'Experience local life with a fun tuk-tuk tour!'
     },
     {
-      src: 'images/village_cooking.jpg',
+      src: '/images/village_cooking.jpg',
       alt: 'Village Cooking Experience',
       title: 'Cook Like a Local',
       caption: 'Learn authentic Sri Lankan recipes!'
@@ -54,6 +54,7 @@ function Home() {
   ], []);
 
   useEffect(() => {
+    console.log('API URL:', apiUrl); // Debug API URL
     console.log('Slider initialized. Slides:', slides);
     slides.forEach(slide => {
       const img = new Image();
@@ -85,6 +86,15 @@ function Home() {
             return { data: [] };
           })
         ]);
+        // Validate response data
+        if (!Array.isArray(providersRes.data)) {
+          console.error('Providers response is not an array:', providersRes.data);
+          throw new Error('Invalid providers data');
+        }
+        if (!Array.isArray(reviewsRes.data)) {
+          console.error('Reviews response is not an array:', reviewsRes.data);
+          throw new Error('Invalid reviews data');
+        }
         console.log('Featured providers:', providersRes.data);
         console.log('Reviews:', reviewsRes.data);
         setFeaturedProviders(providersRes.data || []);
@@ -300,15 +310,15 @@ function Home() {
       <section className="gallery-section container">
         <h2>Our Gallery</h2>
         <video
-        src="/video/video1.mov"
-        autoPlay
-        loop
-        muted
-        controls
-        playsInline
-        className="gallery-video"
-        onError={(e) => console.error('Video failed to load:', e.target.error)}
-      />
+          src="/video/video1.mov"
+          autoPlay
+          loop
+          muted
+          controls
+          playsInline
+          className="gallery-video"
+          onError={(e) => console.error('Video failed to load:', e.target.error)}
+        />
       </section>
 
       <CompanyProducts />
@@ -317,26 +327,30 @@ function Home() {
         <h2>Featured Services</h2>
         <div className="services-container">
           <div className="services-slider" style={{ transform: `translateX(-${currentServiceSlide * 100}%)` }}>
-            {featuredProviders.map((provider) => (
-              <div key={provider._id} className="service-card">
-                <img
-                  src={provider.profilePicture || '/images/placeholder.jpg'}
-                  alt={provider.serviceName}
-                  className="service-image"
-                  onError={(e) => {
-                    console.error(`Failed to load image: ${provider.profilePicture}`);
-                    e.target.src = '/images/placeholder.jpg';
-                  }}
-                />
-                <h3>{provider.serviceName}</h3>
-                <p>{provider.category ? provider.category.replace('-', ' ') : 'Unknown'}</p>
-                <p>{provider.description ? provider.description.substring(0, 100) + '...' : 'No description available.'}</p>
-                <p className="price">USD {provider.price.toFixed(2)}</p>
-                <Link to={`/provider/${provider._id}`} className="service-button">View Details</Link>
-              </div>
-            ))}
+            {Array.isArray(featuredProviders) && featuredProviders.length > 0 ? (
+              featuredProviders.map((provider) => (
+                <div key={provider._id} className="service-card">
+                  <img
+                    src={provider.profilePicture || '/images/placeholder.jpg'}
+                    alt={provider.serviceName}
+                    className="service-image"
+                    onError={(e) => {
+                      console.error(`Failed to load image: ${provider.profilePicture}`);
+                      e.target.src = '/images/placeholder.jpg';
+                    }}
+                  />
+                  <h3>{provider.serviceName}</h3>
+                  <p>{provider.category ? provider.category.replace('-', ' ') : 'Unknown'}</p>
+                  <p>{provider.description ? provider.description.substring(0, 100) + '...' : 'No description available.'}</p>
+                  <p className="price">USD {provider.price.toFixed(2)}</p>
+                  <Link to={`/provider/${provider._id}`} className="service-button">View Details</Link>
+                </div>
+              ))
+            ) : (
+              <p>No featured providers available.</p>
+            )}
           </div>
-          {featuredProviders.length > 0 && (
+          {Array.isArray(featuredProviders) && featuredProviders.length > 0 && (
             <>
               <button
                 className="services-arrow services-arrow-left"
@@ -415,7 +429,7 @@ function Home() {
 
       <section className="reviews-section container">
         <h2>Customer Reviews</h2>
-        <ReviewGridSlider reviews={reviews.filter(review => review.reviewType === 'service' || review.reviewType === 'product')} />
+        <ReviewGridSlider reviews={Array.isArray(reviews) ? reviews.filter(review => review.reviewType === 'service' || review.reviewType === 'product') : []} />
       </section>
     </div>
   );
