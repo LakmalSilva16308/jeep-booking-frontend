@@ -297,6 +297,18 @@ function Home() {
         </div>
       </section>
 
+      <section className="gallery-section container">
+        <h2>Our Gallery</h2>
+        <video
+          src="/video/video_1.mp4"
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="gallery-video"
+        />
+      </section>
+
       <CompanyProducts />
 
       <section className="services-preview container">
