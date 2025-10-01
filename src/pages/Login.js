@@ -9,7 +9,7 @@ function Login() {
   const [error, setError] = useState(null); // Added state for error message
   const navigate = useNavigate();
   // Using a clean URL by removing any trailing slashes from the environment variable
-  const cleanApiUrl = process.env.REACT_APP_API_URL ;
+  const cleanApiUrl = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL.replace(/\/+$/, '') : 'http://localhost:5000/api';
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 

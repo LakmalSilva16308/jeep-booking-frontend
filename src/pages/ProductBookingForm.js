@@ -52,7 +52,7 @@ const PRICING_STRUCTURE = {
   'Hiriwadunna Village Tour and Jeep Safari One Day Tour': [
     { min: 1, max: Infinity, price: 45 }
   ],
-  'Village Tour and Jeep Safari Sigiriya Tour Dambulla Temple': [
+  'Sigiriya Tour,Dambulla Temple, Village Tour and Jeep Safari': [
     { min: 1, max: Infinity, price: 78 }
   ]
 };

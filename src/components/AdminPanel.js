@@ -135,7 +135,7 @@ function AdminPanel() {
     'Budget Village Tour', 'Village Tour', 'Bicycle Tour', 'Sigiriya Lion Rock',
     'Pidurangala Rock', 'Polonnaruwa City Tour', 'Motor Bikes Rent', 'Village Walk Tour',
     'Hiriwadunna Village Tour and Jeep Safari One Day Tour',
-    'Village Tour and Jeep Safari Sigiriya Tour Dambulla Temple'
+    'Sigiriya Tour,Dambulla Temple, Village Tour and Jeep Safari'
   ];
 
   // Normalize provider data
