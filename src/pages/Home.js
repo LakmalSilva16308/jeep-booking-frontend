@@ -54,7 +54,7 @@ function Home() {
   ], []);
 
   useEffect(() => {
-    console.log('API URL:', apiUrl); // Debug API URL
+    console.log('API URL:', apiUrl);
     console.log('Slider initialized. Slides:', slides);
     slides.forEach(slide => {
       const img = new Image();
@@ -86,7 +86,6 @@ function Home() {
             return { data: [] };
           })
         ]);
-        // Validate response data
         if (!Array.isArray(providersRes.data)) {
           console.error('Providers response is not an array:', providersRes.data);
           throw new Error('Invalid providers data');
