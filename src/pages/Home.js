@@ -300,7 +300,7 @@ function Home() {
       <section className="gallery-section container">
         <h2>Our Gallery</h2>
         <video
-        src="/video/video_1.mp4"
+        src="/video/video_1_converted.mp4"
         autoPlay
         loop
         muted
