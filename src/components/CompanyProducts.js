@@ -10,7 +10,7 @@ const COMPANY_PRODUCTS = [
     image: '/images/hiriwadunna.png'
   },
   {
-    name: 'Village Tour and Jeep Safari Sigiriya Tour Dambulla Temple',
+    name: 'Sigiriya Tour,Dambulla Temple, Village Tour and Jeep Safari',
     price: 78,
     description: 'Experience a two-day journey exploring a traditional village, a thrilling jeep safari, the iconic Sigiriya Lion Rock, and the historic Dambulla Cave Temple.',
     image: '/images/dambulla.jpg'
