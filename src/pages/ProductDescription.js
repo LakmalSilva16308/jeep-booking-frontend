@@ -1,5 +1,4 @@
 import React from 'react';
-import { Helmet } from 'react-helmet-async';
 import { useParams, Link } from 'react-router-dom';
 import '../styles/ProductDescription.css';
 
@@ -359,128 +358,134 @@ const ProductDescription = () => {
 
   if (!product) {
     return (
-      <div className="product-description-container">
-        <Helmet>
-          <title>Product Not Found - SLECO Tour</title>
-          <meta name="description" content="Explore Sri Lanka tourism with SLECO Tour’s eco-friendly adventures and cultural tours." />
-        </Helmet>
-        <h2>Product Not Found</h2>
-        <p>Sorry, we couldn't find the requested product.</p>
-        <Link to="/" className="cta-button">Back to Home</Link>
-      </div>
+      <>
+        <title>Product Not Found - SLECO Tour</title>
+        <meta name="description" content="Explore Sri Lanka tourism with SLECO Tour’s eco-friendly adventures and cultural tours." />
+        <meta name="keywords" content="sri lanka tourism, eco tourism sri lanka" />
+        <div className="product-description-container">
+          <h2>Product Not Found</h2>
+          <p>Sorry, we couldn't find the requested product.</p>
+          <Link to="/" className="cta-button">Back to Home</Link>
+        </div>
+      </>
     );
   }
 
   return (
-    <div className="product-description-container">
-      <Helmet>
-        <title>{product.seo.title}</title>
-        <meta name="description" content={product.seo.description} />
-        <meta name="keywords" content={product.seo.keywords} />
-        <meta property="og:title" content={product.seo.title} />
-        <meta property="og:description" content={product.seo.description} />
-        <meta property="og:image" content={`https://www.slecotour.com${product.image}`} />
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "TouristTrip",
-            "name": product.name,
-            "description": product.seo.description,
-            "url": `https://www.slecotour.com/product-description/${encodeURIComponent(product.name)}`
-          })}
-        </script>
-      </Helmet>
-      <div className="product-description-content animate-in">
-        <h1>{product.name}</h1>
-        <img
-          src={product.image}
-          alt={`${product.name} - Sri Lanka tourism adventure`}
-          className="product-description-image"
-          onError={(e) => {
-            console.error(`Failed to load image: ${product.image}`);
-            e.target.src = '/images/placeholder.jpg';
-          }}
-        />
-        <div className="product-description-text">
-          {product.detailedDescription.trim().split('\n').map((paragraph, index) => (
-            <p key={index}>{paragraph}</p>
-          ))}
-          <p>Discover the best of Sri Lanka tourism with {product.name.toLowerCase()}. Perfect for eco-tourists and adventure seekers visiting in 2025.</p>
-        </div>
-        {product.additionalDetails && (product.additionalDetails.duration?.length > 0 || product.additionalDetails.included?.length > 0 || product.additionalDetails.excluded?.length > 0 || product.additionalDetails.notes?.length > 0) && (
-          <div className="additional-details">
-            <h3>Additional Details</h3>
-            {product.additionalDetails.duration?.length > 0 && (
-              <div className="details-section">
-                <h4>Duration</h4>
-                <ul className="details-list">
-                  {product.additionalDetails.duration.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {product.additionalDetails.included?.length > 0 && (
-              <div className="details-section">
-                <h4>Included</h4>
-                <ul className="details-list">
-                  {product.additionalDetails.included.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {product.additionalDetails.excluded?.length > 0 && (
-              <div className="details-section">
-                <h4>Excluded</h4>
-                <ul className="details-list">
-                  {product.additionalDetails.excluded.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {product.additionalDetails.notes?.length > 0 && (
-              <div className="details-section">
-                <h4>Notes</h4>
-                <ul className="details-list">
-                  {product.additionalDetails.notes.map((item, index) => (
-                    <li key={index}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-            )}
+    <>
+      <title>{product.seo.title}</title>
+      <meta name="description" content={product.seo.description} />
+      <meta name="keywords" content={product.seo.keywords} />
+      <meta property="og:title" content={product.seo.title} />
+      <meta property="og:description" content={product.seo.description} />
+      <meta property="og:image" content={`https://www.slecotour.com${product.image}`} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={product.seo.title} />
+      <meta name="twitter:description" content={product.seo.description} />
+      <meta name="twitter:image" content={`https://www.slecotour.com${product.image}`} />
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "TouristTrip",
+          "name": product.name,
+          "description": product.seo.description,
+          "url": `https://www.slecotour.com/product-description/${encodeURIComponent(product.name)}`
+        })}
+      </script>
+
+      <div className="product-description-container">
+        <div className="product-description-content animate-in">
+          <h1>{product.name}</h1>
+          <img
+            src={product.image}
+            alt={`${product.name} - Sri Lanka tourism adventure`}
+            className="product-description-image"
+            onError={(e) => {
+              console.error(`Failed to load image: ${product.image}`);
+              e.target.src = '/images/placeholder.jpg';
+            }}
+          />
+          <div className="product-description-text">
+            {product.detailedDescription.trim().split('\n').map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+            <p>Discover the best of Sri Lanka tourism with {product.name.toLowerCase()}. Perfect for eco-tourists and adventure seekers visiting in 2025.</p>
           </div>
-        )}
-        <div className="product-description-actions">
-          <Link to={`/book-product/${encodeURIComponent(product.name)}`} className="cta-button">
-            Book Now
-          </Link>
-          <Link to="/" className="cta-button secondary">
-            Back to Home
-          </Link>
-        </div>
-        {product.relatedImages && product.relatedImages.length > 0 && (
-          <div className="related-images">
-            <h3>Explore More</h3>
-            <div className="related-images-grid">
-              {product.relatedImages.map((image, index) => (
-                <img
-                  key={index}
-                  src={image}
-                  alt={`${product.name} - Sri Lanka tourism image ${index + 1}`}
-                  className="related-image"
-                  onError={(e) => {
-                    console.error(`Failed to load related image: ${image}`);
-                    e.target.src = '/images/placeholder.jpg';
-                  }}
-                />
-              ))}
+          {product.additionalDetails && (product.additionalDetails.duration?.length > 0 || product.additionalDetails.included?.length > 0 || product.additionalDetails.excluded?.length > 0 || product.additionalDetails.notes?.length > 0) && (
+            <div className="additional-details">
+              <h3>Additional Details</h3>
+              {product.additionalDetails.duration?.length > 0 && (
+                <div className="details-section">
+                  <h4>Duration</h4>
+                  <ul className="details-list">
+                    {product.additionalDetails.duration.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {product.additionalDetails.included?.length > 0 && (
+                <div className="details-section">
+                  <h4>Included</h4>
+                  <ul className="details-list">
+                    {product.additionalDetails.included.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {product.additionalDetails.excluded?.length > 0 && (
+                <div className="details-section">
+                  <h4>Excluded</h4>
+                  <ul className="details-list">
+                    {product.additionalDetails.excluded.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {product.additionalDetails.notes?.length > 0 && (
+                <div className="details-section">
+                  <h4>Notes</h4>
+                  <ul className="details-list">
+                    {product.additionalDetails.notes.map((item, index) => (
+                      <li key={index}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
             </div>
+          )}
+          <div className="product-description-actions">
+            <Link to={`/book-product/${encodeURIComponent(product.name)}`} className="cta-button">
+              Book Now
+            </Link>
+            <Link to="/" className="cta-button secondary">
+              Back to Home
+            </Link>
           </div>
-        )}
+          {product.relatedImages && product.relatedImages.length > 0 && (
+            <div className="related-images">
+              <h3>Explore More</h3>
+              <div className="related-images-grid">
+                {product.relatedImages.map((image, index) => (
+                  <img
+                    key={index}
+                    src={image}
+                    alt={`${product.name} - Sri Lanka tourism image ${index + 1}`}
+                    className="related-image"
+                    onError={(e) => {
+                      console.error(`Failed to load related image: ${image}`);
+                      e.target.src = '/images/placeholder.jpg';
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

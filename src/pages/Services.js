@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
 import axios from 'axios';
 import ServiceCard from '../components/ServiceCard';
 import CompanyProducts from '../components/CompanyProducts';
@@ -55,44 +54,49 @@ function Services() {
   if (loading) return <div className="services-preview">Loading services...</div>;
 
   return (
-    <div className="services-preview">
-      <Helmet>
-        <title>Sri Lanka Jeep Safari & Eco Tours - SLECO Tour 2025</title>
-        <meta name="description" content="Book Sri Lanka jeep safaris in Yala National Park, Hiriwadunna village tours, and eco-friendly adventures with SLECO Tour for 2025." />
-        <meta name="keywords" content="sri lanka jeep safari, yala national park, hiriwadunna village tour, eco tourism sri lanka, catamaran boat ride sri lanka, sigiriya lion rock" />
-        <meta property="og:title" content="Sri Lanka Jeep Safari & Eco Tours - SLECO Tour" />
-        <meta property="og:description" content="Explore Yala jeep safaris, Hiriwadunna village tours, and Sigiriya adventures with SLECO Tour." />
-        <meta property="og:image" content="https://www.slecotour.com/images/jeep_safari.jpg" />
-      </Helmet>
-      <h1>Sri Lanka Jeep Safari & Eco-Friendly Tours</h1>
-      <p>Discover the best of Sri Lanka tourism with our eco-friendly adventures, including Yala jeep safaris, Hiriwadunna village tours, and cultural experiences like Sigiriya Lion Rock climbs.</p>
-      <CompanyProducts />
-      <h2>Featured Services</h2>
-      {providers.length > 0 ? (
-        <div className="services-container">
-          <div
-            className="services-grid"
-            style={isMobile ? {} : { transform: `translateX(-${currentIndex * (100 / cardsPerView)}%)` }}
-          >
-            {visibleProviders.map((provider) => (
-              <ServiceCard key={provider._id} provider={provider} />
-            ))}
+    <>
+      <title>Sri Lanka Jeep Safari & Eco Tours - SLECO Tour 2025</title>
+      <meta name="description" content="Book Sri Lanka jeep safaris in Yala National Park, Hiriwadunna village tours, and eco-friendly adventures with SLECO Tour for 2025." />
+      <meta name="keywords" content="sri lanka jeep safari, yala national park, hiriwadunna village tour, eco tourism sri lanka, catamaran boat ride sri lanka, sigiriya lion rock" />
+      <meta property="og:title" content="Sri Lanka Jeep Safari & Eco Tours - SLECO Tour" />
+      <meta property="og:description" content="Explore Yala jeep safaris, Hiriwadunna village tours, and Sigiriya adventures with SLECO Tour." />
+      <meta property="og:image" content="https://www.slecotour.com/images/jeep_safari.jpg" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="Sri Lanka Jeep Safari & Eco Tours - SLECO Tour" />
+      <meta name="twitter:description" content="Explore Yala jeep safaris, Hiriwadunna village tours, and Sigiriya adventures with SLECO Tour." />
+      <meta name="twitter:image" content="https://www.slecotour.com/images/jeep_safari.jpg" />
+
+      <div className="services-preview">
+        <h1>Sri Lanka Jeep Safari & Eco-Friendly Tours</h1>
+        <p>Discover the best of Sri Lanka tourism with our eco-friendly adventures, including Yala jeep safaris, Hiriwadunna village tours, and cultural experiences like Sigiriya Lion Rock climbs.</p>
+        <CompanyProducts />
+        <h2>Featured Services</h2>
+        {providers.length > 0 ? (
+          <div className="services-container">
+            <div
+              className="services-grid"
+              style={isMobile ? {} : { transform: `translateX(-${currentIndex * (100 / cardsPerView)}%)` }}
+            >
+              {visibleProviders.map((provider) => (
+                <ServiceCard key={provider._id} provider={provider} />
+              ))}
+            </div>
+            {!isMobile && providers.length > cardsPerView && (
+              <>
+                <button className="services-arrow services-arrow-left" onClick={prevSlide} aria-label="Previous services">
+                  &#10094;
+                </button>
+                <button className="services-arrow services-arrow-right" onClick={nextSlide} aria-label="Next services">
+                  &#10095;
+                </button>
+              </>
+            )}
           </div>
-          {!isMobile && providers.length > cardsPerView && (
-            <>
-              <button className="services-arrow services-arrow-left" onClick={prevSlide} aria-label="Previous services">
-                &#10094;
-              </button>
-              <button className="services-arrow services-arrow-right" onClick={nextSlide} aria-label="Next services">
-                &#10095;
-              </button>
-            </>
-          )}
-        </div>
-      ) : (
-        <p>No services available yet.</p>
-      )}
-    </div>
+        ) : (
+          <p>No services available yet.</p>
+        )}
+      </div>
+    </>
   );
 }
 
