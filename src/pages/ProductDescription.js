@@ -38,8 +38,13 @@ const PRODUCT_DETAILS = [
     `,
     relatedImages: [
       '/images/dambulla_1.jpg',
+      '/images/village_tour_1.jpeg',
+      '/images/dambulla_3.jpg',
+      '/images/sigiriya.jpeg',
       '/images/dambulla_2.jpg',
-      '/images/dambulla_3.jpg'
+      '/images/jeep1.jpeg',
+      '/images/jeep2.jpeg',
+      '/images/jeep4.jpeg'
     ],
     additionalDetails: {
       included: ['Village tour ticket'],
