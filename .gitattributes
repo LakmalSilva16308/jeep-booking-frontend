@@ -1,2 +1,3 @@
 *.mp4 !text !filter !merge !diff
 public/video/video_1.mp4 filter=lfs diff=lfs merge=lfs -text
+public/video/video_1_converted.mp4 filter=lfs diff=lfs merge=lfs -text
