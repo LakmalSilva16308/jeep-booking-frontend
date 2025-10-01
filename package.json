@@ -16,15 +16,20 @@
     "mongoose": "^8.18.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-helmet": "^6.1.0",
+    "react-helmet-async": "^2.0.5",
     "react-router-dom": "^7.8.2",
+    "react-router-sitemap": "^1.2.0",
     "react-scripts": "5.0.1",
+    "sitemap": "^8.0.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "generate-sitemap": "node sitemap-generator.js"
   },
   "eslintConfig": {
     "extends": [
