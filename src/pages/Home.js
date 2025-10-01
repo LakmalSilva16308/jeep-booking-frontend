@@ -304,6 +304,7 @@ function Home() {
         autoPlay
         loop
         muted
+        controls
         playsInline
         className="gallery-video"
         onError={(e) => console.error('Video failed to load:', e.target.error)}
