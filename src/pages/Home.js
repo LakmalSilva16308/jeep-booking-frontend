@@ -300,13 +300,14 @@ function Home() {
       <section className="gallery-section container">
         <h2>Our Gallery</h2>
         <video
-          src="/video/video_1.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="gallery-video"
-        />
+        src="/video/video_1.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="gallery-video"
+        onError={(e) => console.error('Video failed to load:', e.target.error)}
+      />
       </section>
 
       <CompanyProducts />
