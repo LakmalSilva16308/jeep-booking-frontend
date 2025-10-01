@@ -8,7 +8,7 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  const cleanApiUrl = process.env.REACT_APP_API_URL ? process.env.REACT_APP_API_URL.replace(/\/+$/, '') : 'http://localhost:5000/api';
+  const cleanApiUrl = process.env.REACT_APP_API_URL?.replace(/\/+$/, '') || 'https://jeep-booking-backend.vercel.app/api';
 
   console.log('API URL:', cleanApiUrl);
 
@@ -21,14 +21,15 @@ function Login() {
     try {
       console.log('Sending request to:', `${cleanApiUrl}/auth/login`, 'with data:', formData);
       const res = await axios.post(`${cleanApiUrl}/auth/login`, formData, {
-        headers: { 'Content-Type': 'application/json' }
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true // Enable credentials for CORS
       });
       localStorage.setItem('token', res.data.token);
       if (formData.role === 'tourist') navigate('/tourist-dashboard');
       else if (formData.role === 'provider') navigate('/provider-dashboard');
       else if (formData.role === 'admin') navigate('/admin-panel');
     } catch (err) {
-      console.error('Login.js: Error logging in:', err); // Log full error object
+      console.error('Login.js: Error logging in:', err);
       setError(err.response?.data?.error || 'Failed to log in. Please check your credentials or network connection.');
     } finally {
       setLoading(false);

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import '../styles/App.css';
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -21,6 +22,7 @@ function Signup() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const cleanApiUrl = process.env.REACT_APP_API_URL?.replace(/\/+$/, '') || 'https://jeep-booking-backend.vercel.app/api';
 
   const categories = [
     'Jeep Safari',
@@ -85,15 +87,19 @@ function Signup() {
         formData.photos.forEach((photo) => data.append('photos', photo));
       }
 
-      const res = await axios.post(`${process.env.REACT_APP_API_URL}/${endpoint}`, data, { headers });
+      const res = await axios.post(`${cleanApiUrl}/${endpoint}`, data, {
+        headers,
+        withCredentials: true // Enable credentials for CORS
+      });
       console.log('Signup response:', JSON.stringify(res.data, null, 2));
       localStorage.setItem('token', res.data.token);
       navigate(formData.role === 'tourist' ? '/tourist-dashboard' : '/provider-dashboard');
     } catch (err) {
       console.error('Signup error:', err.response?.data || err.message);
       setError('Error signing up: ' + (err.response?.data?.error || err.message));
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
