@@ -300,21 +300,28 @@ function Home() {
       <section className="gallery-section container">
       <h2>Our Gallery</h2>
       <video
-        src="/video/video_1_optimized.mp4"
-        type="video/mp4"
         autoPlay
         loop
         muted
         playsInline
         className="gallery-video"
         onError={(e) => {
-          console.error('Video failed to load:', {
-            message: e.target.error?.message || 'Unknown error',
-            code: e.target.error?.code || 'Unknown code',
-            src: e.target.currentSrc
-          });
+          if (e.target.tagName === 'VIDEO') {
+            console.error('Video failed to load:', {
+              message: e.target.error?.message || 'Unknown error',
+              code: e.target.error?.code || 'Unknown code',
+              src: e.target.currentSrc
+            });
+          } else {
+            console.error('Fallback image failed to load:', {
+              src: e.target.src,
+              alt: e.target.alt
+            });
+          }
         }}
       >
+        <source src="/video/video_1_optimized.mp4" type="video/mp4" />
+        <source src="/video/video_1.webm" type="video/webm" />
         <img src="/images/placeholder.jpg" alt="Gallery fallback" className="gallery-video" />
       </video>
     </section>
