@@ -313,7 +313,7 @@ function Home() {
             });
           }}
         >
-          <source src="/video/video_1_optimized.mp4" type="video/mp4" />
+          <source src="/video/video_1_max.mp4" type="video/mp4" />
           <source src="/video/video_1.webm" type="video/webm" />
           <img src="/images/placeholder.jpg" alt="Gallery fallback" className="gallery-video" onError={(e) => {
             console.error('Fallback image failed to load:', {
