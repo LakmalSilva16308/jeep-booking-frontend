@@ -1,4 +1,3 @@
-
 const { SitemapStream, streamToPromise } = require('sitemap');
 const { createWriteStream } = require('fs');
 const path = require('path');
@@ -44,7 +43,7 @@ const generateSitemap = async () => {
     console.log('Dynamic routes fetched:', dynamicRoutes);
   } catch (err) {
     console.error('Error fetching providers for sitemap:', err.message);
-    dynamicRoutes = []; // Ensure dynamicRoutes is defined even if API fails
+    dynamicRoutes = [];
   }
 
   const sitemap = new SitemapStream({ hostname: 'https://www.slecotour.com' });
