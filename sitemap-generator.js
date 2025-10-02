@@ -1,3 +1,4 @@
+
 const { SitemapStream, streamToPromise } = require('sitemap');
 const { createWriteStream } = require('fs');
 const path = require('path');
@@ -33,14 +34,17 @@ const generateSitemap = async () => {
   let dynamicRoutes = [];
   try {
     const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+    console.log(`Fetching providers from: ${apiUrl}/api/providers?approved=true`);
     const response = await axios.get(`${apiUrl}/api/providers`, { params: { approved: true } });
     dynamicRoutes = response.data.map(provider => ({
       url: `/provider/${provider._id}`,
       priority: 0.8,
       changefreq: 'weekly'
     }));
+    console.log('Dynamic routes fetched:', dynamicRoutes);
   } catch (err) {
-    console.error('Error fetching providers for sitemap:', err);
+    console.error('Error fetching providers for sitemap:', err.message);
+    dynamicRoutes = []; // Ensure dynamicRoutes is defined even if API fails
   }
 
   const sitemap = new SitemapStream({ hostname: 'https://www.slecotour.com' });
@@ -50,9 +54,11 @@ const generateSitemap = async () => {
   streamToPromise(sitemap)
     .then(data => {
       createWriteStream(path.join(__dirname, 'public', 'sitemap.xml')).write(data.toString());
-      console.log('Sitemap generated with keyword-optimized routes and dynamic provider pages!');
+      console.log('Sitemap generated successfully!');
     })
-    .catch(console.error);
+    .catch(err => {
+      console.error('Error writing sitemap:', err);
+    });
 };
 
 generateSitemap();
