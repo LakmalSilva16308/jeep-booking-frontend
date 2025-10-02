@@ -7,7 +7,7 @@ const PRODUCT_DETAILS = [
     name: 'Hiriwadunna Village Tour and Jeep Safari One Day Tour',
     image: '/images/hiriwadunna.png',
     detailedDescription: `
-      Embark on an unforgettable full-day adventure that combines the rich cultural heritage of Hiriwadunna with the thrill of a jeep safari. Begin your journey with a guided tour through the serene Hiriwadunna Village, where you'll witness traditional Sri Lankan rural life. Interact with locals, learn about their customs, and experience a bullock cart ride through lush paddy fields. Afterward, hop into a rugged jeep for an exhilarating safari through the wilderness, spotting wildlife such as elephants, deer, and exotic birds. This tour offers a perfect blend of culture and adventure, ideal for those seeking an authentic Sri Lankan experience.
+      Embark on an unforgettable full-day adventure with SLECO Tour, combining the rich cultural heritage of Hiriwadunna with the thrill of a jeep safari. Begin with a guided Hiriwadunna village tour, experiencing traditional Sri Lankan rural life. Interact with locals, learn about their customs, and enjoy a bullock cart ride through lush paddy fields. Then, hop into a rugged 4x4 for an exhilarating jeep safari through Sri Lanka’s wilderness, spotting elephants, deer, and exotic birds. This tour blends culture and adventure, ideal for eco-tourists visiting Sri Lanka in 2025.
     `,
     relatedImages: [
       '/images/hiriwadunna_1.jpg',
@@ -31,15 +31,15 @@ const PRODUCT_DETAILS = [
     },
     seo: {
       title: 'Hiriwadunna Village Tour & Jeep Safari - SLECO Tour 2025',
-      description: 'Experience a Hiriwadunna village tour and jeep safari in Sri Lanka. Explore rural life and wildlife with SLECO Tour.',
-      keywords: 'hiriwadunna village tour, sri lanka jeep safari, sri lanka tourism, eco tourism sri lanka'
+      description: 'Experience a Hiriwadunna village tour and jeep safari in Sri Lanka with SLECO Tour. Book your eco-tourism adventure now.',
+      keywords: 'hiriwadunna village tour, sri lanka jeep safari, sri lanka tourism, eco tourism sri lanka, yala jeep safari'
     }
   },
   {
     name: 'Sigiriya Tour,Dambulla Temple, Village Tour and Jeep Safari',
     image: '/images/dambulla.jpg',
     detailedDescription: `
-      This two-day immersive journey takes you deep into Sri Lanka’s cultural and natural treasures. Day one includes a village tour where you’ll engage with local traditions, followed by a thrilling jeep safari through untamed landscapes teeming with wildlife. On day two, climb the iconic Sigiriya Lion Rock, a UNESCO World Heritage Site, and marvel at its ancient frescoes and breathtaking views. Conclude your adventure with a visit to the historic Dambulla Cave Temple, adorned with intricate Buddhist murals and statues. This tour is perfect for history buffs and adventure seekers alike.
+      This two-day immersive journey with SLECO Tour explores Sri Lanka’s cultural and natural treasures. Day one features a Hiriwadunna village tour, engaging with local traditions, followed by a thrilling jeep safari through wildlife-rich landscapes. On day two, climb the iconic Sigiriya Lion Rock, a UNESCO World Heritage Site, to admire ancient frescoes and panoramic views. Conclude with a visit to the historic Dambulla Cave Temple, adorned with intricate Buddhist murals. Perfect for history buffs and adventure seekers visiting Sri Lanka in 2025.
     `,
     relatedImages: [
       '/images/dambulla_1.jpg',
@@ -57,7 +57,7 @@ const PRODUCT_DETAILS = [
     },
     seo: {
       title: 'Sigiriya, Dambulla & Jeep Safari Tour - SLECO Tour 2025',
-      description: 'Explore Sigiriya Lion Rock, Dambulla Temple, and a jeep safari in Sri Lanka with SLECO Tour. Book your cultural adventure now.',
+      description: 'Explore Sigiriya Lion Rock, Dambulla Temple, and a jeep safari with SLECO Tour. Book your Sri Lanka tourism adventure.',
       keywords: 'sigiriya lion rock, dambulla temple, sri lanka jeep safari, sri lanka tourism, eco tourism sri lanka'
     }
   },
@@ -65,7 +65,7 @@ const PRODUCT_DETAILS = [
     name: 'Jeep Safari',
     image: '/images/jeep_safari.jpg',
     detailedDescription: `
-      Feel the adrenaline rush as you venture into the heart of Sri Lanka’s wilderness on a jeep safari. Traverse rugged terrains, dense forests, and open plains in a 4x4 vehicle, guided by experienced drivers. Keep your eyes peeled for elephants, leopards, and a variety of bird species. This adventure is perfect for nature lovers and thrill-seekers looking to explore the untamed beauty of Sri Lanka’s wildlife reserves.
+      Experience the thrill of a Yala jeep safari with SLECO Tour, venturing into Sri Lanka’s wilderness. Traverse rugged terrains and dense forests in a 4x4 vehicle, guided by expert drivers. Spot elephants, leopards, and diverse bird species in Yala National Park. This adventure is perfect for nature lovers and thrill-seekers exploring Sri Lanka tourism in 2025.
     `,
     relatedImages: [
       '/images/jeep1.jpeg',
@@ -78,15 +78,15 @@ const PRODUCT_DETAILS = [
     },
     seo: {
       title: 'Yala Jeep Safari Sri Lanka - SLECO Tour 2025',
-      description: 'Book a Yala jeep safari in Sri Lanka with SLECO Tour. Spot leopards and elephants in Yala National Park.',
-      keywords: 'yala jeep safari sri lanka, sri lanka jeep safari, yala national park, eco tourism sri lanka'
+      description: 'Book a Yala jeep safari with SLECO Tour to spot leopards and elephants in Sri Lanka’s Yala National Park.',
+      keywords: 'yala jeep safari sri lanka, sri lanka jeep safari, yala national park, eco tourism sri lanka, sri lanka tourism'
     }
   },
   {
     name: 'Tuk Tuk Adventures',
     image: '/images/tuk_tuk.jpg',
     detailedDescription: `
-      Hop aboard a vibrant tuk-tuk and zip through the scenic villages of Sri Lanka. This fun-filled adventure lets you experience local life up close, from bustling markets to tranquil countryside roads. Your local driver will share stories and insights, making this a culturally rich and exciting way to explore the region. Perfect for those who want a lively, authentic travel experience.
+      Hop aboard a vibrant tuk-tuk with SLECO Tour for a lively adventure through Sri Lanka’s villages. Zip through scenic countryside roads and bustling markets, guided by a local driver sharing cultural insights. This fun-filled tuk-tuk tour is perfect for those seeking an authentic Sri Lanka tourism experience in 2025.
     `,
     relatedImages: [
       '/images/tuk_tuk_1.jpg',
@@ -100,7 +100,7 @@ const PRODUCT_DETAILS = [
     additionalDetails: {},
     seo: {
       title: 'Sri Lanka Tuk Tuk Tour - SLECO Tour 2025',
-      description: 'Experience a tuk-tuk adventure through Sri Lankan villages with SLECO Tour. Book now for an authentic cultural journey.',
+      description: 'Experience a tuk-tuk adventure through Sri Lankan villages with SLECO Tour. Book your cultural journey now.',
       keywords: 'tuk tuk tour sri lanka, sri lanka village tours, sri lanka tourism, eco tourism sri lanka'
     }
   },
@@ -108,7 +108,7 @@ const PRODUCT_DETAILS = [
     name: 'Catamaran Boat Ride',
     image: '/images/catamaran_boat_ride.jpg',
     detailedDescription: `
-      Set sail on a traditional catamaran for a serene journey across the tranquil waters of Hiriwadunna Lake. This peaceful boat ride offers stunning views of the surrounding nature and opportunities to spot local birdlife, including herons and kingfishers. Ideal for those seeking a relaxing escape, this experience combines natural beauty with cultural heritage.
+      Set sail on a traditional catamaran with SLECO Tour for a serene boat ride across Hiriwadunna Lake. Enjoy stunning views and spot local birdlife, including herons and kingfishers. This eco-friendly adventure is ideal for those seeking a relaxing Sri Lanka tourism experience in 2025.
     `,
     relatedImages: [
       '/images/catamaran_boat_ride_1.jpg',
@@ -121,16 +121,16 @@ const PRODUCT_DETAILS = [
     ],
     additionalDetails: {},
     seo: {
-      title: 'Catamaran Boat Ride Sri Lanka - Hiriwadunna Lake Tour',
+      title: 'Catamaran Boat Ride Sri Lanka - Hiriwadunna Lake Tour 2025',
       description: 'Enjoy a catamaran boat ride on Hiriwadunna Lake with SLECO Tour, perfect for bird-watching and eco tourism in Sri Lanka.',
-      keywords: 'catamaran boat ride sri lanka, hiriwadunna lake boat tour, sri lanka boat tours, eco tourism sri lanka'
+      keywords: 'catamaran boat ride sri lanka, hiriwadunna lake boat tour, sri lanka boat tours, eco tourism sri lanka, sri lanka tourism'
     }
   },
   {
     name: 'Village Cooking Experience',
     image: '/images/village_cooking.jpg',
     detailedDescription: `
-      Immerse yourself in Sri Lankan culinary traditions with a hands-on village cooking experience. Join local families in their homes to learn how to prepare authentic dishes using fresh, local ingredients. From spicy curries to fragrant rice, you’ll master recipes passed down through generations. Enjoy the fruits of your labor with a delicious meal, making this a delightful activity for food enthusiasts.
+      Immerse yourself in Sri Lankan culinary traditions with SLECO Tour’s village cooking experience. Join local families to learn authentic recipes using fresh ingredients, from spicy curries to fragrant rice. Enjoy your meal in a traditional setting, perfect for food lovers exploring Sri Lanka tourism in 2025.
     `,
     relatedImages: [
       '/images/village_cooking_1.jpg',
@@ -151,7 +151,7 @@ const PRODUCT_DETAILS = [
     },
     seo: {
       title: 'Sri Lanka Village Cooking Class - SLECO Tour 2025',
-      description: 'Learn authentic Sri Lankan recipes in a village cooking class with SLECO Tour. Perfect for food lovers and cultural explorers.',
+      description: 'Learn authentic Sri Lankan recipes in a village cooking class with SLECO Tour. Book your cultural experience now.',
       keywords: 'sri lanka village cooking class, sri lanka tourism, authentic sri lankan cooking, eco tourism sri lanka'
     }
   },
@@ -159,7 +159,7 @@ const PRODUCT_DETAILS = [
     name: 'Traditional Village Lunch',
     image: '/images/village_lunch.jpg',
     detailedDescription: `
-      Savor the flavors of Sri Lanka with a traditional village lunch served in an authentic setting. Enjoy a spread of home-cooked dishes, including rice, curries, and local delicacies, all prepared with fresh ingredients. This experience offers a taste of rural hospitality and a chance to connect with local culture through food.
+      Savor the flavors of Sri Lanka with SLECO Tour’s traditional village lunch. Enjoy home-cooked dishes like rice, curries, and local delicacies in an authentic rural setting. This experience offers a taste of Sri Lankan hospitality, perfect for eco-tourists in 2025.
     `,
     relatedImages: [],
     additionalDetails: {},
@@ -173,7 +173,7 @@ const PRODUCT_DETAILS = [
     name: 'Sundowners Cocktail',
     image: '/images/sundowners_cocktail.jpg',
     detailedDescription: `
-      Unwind with a refreshing cocktail as you watch the sun set over the stunning Sri Lankan landscape. This sundowner experience combines tropical drinks with breathtaking views, creating a perfect evening of relaxation. Whether you’re toasting with friends or enjoying a quiet moment, this is an ideal way to end your day.
+      Unwind with SLECO Tour’s sundowners cocktail experience, enjoying tropical drinks against the backdrop of a stunning Sri Lankan sunset. This relaxing activity is perfect for travelers seeking a serene end to their day in 2025.
     `,
     relatedImages: [],
     additionalDetails: {},
@@ -187,7 +187,7 @@ const PRODUCT_DETAILS = [
     name: 'High Tea',
     image: '/images/high_tea_1.webp',
     detailedDescription: `
-      Indulge in a classic high tea experience, featuring a selection of fine teas, delicate sandwiches, and delectable pastries. Set in a charming environment, this activity offers a taste of colonial elegance blended with Sri Lankan hospitality. Perfect for those looking to relax and enjoy a refined afternoon.
+      Indulge in SLECO Tour’s high tea experience, featuring fine teas, sandwiches, and pastries in a charming Sri Lankan setting. This blend of colonial elegance and local hospitality is perfect for a refined afternoon in 2025.
     `,
     relatedImages: [],
     additionalDetails: {},
@@ -201,7 +201,7 @@ const PRODUCT_DETAILS = [
     name: 'Bullock Cart Ride',
     image: '/images/bullockcart_ride.jpg',
     detailedDescription: `
-      Step back in time with a traditional bullock cart ride through the picturesque countryside. This leisurely journey offers a glimpse into rural Sri Lankan life, with scenic views of paddy fields and village homes. Guided by local farmers, this experience is both nostalgic and educational, ideal for families and culture enthusiasts.
+      Step back in time with SLECO Tour’s traditional bullock cart ride through Sri Lanka’s countryside. Enjoy scenic views of paddy fields and village homes, guided by local farmers. This nostalgic experience is ideal for families and culture enthusiasts in 2025.
     `,
     relatedImages: [
       '/images/bullockcart_ride_1.jpeg',
@@ -223,7 +223,7 @@ const PRODUCT_DETAILS = [
     name: 'Village Tour',
     image: '/images/tour.jpg',
     detailedDescription: `
-      Discover the heart of Sri Lanka with a guided village tour. Walk through vibrant communities, interact with friendly locals, and learn about traditional crafts, farming, and daily life. This immersive experience showcases the rich cultural tapestry of rural Sri Lanka, making it a must-do for cultural explorers.
+      Discover rural Sri Lanka with SLECO Tour’s guided village tour. Walk through vibrant communities, interact with locals, and learn about traditional crafts and farming. This immersive experience is a must-do for cultural explorers in 2025.
     `,
     relatedImages: [
       '/images/village_tour_1.jpeg',
@@ -244,7 +244,7 @@ const PRODUCT_DETAILS = [
     name: 'Bicycle Tour',
     image: '/images/bicycle.jpeg',
     detailedDescription: `
-      Pedal through the scenic countryside on a guided bicycle tour, exploring hidden trails, lush paddy fields, and quaint villages. This eco-friendly adventure offers a refreshing way to connect with nature and local culture, with opportunities to stop at local markets or temples along the way.
+      Pedal through Sri Lanka’s scenic countryside with SLECO Tour’s guided bicycle tour. Explore hidden trails, lush paddy fields, and quaint villages, stopping at local markets or temples. This eco-friendly adventure is perfect for nature lovers in 2025.
     `,
     relatedImages: [],
     additionalDetails: {},
@@ -258,7 +258,7 @@ const PRODUCT_DETAILS = [
     name: 'Sigiriya Lion Rock',
     image: '/images/sigiriya.jpeg',
     detailedDescription: `
-      Ascend the majestic Sigiriya Lion Rock, a UNESCO World Heritage Site and one of Sri Lanka’s most iconic landmarks. Explore the ancient fortress, admire its stunning frescoes, and enjoy panoramic views from the summit. This historical adventure is perfect for those eager to uncover Sri Lanka’s rich past.
+      Ascend the majestic Sigiriya Lion Rock with SLECO Tour, a UNESCO World Heritage Site. Explore the ancient fortress, admire its stunning frescoes, and enjoy panoramic views. This historical adventure is perfect for uncovering Sri Lanka’s rich past in 2025.
     `,
     relatedImages: [],
     additionalDetails: {
@@ -277,7 +277,7 @@ const PRODUCT_DETAILS = [
     name: 'Pidurangala Rock',
     image: '/images/pidurangala.webp',
     detailedDescription: `
-      Hike to the summit of Pidurangala Rock for breathtaking views and a glimpse into Sri Lanka’s spiritual heritage. This lesser-known gem offers a quieter alternative to Sigiriya, with a historic rock temple and panoramic vistas of the surrounding landscape. Ideal for hikers and history lovers.
+      Hike Pidurangala Rock with SLECO Tour for breathtaking views and a glimpse into Sri Lanka’s spiritual heritage. This quieter alternative to Sigiriya features a historic rock temple and panoramic vistas, ideal for hikers and history lovers in 2025.
     `,
     relatedImages: [
       '/images/pidurangala_1.jpg',
@@ -298,7 +298,7 @@ const PRODUCT_DETAILS = [
     name: 'Polonnaruwa City Tour',
     image: '/images/polonnaruwa.jpg',
     detailedDescription: `
-      Step into history with a guided tour of Polonnaruwa, an ancient royal capital and UNESCO World Heritage Site. Explore well-preserved ruins, including palaces, temples, and stupas, while learning about Sri Lanka’s medieval past. This tour is a must for history enthusiasts and cultural explorers.
+      Explore Polonnaruwa, an ancient royal capital and UNESCO World Heritage Site, with SLECO Tour. Visit well-preserved ruins, including palaces and temples, while learning about Sri Lanka’s medieval past. A must for history enthusiasts in 2025.
     `,
     relatedImages: [
       '/images/polonnaruwa_1.jpg',
@@ -317,7 +317,7 @@ const PRODUCT_DETAILS = [
     name: 'Motor Bikes Rent',
     image: '/images/motor.jpg',
     detailedDescription: `
-      Embark on a thrilling motorbike adventure through Sri Lanka’s scenic landscapes. Rent a reliable motorbike and explore at your own pace, from rural villages to coastal roads. This experience is perfect for adventure seekers looking for freedom and flexibility in their travels.
+      Embark on a thrilling motorbike adventure with SLECO Tour, exploring Sri Lanka’s scenic landscapes at your own pace. Rent a reliable motorbike to ride through rural villages and coastal roads, perfect for adventure seekers in 2025.
     `,
     relatedImages: [],
     additionalDetails: {},
@@ -331,7 +331,7 @@ const PRODUCT_DETAILS = [
     name: 'Village Walk Tour',
     image: '/images/walk.jpg',
     detailedDescription: `
-      Take a leisurely stroll through a traditional Sri Lankan village, guided by locals who share stories of their culture and traditions. This walking tour offers an intimate look at rural life, with opportunities to visit homes, farms, and local landmarks. Perfect for those seeking a slow-paced, authentic experience.
+      Join SLECO Tour for a leisurely village walk tour through Sri Lanka’s rural communities. Guided by locals, explore traditional crafts, farming, and daily life for an intimate cultural experience in 2025.
     `,
     relatedImages: [
       '/images/village_walk_1.jpg',
@@ -359,9 +359,10 @@ const ProductDescription = () => {
   if (!product) {
     return (
       <>
-        <title>Product Not Found - SLECO Tour</title>
+        <title>Product Not Found - SLECO Tour 2025</title>
         <meta name="description" content="Explore Sri Lanka tourism with SLECO Tour’s eco-friendly adventures and cultural tours." />
         <meta name="keywords" content="sri lanka tourism, eco tourism sri lanka" />
+        <link rel="canonical" href="https://www.slecotour.com/" />
         <div className="product-description-container">
           <h2>Product Not Found</h2>
           <p>Sorry, we couldn't find the requested product.</p>
@@ -379,17 +380,26 @@ const ProductDescription = () => {
       <meta property="og:title" content={product.seo.title} />
       <meta property="og:description" content={product.seo.description} />
       <meta property="og:image" content={`https://www.slecotour.com${product.image}`} />
+      <meta property="og:url" content={`https://www.slecotour.com/product-description/${encodeURIComponent(product.name)}`} />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content={product.seo.title} />
       <meta name="twitter:description" content={product.seo.description} />
       <meta name="twitter:image" content={`https://www.slecotour.com${product.image}`} />
+      <link rel="canonical" href={`https://www.slecotour.com/product-description/${encodeURIComponent(product.name)}`} />
       <script type="application/ld+json">
         {JSON.stringify({
           "@context": "https://schema.org",
           "@type": "TouristTrip",
           "name": product.name,
           "description": product.seo.description,
-          "url": `https://www.slecotour.com/product-description/${encodeURIComponent(product.name)}`
+          "url": `https://www.slecotour.com/product-description/${encodeURIComponent(product.name)}`,
+          "image": `https://www.slecotour.com${product.image}`,
+          "offers": {
+            "@type": "Offer",
+            "availability": "https://schema.org/InStock",
+            "priceCurrency": "USD",
+            "url": `https://www.slecotour.com/book-product/${encodeURIComponent(product.name)}`
+          }
         })}
       </script>
 
@@ -398,8 +408,9 @@ const ProductDescription = () => {
           <h1>{product.name}</h1>
           <img
             src={product.image}
-            alt={`${product.name} - Sri Lanka tourism adventure`}
+            alt={`${product.name} - Sri Lanka Tourism Adventure 2025`}
             className="product-description-image"
+            loading="lazy"
             onError={(e) => {
               console.error(`Failed to load image: ${product.image}`);
               e.target.src = '/images/placeholder.jpg';
@@ -409,7 +420,7 @@ const ProductDescription = () => {
             {product.detailedDescription.trim().split('\n').map((paragraph, index) => (
               <p key={index}>{paragraph}</p>
             ))}
-            <p>Discover the best of Sri Lanka tourism with {product.name.toLowerCase()}. Perfect for eco-tourists and adventure seekers visiting in 2025.</p>
+            <p>Discover the best of <Link to="/services">Sri Lanka tourism</Link> with {product.name.toLowerCase()}. Book now for an unforgettable adventure in 2025!</p>
           </div>
           {product.additionalDetails && (product.additionalDetails.duration?.length > 0 || product.additionalDetails.included?.length > 0 || product.additionalDetails.excluded?.length > 0 || product.additionalDetails.notes?.length > 0) && (
             <div className="additional-details">
@@ -463,17 +474,21 @@ const ProductDescription = () => {
             <Link to="/" className="cta-button secondary">
               Back to Home
             </Link>
+            <Link to="/services" className="cta-button secondary">
+              Explore More Tours
+            </Link>
           </div>
           {product.relatedImages && product.relatedImages.length > 0 && (
             <div className="related-images">
-              <h3>Explore More</h3>
+              <h3>Explore More of {product.name}</h3>
               <div className="related-images-grid">
                 {product.relatedImages.map((image, index) => (
                   <img
                     key={index}
                     src={image}
-                    alt={`${product.name} - Sri Lanka tourism image ${index + 1}`}
+                    alt={`${product.name} - Sri Lanka Tourism Image ${index + 1}`}
                     className="related-image"
+                    loading="lazy"
                     onError={(e) => {
                       console.error(`Failed to load related image: ${image}`);
                       e.target.src = '/images/placeholder.jpg';

@@ -29,27 +29,27 @@ function Home() {
   const slides = useMemo(() => [
     {
       src: '/images/jeep_safari.jpg',
-      alt: 'Jeep Safari Adventure',
-      title: 'Discover Amazing Adventures',
-      caption: 'Explore Jeep Safaris, Boat Rides, and More!'
+      alt: 'Yala Jeep Safari Adventure - Sri Lanka Tourism',
+      title: 'Discover Yala Jeep Safaris',
+      caption: 'Explore thrilling jeep safaris in Yala National Park with SLECO Tour.'
     },
     {
       src: '/images/catamaran_boat_ride.jpg',
-      alt: 'Catamaran Boat Ride',
-      title: 'Catamaran Birds Watching Tour',
-      caption: 'Enjoy a peaceful boat ride on Hiriwadunna Lake!'
+      alt: 'Catamaran Boat Ride Hiriwadunna - Eco Tourism Sri Lanka',
+      title: 'Hiriwadunna Lake Boat Ride',
+      caption: 'Enjoy a serene catamaran boat ride on Hiriwadunna Lake.'
     },
     {
       src: '/images/tuk_tuk.jpg',
-      alt: 'Tuk Tuk Adventure',
-      title: 'Ride Through the Village',
-      caption: 'Experience local life with a fun tuk-tuk tour!'
+      alt: 'Tuk Tuk Village Tour - Sri Lanka Tourism',
+      title: 'Tuk Tuk Village Adventures',
+      caption: 'Experience Sri Lankan village life with a fun tuk-tuk tour.'
     },
     {
       src: '/images/village_cooking.jpg',
-      alt: 'Village Cooking Experience',
-      title: 'Cook Like a Local',
-      caption: 'Learn authentic Sri Lankan recipes!'
+      alt: 'Sri Lankan Village Cooking Class - Eco Tourism',
+      title: 'Authentic Village Cooking',
+      caption: 'Learn traditional Sri Lankan recipes in a village setting.'
     }
   ], []);
 
@@ -89,7 +89,6 @@ function Home() {
           })
         ]);
 
-        // Validate response data
         const providersData = Array.isArray(providersRes.data) ? providersRes.data : [];
         const reviewsData = Array.isArray(reviewsRes.data) ? reviewsRes.data : [];
 
@@ -257,179 +256,207 @@ function Home() {
   if (error) return <div className="container error">{error}</div>;
 
   return (
-    <div className="home">
-      <section className="hero">
-        <div className="hero-slider">
-          <div className="slider">
-            {slides.map((slide, index) => (
-              <div
-                key={index}
-                className={`slide ${index === currentSlide ? 'active' : ''}`}
-              >
-                <img
-                  src={slide.src}
-                  alt={slide.alt}
-                  className="slide-image"
-                  onLoad={() => console.log(`Image loaded: ${slide.src}`)}
-                  onError={(e) => {
-                    console.error(`Failed to load image: ${slide.src}`);
-                    e.target.src = '/images/placeholder.jpg';
-                  }}
-                />
-                <div className="hero-content">
-                  <h1>{slide.title}</h1>
-                  <p>{slide.caption}</p>
-                  <Link to="/services" className="cta-button" data-discover="true">
-                    Book Your Adventure
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-          <button className="slider-arrow left-arrow" onClick={prevSlide} aria-label="Previous slide">
-            &#10094;
-          </button>
-          <button className="slider-arrow right-arrow" onClick={nextSlide} aria-label="Next slide">
-            &#10095;
-          </button>
-          <div className="slider-dots">
-            {slides.map((_, index) => (
-              <span
-                key={index}
-                className={`dot ${index === currentSlide ? 'active' : ''}`}
-                onClick={() => goToSlide(index)}
-                aria-label={`Go to slide ${index + 1}`}
-              ></span>
-            ))}
-          </div>
-        </div>
-      </section>
+    <>
+      <title>SLECO Tour - Best Sri Lanka Tourism Adventures 2025</title>
+      <meta name="description" content="Explore Sri Lanka tourism with SLECO Tour: Yala jeep safaris, Hiriwadunna village tours, and Sigiriya Lion Rock climbs for 2025." />
+      <meta name="keywords" content="sri lanka tourism, yala jeep safari, hiriwadunna village tour, sigiriya lion rock, eco tourism sri lanka, catamaran boat ride" />
+      <meta property="og:title" content="SLECO Tour - Sri Lanka Tourism Adventures 2025" />
+      <meta property="og:description" content="Book Yala jeep safaris, Hiriwadunna village tours, and Sigiriya Lion Rock climbs with SLECO Tour." />
+      <meta property="og:image" content="https://www.slecotour.com/images/jeep_safari.jpg" />
+      <meta property="og:url" content="https://www.slecotour.com/" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content="SLECO Tour - Sri Lanka Tourism Adventures" />
+      <meta name="twitter:description" content="Book Yala jeep safaris, Hiriwadunna village tours, and Sigiriya Lion Rock climbs for 2025." />
+      <meta name="twitter:image" content="https://www.slecotour.com/images/jeep_safari.jpg" />
+      <link rel="canonical" href="https://www.slecotour.com/" />
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          "name": "SLECO Tour",
+          "url": "https://www.slecotour.com/",
+          "description": "Book eco-friendly Sri Lanka tourism adventures including Yala jeep safaris and Hiriwadunna village tours."
+        })}
+      </script>
 
-      <section className="gallery-section container">
-        <h2>Our Gallery</h2>
-        <video
-          src="/video/video1.mov"
-          autoPlay
-          loop
-          muted
-          controls
-          playsInline
-          className="gallery-video"
-          onError={(e) => console.error('Video failed to load:', e.target.error)}
-        />
-      </section>
-
-      <CompanyProducts />
-
-      <section className="services-preview container">
-        <h2>Featured Services</h2>
-        <div className="services-container">
-          <div className="services-slider" style={{ transform: `translateX(-${currentServiceSlide * 100}%)` }}>
-            {featuredProviders.length > 0 ? (
-              featuredProviders.map((provider) => (
-                <div key={provider._id} className="service-card">
+      <div className="home">
+        <section className="hero">
+          <div className="hero-slider">
+            <div className="slider">
+              {slides.map((slide, index) => (
+                <div
+                  key={index}
+                  className={`slide ${index === currentSlide ? 'active' : ''}`}
+                >
                   <img
-                    src={provider.profilePicture || '/images/placeholder.jpg'}
-                    alt={provider.serviceName}
-                    className="service-image"
+                    src={slide.src}
+                    alt={slide.alt}
+                    className="slide-image"
+                    loading="lazy"
+                    onLoad={() => console.log(`Image loaded: ${slide.src}`)}
                     onError={(e) => {
-                      console.error(`Failed to load image: ${provider.profilePicture}`);
+                      console.error(`Failed to load image: ${slide.src}`);
                       e.target.src = '/images/placeholder.jpg';
                     }}
                   />
-                  <h3>{provider.serviceName}</h3>
-                  <p>{provider.category ? provider.category.replace('-', ' ') : 'Unknown'}</p>
-                  <p>{provider.description ? provider.description.substring(0, 100) + '...' : 'No description available.'}</p>
-                  <p className="price">USD {provider.price.toFixed(2)}</p>
-                  <Link to={`/provider/${provider._id}`} className="service-button">View Details</Link>
+                  <div className="hero-content">
+                    <h1>{slide.title}</h1>
+                    <p>{slide.caption}</p>
+                    <Link to="/services" className="cta-button" data-discover="true">
+                      Book Your Adventure
+                    </Link>
+                  </div>
                 </div>
-              ))
-            ) : (
-              <p>No featured providers available.</p>
+              ))}
+            </div>
+            <button className="slider-arrow left-arrow" onClick={prevSlide} aria-label="Previous slide">
+              &#10094;
+            </button>
+            <button className="slider-arrow right-arrow" onClick={nextSlide} aria-label="Next slide">
+              &#10095;
+            </button>
+            <div className="slider-dots">
+              {slides.map((_, index) => (
+                <span
+                  key={index}
+                  className={`dot ${index === currentSlide ? 'active' : ''}`}
+                  onClick={() => goToSlide(index)}
+                  aria-label={`Go to slide ${index + 1}`}
+                ></span>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="gallery-section container">
+          <h2>Our Gallery</h2>
+          <p>Discover <Link to="/product-description/Hiriwadunna%20Village%20Tour%20and%20Jeep%20Safari%20One%20Day%20Tour">Hiriwadunna village tours</Link> and <Link to="/product-description/Jeep%20Safari">Yala jeep safaris</Link> in our gallery.</p>
+          <video
+            src="/video/video1.mov"
+            autoPlay
+            loop
+            muted
+            controls
+            playsInline
+            className="gallery-video"
+            onError={(e) => console.error('Video failed to load:', e.target.error)}
+          />
+        </section>
+
+        <CompanyProducts />
+
+        <section className="services-preview container">
+          <h2>Featured Sri Lanka Tourism Services</h2>
+          <p>Explore our top eco-friendly adventures, including <Link to="/product-description/Sigiriya%20Lion%20Rock">Sigiriya Lion Rock climbs</Link> and <Link to="/product-description/Catamaran%20Boat%20Ride">catamaran boat rides</Link>.</p>
+          <div className="services-container">
+            <div className="services-slider" style={{ transform: `translateX(-${currentServiceSlide * 100}%)` }}>
+              {featuredProviders.length > 0 ? (
+                featuredProviders.map((provider) => (
+                  <div key={provider._id} className="service-card">
+                    <img
+                      src={provider.profilePicture || '/images/placeholder.jpg'}
+                      alt={`${provider.serviceName} - Sri Lanka Tourism`}
+                      className="service-image"
+                      loading="lazy"
+                      onError={(e) => {
+                        console.error(`Failed to load image: ${provider.profilePicture}`);
+                        e.target.src = '/images/placeholder.jpg';
+                      }}
+                    />
+                    <h3>{provider.serviceName}</h3>
+                    <p>{provider.category ? provider.category.replace('-', ' ') : 'Unknown'}</p>
+                    <p>{provider.description ? provider.description.substring(0, 100) + '...' : 'No description available.'}</p>
+                    <p className="price">USD {provider.price.toFixed(2)}</p>
+                    <Link to={`/provider/${provider._id}`} className="service-button">View Details</Link>
+                  </div>
+                ))
+              ) : (
+                <p>No featured providers available.</p>
+              )}
+            </div>
+            {featuredProviders.length > 0 && (
+              <>
+                <button
+                  className="services-arrow services-arrow-left"
+                  onClick={prevServiceSlide}
+                  disabled={currentServiceSlide === 0}
+                  aria-label="Previous services"
+                >
+                  &#10094;
+                </button>
+                <button
+                  className="services-arrow services-arrow-right"
+                  onClick={nextServiceSlide}
+                  disabled={currentServiceSlide === Math.ceil(featuredProviders.length / 4) - 1}
+                  aria-label="Next services"
+                >
+                  &#10095;
+                </button>
+              </>
             )}
           </div>
-          {featuredProviders.length > 0 && (
-            <>
-              <button
-                className="services-arrow services-arrow-left"
-                onClick={prevServiceSlide}
-                disabled={currentServiceSlide === 0}
-                aria-label="Previous services"
-              >
-                &#10094;
-              </button>
-              <button
-                className="services-arrow services-arrow-right"
-                onClick={nextServiceSlide}
-                disabled={currentServiceSlide === Math.ceil(featuredProviders.length / 4) - 1}
-                aria-label="Next services"
-              >
-                &#10095;
-              </button>
-            </>
-          )}
-        </div>
-      </section>
-
-      {userRole === 'tourist' && (
-        <section className="submit-review container">
-          <h2>Submit a Review</h2>
-          {confirmedProviders.length > 0 ? (
-            <div className="form-container">
-              <div className="form-group">
-                <label htmlFor="targetId">Select Service or Product</label>
-                <select
-                  id="targetId"
-                  name="targetId"
-                  value={reviewForm.targetId}
-                  onChange={handleReviewChange}
-                  required
-                >
-                  <option value="">Select a service or product</option>
-                  {confirmedProviders.map(provider => (
-                    <option key={provider.id} value={provider.id}>{provider.serviceName}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="form-group">
-                <label htmlFor="rating">Rating (1-5)</label>
-                <select
-                  id="rating"
-                  name="rating"
-                  value={reviewForm.rating}
-                  onChange={handleReviewChange}
-                  required
-                >
-                  {[1, 2, 3, 4, 5].map(num => (
-                    <option key={num} value={num}>{num}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="form-group">
-                <label htmlFor="comment">Comment</label>
-                <textarea
-                  id="comment"
-                  name="comment"
-                  value={reviewForm.comment}
-                  onChange={handleReviewChange}
-                  required
-                />
-              </div>
-              <button className="cta-button" onClick={handleReviewSubmit}>Submit Review</button>
-              {reviewError && <p className="error">{reviewError}</p>}
-              {reviewSuccess && <p className="success">{reviewSuccess}</p>}
-            </div>
-          ) : (
-            <p className="info">You need a confirmed booking to submit a review.</p>
-          )}
         </section>
-      )}
 
-      <section className="reviews-section container">
-        <h2>Customer Reviews</h2>
-        <ReviewGridSlider reviews={Array.isArray(reviews) ? reviews.filter(review => review.reviewType === 'service' || review.reviewType === 'product') : []} />
-      </section>
-    </div>
+        {userRole === 'tourist' && (
+          <section className="submit-review container">
+            <h2>Submit a Review for Your Adventure</h2>
+            {confirmedProviders.length > 0 ? (
+              <div className="form-container">
+                <div className="form-group">
+                  <label htmlFor="targetId">Select Service or Product</label>
+                  <select
+                    id="targetId"
+                    name="targetId"
+                    value={reviewForm.targetId}
+                    onChange={handleReviewChange}
+                    required
+                  >
+                    <option value="">Select a service or product</option>
+                    {confirmedProviders.map(provider => (
+                      <option key={provider.id} value={provider.id}>{provider.serviceName}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="rating">Rating (1-5)</label>
+                  <select
+                    id="rating"
+                    name="rating"
+                    value={reviewForm.rating}
+                    onChange={handleReviewChange}
+                    required
+                  >
+                    {[1, 2, 3, 4, 5].map(num => (
+                      <option key={num} value={num}>{num}</option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="comment">Comment</label>
+                  <textarea
+                    id="comment"
+                    name="comment"
+                    value={reviewForm.comment}
+                    onChange={handleReviewChange}
+                    required
+                  />
+                </div>
+                <button className="cta-button" onClick={handleReviewSubmit}>Submit Review</button>
+                {reviewError && <p className="error">{reviewError}</p>}
+                {reviewSuccess && <p className="success">{reviewSuccess}</p>}
+              </div>
+            ) : (
+              <p className="info">You need a confirmed booking to submit a review.</p>
+            )}
+          </section>
+        )}
+
+        <section className="reviews-section container">
+          <h2>Customer Reviews for Sri Lanka Tours</h2>
+          <ReviewGridSlider reviews={Array.isArray(reviews) ? reviews.filter(review => review.reviewType === 'service' || review.reviewType === 'product') : []} />
+        </section>
+      </div>
+    </>
   );
 }
 
