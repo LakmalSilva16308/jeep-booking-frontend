@@ -32,7 +32,7 @@ const PRODUCT_DETAILS = [
     seo: {
       title: 'Hiriwadunna Village Tour & Jeep Safari - SLECO Tour 2025',
       description: 'Experience a Hiriwadunna village tour and jeep safari in Sri Lanka with SLECO Tour. Book your eco-tourism adventure now.',
-      keywords: 'hiriwadunna village tour, sri lanka jeep safari, sri lanka tourism, eco tourism sri lanka, yala jeep safari'
+      keywords: 'hiriwadunna village tour, sri lanka jeep safari, sri lanka tourism, eco tourism sri lanka, minneriya jeep safari'
     }
   },
   {
@@ -65,7 +65,7 @@ const PRODUCT_DETAILS = [
     name: 'Jeep Safari',
     image: '/images/jeep_safari.jpg',
     detailedDescription: `
-      Experience the thrill of a Yala jeep safari with SLECO Tour, venturing into Sri Lanka’s wilderness. Traverse rugged terrains and dense forests in a 4x4 vehicle, guided by expert drivers. Spot elephants, leopards, and diverse bird species in Yala National Park. This adventure is perfect for nature lovers and thrill-seekers exploring Sri Lanka tourism in 2025.
+      Experience the thrill of a minneriya jeep safari with SLECO Tour, venturing into Sri Lanka’s wilderness. Traverse rugged terrains and dense forests in a 4x4 vehicle, guided by expert drivers. Spot elephants, leopards, and diverse bird species in Minneriya. This adventure is perfect for nature lovers and thrill-seekers exploring Sri Lanka tourism in 2025.
     `,
     relatedImages: [
       '/images/jeep1.jpeg',
@@ -77,9 +77,9 @@ const PRODUCT_DETAILS = [
       excluded: ['Jeep safari ticket']
     },
     seo: {
-      title: 'Yala Jeep Safari Sri Lanka - SLECO Tour 2025',
-      description: 'Book a Yala jeep safari with SLECO Tour to spot leopards and elephants in Sri Lanka’s Yala National Park.',
-      keywords: 'yala jeep safari sri lanka, sri lanka jeep safari, yala national park, eco tourism sri lanka, sri lanka tourism'
+      title: 'minneriya Jeep Safari Sri Lanka - SLECO Tour 2025',
+      description: 'Book a minneriya jeep safari with SLECO Tour to spot leopards and elephants in Sri Lanka’s minneriya.',
+      keywords: 'minneriya jeep safari sri lanka, sri lanka jeep safari, minneriya, eco tourism sri lanka, sri lanka tourism'
     }
   },
   {
