@@ -6,7 +6,7 @@ function About() {
     <>
       <title>Eco Tourism Sri Lanka - About SLECO Tour 2025</title>
       <meta name="description" content="Learn about SLECO Tour’s mission to promote eco tourism in Sri Lanka through jeep safaris, village tours, and cultural adventures." />
-      <meta name="keywords" content="eco tourism sri lanka, sri lanka tourism, yala jeep safari sri lanka, hiriwadunna village tour, sigiriya lion rock" />
+      <meta name="keywords" content="eco tourism sri lanka, sri lanka tourism, Minneriya jeep safari sri lanka, hiriwadunna village tour, sigiriya lion rock" />
       <meta property="og:title" content="Eco Tourism Sri Lanka - About SLECO Tour" />
       <meta property="og:description" content="Discover SLECO Tour’s commitment to sustainable Sri Lanka tourism with jeep safaris and village experiences." />
       <meta property="og:image" content="https://www.slecotour.com/images/hiriwadunna.png" />
@@ -31,13 +31,13 @@ function About() {
         <section className="about-content">
           <h2>About Us</h2>
           <p className="intro-text">
-            At SLECO Tour, we are passionate about showcasing the vibrant culture, stunning landscapes, and thrilling adventures of Sri Lanka. Our mission is to connect travelers with authentic eco tourism experiences, from Yala jeep safaris to Hiriwadunna village tours, creating lasting memories.
+            At SLECO Tour, we are passionate about showcasing the vibrant culture, stunning landscapes, and thrilling adventures of Sri Lanka. Our mission is to connect travelers with authentic eco tourism experiences, from Minneriya jeep safaris to Hiriwadunna village tours, creating lasting memories.
           </p>
           <div className="features-grid">
             <div className="feature-card">
               <h3>Unique Eco Adventures</h3>
               <p>
-                From thrilling Yala jeep safaris to serene catamaran boat rides on Hiriwadunna Lake, we offer diverse Sri Lanka tourism activities.
+                From thrilling Minneriya jeep safaris to serene catamaran boat rides on Hiriwadunna Lake, we offer diverse Sri Lanka tourism activities.
               </p>
             </div>
             <div className="feature-card">

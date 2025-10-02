@@ -56,19 +56,19 @@ function Services() {
   return (
     <>
       <title>Sri Lanka Jeep Safari & Eco Tours - SLECO Tour 2025</title>
-      <meta name="description" content="Book Sri Lanka jeep safaris in Yala National Park, Hiriwadunna village tours, and eco-friendly adventures with SLECO Tour for 2025." />
-      <meta name="keywords" content="sri lanka jeep safari, yala national park, hiriwadunna village tour, eco tourism sri lanka, catamaran boat ride sri lanka, sigiriya lion rock" />
+      <meta name="description" content="Book Sri Lanka jeep safaris Monneriya National Park, Hiriwadunna village tours, and eco-friendly adventures with SLECO Tour for 2025." />
+      <meta name="keywords" content="sri lanka jeep safari, Monneriya national park, hiriwadunna village tour, eco tourism sri lanka, catamaran boat ride sri lanka, sigiriya lion rock" />
       <meta property="og:title" content="Sri Lanka Jeep Safari & Eco Tours - SLECO Tour" />
-      <meta property="og:description" content="Explore Yala jeep safaris, Hiriwadunna village tours, and Sigiriya adventures with SLECO Tour." />
+      <meta property="og:description" content="Explore Monneriya jeep safaris, Hiriwadunna village tours, and Sigiriya adventures with SLECO Tour." />
       <meta property="og:image" content="https://www.slecotour.com/images/jeep_safari.jpg" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content="Sri Lanka Jeep Safari & Eco Tours - SLECO Tour" />
-      <meta name="twitter:description" content="Explore Yala jeep safaris, Hiriwadunna village tours, and Sigiriya adventures with SLECO Tour." />
+      <meta name="twitter:description" content="Explore Monneriya jeep safaris, Hiriwadunna village tours, and Sigiriya adventures with SLECO Tour." />
       <meta name="twitter:image" content="https://www.slecotour.com/images/jeep_safari.jpg" />
 
       <div className="services-preview">
         <h1>Sri Lanka Jeep Safari & Eco-Friendly Tours</h1>
-        <p>Discover the best of Sri Lanka tourism with our eco-friendly adventures, including Yala jeep safaris, Hiriwadunna village tours, and cultural experiences like Sigiriya Lion Rock climbs.</p>
+        <p>Discover the best of Sri Lanka tourism with our eco-friendly adventures, including Monneriya jeep safaris, Hiriwadunna village tours, and cultural experiences like Sigiriya Lion Rock climbs.</p>
         <CompanyProducts />
         <h2>Featured Services</h2>
         {providers.length > 0 ? (

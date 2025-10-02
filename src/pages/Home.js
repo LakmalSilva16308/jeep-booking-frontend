@@ -29,9 +29,9 @@ function Home() {
   const slides = useMemo(() => [
     {
       src: '/images/jeep_safari.jpg',
-      alt: 'Yala Jeep Safari Adventure - Sri Lanka Tourism',
-      title: 'Discover Yala Jeep Safaris',
-      caption: 'Explore thrilling jeep safaris in Yala National Park with SLECO Tour.'
+      alt: 'Minneriya Jeep Safari Adventure - Sri Lanka Tourism',
+      title: 'Discover Minneriya Jeep Safaris',
+      caption: 'Explore thrilling jeep safaris in Minneriya National Park with SLECO Tour.'
     },
     {
       src: '/images/catamaran_boat_ride.jpg',
@@ -258,15 +258,15 @@ function Home() {
   return (
     <>
       <title>SLECO Tour - Best Sri Lanka Tourism Adventures 2025</title>
-      <meta name="description" content="Explore Sri Lanka tourism with SLECO Tour: Yala jeep safaris, Hiriwadunna village tours, and Sigiriya Lion Rock climbs for 2025." />
-      <meta name="keywords" content="sri lanka tourism, yala jeep safari, hiriwadunna village tour, sigiriya lion rock, eco tourism sri lanka, catamaran boat ride" />
+      <meta name="description" content="Explore Sri Lanka tourism with SLECO Tour: Minneriya jeep safaris, Hiriwadunna village tours, and Sigiriya Lion Rock climbs for 2025." />
+      <meta name="keywords" content="sri lanka tourism, Minneriya jeep safari, hiriwadunna village tour, sigiriya lion rock, eco tourism sri lanka, catamaran boat ride" />
       <meta property="og:title" content="SLECO Tour - Sri Lanka Tourism Adventures 2025" />
-      <meta property="og:description" content="Book Yala jeep safaris, Hiriwadunna village tours, and Sigiriya Lion Rock climbs with SLECO Tour." />
+      <meta property="og:description" content="Book Minneriya jeep safaris, Hiriwadunna village tours, and Sigiriya Lion Rock climbs with SLECO Tour." />
       <meta property="og:image" content="https://www.slecotour.com/images/jeep_safari.jpg" />
       <meta property="og:url" content="https://www.slecotour.com/" />
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:title" content="SLECO Tour - Sri Lanka Tourism Adventures" />
-      <meta name="twitter:description" content="Book Yala jeep safaris, Hiriwadunna village tours, and Sigiriya Lion Rock climbs for 2025." />
+      <meta name="twitter:description" content="Book Minneriya jeep safaris, Hiriwadunna village tours, and Sigiriya Lion Rock climbs for 2025." />
       <meta name="twitter:image" content="https://www.slecotour.com/images/jeep_safari.jpg" />
       <link rel="canonical" href="https://www.slecotour.com/" />
       <script type="application/ld+json">
@@ -275,7 +275,7 @@ function Home() {
           "@type": "WebSite",
           "name": "SLECO Tour",
           "url": "https://www.slecotour.com/",
-          "description": "Book eco-friendly Sri Lanka tourism adventures including Yala jeep safaris and Hiriwadunna village tours."
+          "description": "Book eco-friendly Sri Lanka tourism adventures including Minneriya jeep safaris and Hiriwadunna village tours."
         })}
       </script>
 
@@ -330,7 +330,7 @@ function Home() {
 
         <section className="gallery-section container">
           <h2>Our Gallery</h2>
-          <p>Discover <Link to="/product-description/Hiriwadunna%20Village%20Tour%20and%20Jeep%20Safari%20One%20Day%20Tour">Hiriwadunna village tours</Link> and <Link to="/product-description/Jeep%20Safari">Yala jeep safaris</Link> in our gallery.</p>
+          <p>Discover <Link to="/product-description/Hiriwadunna%20Village%20Tour%20and%20Jeep%20Safari%20One%20Day%20Tour">Hiriwadunna village tours</Link> and <Link to="/product-description/Jeep%20Safari">Minneriya jeep safaris</Link> in our gallery.</p>
           <video
             src="/video/video1.mov"
             autoPlay

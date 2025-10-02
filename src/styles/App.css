@@ -66,8 +66,7 @@ nav {
   align-items: center;
 }
 
-nav .logo {
-  font-family: cursive;
+nav .logo {  
   font-size: 1.6rem;
   font-weight: 700;
   text-decoration: none;
